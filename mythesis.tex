@@ -3,47 +3,47 @@
 \usepackage{amssymb}		% to get all AMS symbols
 \usepackage{graphicx}		% to insert figures
 \usepackage{hyperref}		% PDF hyperreferences??
+\usepackage[utf8]{inputenc}
+\usepackage{subcaption}
+\usepackage{sidecap}
+\usepackage{mathtools}
+\usepackage{commath}
+\usepackage{listings}
+\usepackage[version=4]{mhchem}
+\usepackage{siunitx}
+\usepackage{algorithm}
+\usepackage[linewidth=1pt]{mdframed}
+\usepackage{algpseudocode}
+\usepackage{longtable,tabularx}
+\usepackage{amsmath,amsfonts,bm} % Math packages
 
 %%%%%%%%%%%%   All the preamble material:   %%%%%%%%%%%%
 
-\title{Online Optimal Control and Agile Flight Development for Planetary Landers}
-
+\title{Development of Successive Convexification Method for the Powered Descent Guidance Problem}
 \author{Pádraig~S.}{Lysandrou}
-
 \otherdegrees{B.S. ECE, Cornell University, 2018}
-
 \degree{Masters of Science}		%  #1 {long descr.}
 	{M.S., Aerospace Engineering}		%  #2 {short descr.}
-
 \dept{Department of}			%  #1 {designation}
 	{Aerospace Engineering Sciences}		%  #2 {name}
-
 \advisor{Prof.}				%  #1 {title}
 	{Robert D. Braun}			%  #2 {name}
-
 \reader{Dr.~Jay McMahon}		%  2nd person to sign thesis
-\readerThree{Dr.~Behçet Açıkmeşe}		%  3rd person to sign thesis
-
+\readerThree{???}				%  3rd person to sign thesis
 \abstract{  \OnePageChapter	% because it is very short
 
-	Often the abstract will be long enough to require
-	more than one page, in which case the macro
-	``$\backslash$OnePageChapter'' should {\it not}
-	be used.
-
-	But this one isn't, so it should.
+	INPUT ABSTRACT HERE
 	}
 
 \dedication[Dedication]{	% NEVER use \OnePageChapter here.
-	To Plato, Carolyn, Helena, and Maria for putting up with my ridiculous projects.
+	In no particular order, to my loving family: Plato, Carolyn, Helena, and Maria.
 	}
 
 \acknowledgements{	\OnePageChapter	% *MUST* BE ONLY ONE PAGE!
-	To
-
-	Similarly, I would like to thank my SpaceX colleagues for grounding me in reality whilst letting me play with heavenly vehicles.
+	I should begin with thanking Dr. Robert Braun for his support and advising through my Masters at Colorado Boulder. I would like to thank Professor Jay McMahon and Professor Hanspeter Schaub for serving on my committee and for their fulfilling coursework and advising. Additionally, I would like to thank Dr. Mason Peck for his four years of support at Cornell. I attribute most of my useful spacecraft engineering skills to the countless late nights spent on his projects.
+	
+	Similarly, I would like to thank my SpaceX colleagues for grounding me in reality while letting me play with vehicles of the heavens. Go Falcon, Dragon, and Starlink!
 	}
-
 % \IRBprotocol{E927F29.001X}	% optional!
 
 \ToCisShort	% use this only for 1-page Table of Contents
@@ -67,7 +67,7 @@
 %%%%%%%%%   then the Bibliography, if any   %%%%%%%%%
 \bibliographystyle{plain}	% or "siam", or "alpha", etc.
 \nocite{*}		% list all refs in database, cited or not
-\bibliography{refs}		% Bib database in "refs.bib"
+\bibliography{references}		% Bib database in "refs.bib"
 
 %%%%%%%%%   then the Appendices, if any   %%%%%%%%%
 \appendix
