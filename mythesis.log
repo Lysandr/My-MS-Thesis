@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.12)  5 NOV 2019 13:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.12)  8 NOV 2019 15:30
 entering extended mode
 **./mythesis.tex
 (mythesis.tex
@@ -1334,9 +1334,9 @@ centered
 
 ]
 
-LaTeX Warning: Citation `boyd' on page 2 undefined on input line 28.
+LaTeX Warning: Citation `boyd' on page 2 undefined on input line 32.
 
-) (chapter2.tex [2] [3]
+[2]) (chapter2.tex [3]
  \th@ChapterStyle\th@DoChapCenterChapter \th@ChapterStyle 2.
 centered
 
@@ -1414,7 +1414,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 87.
 Here is how much of TeX's memory you used:
  23839 strings out of 492973
  444419 string characters out of 3121374
- 535449 words of memory out of 3000000
+ 534449 words of memory out of 3000000
  27340 multiletter control sequences out of 15000+200000
  544646 words of font info for 69 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1443,7 +1443,7 @@ androu/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.p
 fb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/symbols/msam10.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Prog
 rams/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mythesis.pdf (32 pages, 289492 bytes).
+Output written on mythesis.pdf (32 pages, 289980 bytes).
 PDF statistics:
  420 PDF objects out of 1000 (max. 8388607)
  120 named destinations out of 1000 (max. 500000)
