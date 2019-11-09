@@ -1,0 +1,186 @@
+% !TEX root = main.tex
+\chapter{Convex Formulation}
+\label{convex}
+
+
+\section{Convex Form}
+Now we shall derive the convex form of Problem 1. We will convert the non-convex continuous free-final-time problem to a convex fixed-final-time problem. This will be a second order cone sub-problem. We will solve this sub-problem repeatedly to convergence or "successively." This successive process turns each subproblem into a larger free-final-time algorithm.
+
+\subsection{Linearization}
+Let us define the state vector $\mathbf{x}(t) \in \mathcal{R}^{14\times 1}$ and our control vector $\mathbf{u}(t) \in \mathcal{R}^{3\times 1}$:
+\begin{align}
+& \mathbf{x}(t) \triangleq 
+	\begin{bmatrix}
+	m(t) & \mathbf{r}_I^T(t) & \mathbf{v}_I^T(t) & q_{B/I}^T(t) & \bm{\omega}_B^T(t)   
+	\end{bmatrix}^T \\
+& \mathbf{u}(t) \triangleq \mathbf{T}_B(t)  
+\end{align}
+Therefore we can express the nonlinear dynamics in the following form
+\begin{align}
+& \frac{d}{dt}\mathbf{x}(t) = f(\mathbf{x}(t), \mathbf{u}(t)) =  
+	\begin{bmatrix}
+	\dot{m(t)} & \dot{\mathbf{r}}_I^T(t) & \dot{\mathbf{v}}_I^T(t) & \dot{q}_{B/I}^T(t) & \dot{\bm{\omega}}_B^T(t)  
+	\end{bmatrix}^T
+\end{align}
+
+In order to make the problem free-final-time, we must manipulate the how time works. We are going to replace $t$ with a normalized trajectory time $\tau \in \left[0,1\right]$. We apply the chain run:
+
+
+\begin{align}
+& \frac{d}{dt}\mathbf{x}(t) = \frac{d\tau}{dt} \frac{d}{d\tau}\mathbf{t}(t)
+\end{align}
+
+And we can translate between the two by using the dilation coefficient $\sigma$ which is defined
+\begin{align}
+& \sigma \triangleq \Big(\frac{d\tau}{dt}\Big)^{-1}
+\end{align}
+
+This $\sigma$ will become a variable in the convex subproblem that acts as the non-dimensionalized final time. It is a scaling factor that translates between real work differential time and the normalized version used for our algorithm. We can now write the nonlinear dynamics to take advantage of this normalized time:
+
+\begin{align}
+& \mathbf{x}^\prime(\tau) \triangleq \frac{d}{d\tau}\mathbf{x}(\tau) = \sigma f(\mathbf{x}(\tau), \mathbf{u}(\tau))
+\end{align}
+
+We can fit the nonlinear dynamics from problem 1 into a linear framework by performing a first-order Taylor approximation about a reference state, input, and dilation coefficient $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\sigma})$. Therefore we can represent the system using normalized time:
+
+\begin{align}
+& \mathbf{x}^\prime(\tau) = \hat{\sigma}\frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(x(\tau)-\hat{x}(\tau)) + \hat{\sigma}\frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(u(\tau)-\hat{u}(\tau)) + \sigma f(\hat{x}(\tau),\hat{u}(\tau)) \\
+& \mathbf{x}^\prime(\tau) = A(\tau)\mathbf{x(\tau)} + B(\tau)\mathbf{u(\tau)} + \Sigma(\tau)\sigma + \mathbf{z}(\tau)
+\end{align}
+
+We can break the Taylor expansion into matrices to make things simpler later on:
+\begin{align}
+& A(\tau) \triangleq \hat{\sigma} \frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}} \\
+& B(\tau) \triangleq \hat{\sigma} \frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}} \\
+& \Sigma(\tau) \triangleq f(\hat{x}(\tau),\hat{u}(\tau)) \\
+& \mathbf{z}(\tau) \triangleq -A(\tau)\hat(x)(\tau) - B(\tau)\hat{u}(\tau)
+\end{align}
+
+With this done, we tackle the only source of non-convexity: the non-zero lower bound to our actuator thrust. With a Taylor series approximation we can say that $T_{min} \leq B_g(\tau)\mathbf(u)(\tau)$ for which $B_g(\tau) \triangleq \frac{\mathbf{\hat{u}}^T(\tau)}{\left\lVert \mathbf{\hat{u}} \right \lVert_2}$.
+
+
+
+\subsection{Discretization Scheme}
+This is where things get hairy. We need to "cast" the problem into a finite dimensional optimization problem where the trajectory is discretized into $K$ evenly separated points with respect to the normalized trajectory time $\tau$. Let us define the set $\mathcal{K}\triangleq \{0,1,\cdots, K-1\}$ with which many of the parameter arrays will have the same dimensions.
+
+Given that the trajectory time is normalized on the interval $\tau \in [0,1 ]$, we must define the discrete time step at point $k$ as such
+
+\begin{align}
+& \tau_k \triangleq \frac{k}{K-1}, \quad \forall k \in \mathcal{K}
+\end{align}
+
+To help with numerical feasibility issues, we employ a first-order-hold linear scaling on the applied controls for each time step. Over the interval $\tau \in [\tau_k, \tau_{k+1}]$, we must express $\mathbf{u}(\tau)$ in terms of the $\mathbf{u}_k$
+ and $\mathbf{u}_{k+1}$:
+
+ \begin{align}
+& \mathbf{u}(\tau) \triangleq \alpha_k(\tau) \mathbf{u}_k + \beta(\tau) \mathbf{u}_{k+1} \\ 
+& \alpha_k(\tau) = \frac{d\tau - \tau}{d\tau} \\
+& \beta_k(\tau) = \frac{\tau}{d\tau} \\
+& d\tau = \frac{1}{K-1}
+\end{align}
+
+I have shown these differently than the author for simplicity.
+
+We can then use a state transition matrix $\Phi(\tau_{k+1},\tau_k)$ to translate the system from $k$ to $k+1$ with no input. This matrix follows these dynamics:
+\begin{align}
+& \frac{d}{d\tau} \Phi(\tau,\tau_k) = A(\tau) \Phi(\tau,\tau_k) \quad \forall k \in \mathcal{K}
+\end{align}
+
+Using our previous expressions, we can now discretize the dynamics such that each matrix, at each time step requires a short integration:
+ \begin{align}
+& \mathbf{x}_{k+1} = \bar{A}_k\mathbf{x_k} + \bar{B}_k\mathbf{u_k} + \bar{C}\mathbf{u_{k+1}} + \bar{\Sigma}_k\sigma + \bar{\mathbf{z}}_k  \\
+& \bar{A}_k \triangleq  \Phi(\tau_{k+1},\tau_k)\\
+& \bar{B}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \alpha_k(\xi) \Phi(\tau_{k+1},\xi) B(\xi) d\xi\\
+& \bar{C}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \beta_k(\xi) \Phi(\tau_{k+1},\xi) B(\xi)  d\xi\\
+& \bar{\Sigma}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \Phi(\tau_{k+1},\xi) \Sigma(\xi) d\xi\\
+& \bar{\mathbf{z}}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \Phi(\tau_{k+1},\xi) \mathbf{z}(\xi) d\xi\\
+\end{align}
+
+The other boundary, state, and control constraints are already convex and just need to be instantiated for all time or at initial/terminal $\tau$.
+
+
+\subsection{Successive Form, Trust Regions and Relaxations}
+In order to solve a non-convex problem, we iteratively solve a sequence of related convex subproblems. However, before we can reach a concluding framework, we must consider trust regions and dynamic relaxations. In order to make sure that this successive framework stays bounded and feasible through this convergence process, we must bound the divergence of state and inputs from one iteration to another. Unbounded problems can arise from constraints that admit an unbounded cost. To mitigate this issue, we augment the cost function with soft trust regions about the previous iterate's information. Let us define these deviations at iteration $i$ as such:
+\begin{align}
+& \delta \mathbf{x}_k^i \triangleq \mathbf{x}_k^i - \mathbf{x}_k^{i-1} \\
+& \delta \mathbf{u}_k^i \triangleq \mathbf{u}_k^i - \mathbf{u}_k^{i-1}, \quad \forall k \in \mathcal{K}\\
+& \delta \sigma^i \triangleq \sigma^i - \sigma^{i-1}
+\end{align}
+
+We can then fabricate the following constraints with $\bm{\bar{\Delta}}^i \in \mathcal{R}^K$ and $\Delta_\sigma^i \in \mathcal{R}$
+\begin{align}
+& \delta \mathbf{x}_k^i \cdot \delta \mathbf{x}_k^i + \delta \mathbf{u}_k^i \cdot \delta \mathbf{u}_k^i \leq \mathbf{e}_k \cdot \bm{\bar{\Delta}}^i \\
+& \delta \sigma^i \cdot \delta \sigma^i \leq \Delta_\sigma^i
+\end{align}
+
+We can now append $w_\Delta^i \norm{{\bar{\Delta}}^i} + w_{\Delta_\sigma}\norm{\Delta_\sigma^i}$ to the cost function to attempt to minimize input, state, and final time deviations and keeping their deviation bounded via constraint, where $w_\Delta^i$ and $w_{\Delta_\sigma}$ are weighting scalars.
+Here the author makes an important note. Given that the trust regions are centered about previous points $(\mathbf{x}_{k}^{i-1},\mathbf{u}_{k}^{i-1},\sigma^{i-1})$, we must evaluate the Jacobian about the nonlinear trajectory beginning at $\mathbf{x}_{k}^{i-1}$. We can then use the zero-order-hold input vector $\mathbf{u}(\tau)$. Doing this $\forall k \in \mathcal{K}$ defines the linearization path $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\sigma})$.
+
+Finally we must speak to dynamic relaxation. "Artificial Infeasibility" is  encountered during the convergence process when the linearization becomes infeasible. For example, if the dynamics are linearized about unrealistic conditions, it because dynamically inconsistent. It will not produce a feasible solution. This is encountered during the first couple iterations of a successive convexification due to poor initial trajectory or time-of-flight estimation. To get rid of this issue, we employ dynamic relaxation, where a slack variable is added to the dynamics in order to "make room" for the iteration to proceed. However, you can guess that this will inevitably be something we try to minimize in the cost function in order to make sure that our final trajectories are as dynamically consistent as possible. Therefore, we must now write our dynamics as follows: 
+
+\begin{align}
+& \mathbf{x}_{k+1}^i = \bar{A}_k^i\mathbf{x_k}^i + \bar{B}_k^i\mathbf{u_k}^i + \bar{C}^i\mathbf{u_{k+1}}^i + \bar{\Sigma}_k^i\sigma^i + \bar{\mathbf{z}}^i_k + \bm{\nu}_k^i
+\end{align}
+
+Because we are going to use this in our cost function as a norm, we shall concatenate the time history of the slack variable as
+
+\begin{align}
+\bar{\bm{\nu}}^i = 
+	\begin{bmatrix}
+	{\bm{\nu}_0^i}^T & \cdots & {\bm{\nu}^i_{K-2}}^T 
+	\end{bmatrix}^T
+\end{align}
+
+And of course we augment the cost function again with $w_v \norm{\bar{\bm{\nu}}^i}_1$. As the iteration continues, this value is minimized as the solution becomes more dynamically feasible. Therefore, the magnitude of this norm is indicative of a final solution in the successive iteration process.
+
+\clearpage
+\subsubsection{Convex Sub-Problem}
+We can now put all of the components together and form the convex version of the continuous problem, but with fixed final time.
+
+\begin{mdframed}
+\textbf{Problem 2: Discretized Convex Fixed-Final-Time Sub-Problem ($i^{th}$ iteration)}
+\underline{Cost Function:}
+\begin{equation*}
+\min_{\sigma^i, \mathbf{u}_k^i} \quad \sigma^i + w_\Delta^i \left\lVert \bar{\Delta}^i \right\lVert_2 + w_{\Delta_\sigma}\left\lVert\Delta_\sigma^i\right\lVert_1 + w_v \left\lVert\bar{\bm{\nu}}^i\right\lVert_1
+\end{equation*}
+
+\underline{Boundary Conditions:}  
+\begin{align*}
+& m_0 = m_{wet} \quad \mathbf{r}_{I_0} = \mathbf{r}_i \quad \mathbf{v}_{I_0} = \mathbf{v}_i \quad \quad \quad{q}_{B/I_0} = {q}_{B/I _{i}} \quad \bm{\omega}_B(0) = \bm{\omega}_{B _{i}} \\
+& \mathbf{r}_{I_K} = \mathbf{0} \quad \quad \mathbf{v}_{I_K} = \mathbf{0} \quad {q}_{B/I _K} = {q}_{B/I _ {f}} \quad \bm{\omega}_{B_K} = \mathbf{0} \\
+& \mathbf{e}_2 \cdot \mathbf{T}_{B_K}= \mathbf{e}_3 \cdot \mathbf{T}_{B_K}= 0
+\end{align*}
+
+\underline{Dynamics:}  
+\begin{align*}
+& \mathbf{x}_{k+1}^i = \bar{A}_k^i\mathbf{x_k}^i + \bar{B}_k^i\mathbf{u_k}^i + \bar{C}^i\mathbf{u_{k+1}}^i + \bar{\Sigma}_k^i\sigma^i + \bar{\mathbf{z}}^i_k + \bm{\nu}_k^i
+\end{align*}
+
+\underline{State Constraints:}  
+\begin{align*}
+& m_k \geq m_{dry} \\
+& \mathbf{e}_1 \cdot \mathbf{r}_{I_k} \geq \tan(\gamma_{gs}) \left\lVert \left[\mathbf{e}_2 \quad \mathbf{e}_3\right]^T \mathbf{r}_{I_k} \right\lVert_2 \\
+& \cos(\theta_{max}) \leq 1-2(q_{2_k}^{2}+q_{3_k}^{2}) \\
+& \left \lVert \bm{\omega}_{B_k} \right \lVert_2 \leq \omega_{max}
+\end{align*}
+
+\underline{Control Constraints:}  
+\begin{align*}
+& T_{min} \leq B_g(\tau_k)\mathbf{u}_k^i \\
+& \left \lVert \mathbf{u}_k^i \right \lVert_2 \leq T_{max} \\
+& \cos(\delta_{max}) \left \lVert \mathbf{u}_k^i \right \lVert_2 \leq \bm{e}_1 \cdot \mathbf{u}_k
+\end{align*}
+
+\underline{Trust Regions:}  
+\begin{align*}
+& \delta \mathbf{x}_k^i \cdot \delta \mathbf{x}_k^i + \delta \mathbf{u}_k^i \cdot \delta \mathbf{u}_k^i \leq \mathbf{e}_k \cdot \bm{\bar{\Delta}}^i \\
+& \delta \sigma^i \cdot \delta \sigma^i \leq \Delta_\sigma^i
+\end{align*}
+
+\end{mdframed}
+
+
+
+\clearpage
+\section{Algorithm}
+The goal is for the successive convexification algorithm to continue iterating until $\Delta_{tol}$ and $\nu_{tol}$ are met. These are defined by the magnitude of each vector.

@@ -18,7 +18,6 @@
 \usepackage{amsmath,amsfonts,bm} % Math packages
 
 %%%%%%%%%%%%   All the preamble material:   %%%%%%%%%%%%
-
 \title{A Study of the Successive Convexification Method for the Powered Descent Guidance Problem}
 \author{Pádraig~S.}{Lysandrou}
 \otherdegrees{B.S. ECE, Cornell University, 2018}
@@ -44,44 +43,38 @@
 	
 	Similarly, I would like to thank my SpaceX colleagues for grounding me in reality while letting me play with vehicles of the heavens. Go Falcon, Dragon, and Starlink!
 	}
+	
 % \IRBprotocol{E927F29.001X}	% optional!
-
-
-
-
 \ToCisShort	% use this only for 1-page Table of Contents
-
 \LoFisShort	% use this only for 1-page Table of Figures
 % \emptyLoF	% use this if there is no List of Figures
-
 \LoTisShort	% use this only for 1-page Table of Tables
 % \emptyLoT	% use this if there is no List of Tables
-
-
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%       BEGIN DOCUMENT...         %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{document}
 
 \input macros.tex
 \input chapter1.tex
-\input chapter2.tex
+\input chapter2.tex	
+\input chapter3.tex
+\input chapter4.tex
+\input chapter5.tex
+\input chapter6.tex
 
 %%%%%%%%%   then the Bibliography, if any   %%%%%%%%%
-\bibliographystyle{plain}	% or "siam", or "alpha", etc.
-\nocite{*}		% list all refs in database, cited or not
+\bibliographystyle{plain}		% or "siam", or "alpha", etc.
+\nocite{*}						% list all refs in database, cited or not
 \bibliography{references}		% Bib database in "refs.bib"
+
 
 %%%%%%%%%   then the Appendices, if any   %%%%%%%%%
 \appendix
 \input appendixA.tex
-\input appendixB.tex
+% \input appendixB.tex
 
 
 \end{document}

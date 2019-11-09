@@ -1,0 +1,169 @@
+% !TEX root = main.tex
+\chapter{Results}
+\label{results}
+
+
+\begin{algorithm}
+\caption{Successive Convexification}\label{Successive}
+\begin{algorithmic}[1]
+\Procedure{SCVX}{$x_{ref},\sigma_{ref}$}
+\State Generate initial trajectory by linearly spanning from initial condition to terminal conditions on each state
+\While{$ ||{\Delta}|| \geq \Delta_{tol} \quad \&\& \quad ||{\nu}|| \geq \nu_{tol} $}
+\State Compute $\bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$ from $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}$
+\State Solve Problem 2 using $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}, \bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$
+\State Store the newly found $\mathbf{x}_k^{i}, \mathbf{u}_k^{i}, \sigma^{i}$
+\State $i++;$
+\EndWhile 
+\State \textbf{return} $\mathbf{x}, \mathbf{u}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+% \begin{figure}[!htb] 
+%   \centering
+%   \includegraphics[width=0.5\textwidth]{alg.PNG}
+%   \caption{Diagram depicting how the successive convexification loop works. If the tolerance requirements are not met, another iteration is done again to make sure it is producing dynamically feasible sets.}
+%   \label{fig:succ}
+%  \end{figure}
+
+It turns out that this tool is incredibly powerful. One can modify the dynamics quite a bit, and depending on the robustness of the linearization scheme, this could be used as a generalized tool. The only glaring obstacle is state and actuator constraints. These types of nonconvexities need to be managed carefully.
+
+
+
+\section{Dimensionalized Simulation Results}
+The initial conditions to this problem must be small for numerical stability. Therefore, you must non-dimensionalize then on entry. Once the problem is solved, you can redimensionalize the solution, as shown in \ref{fig:succ}. I implemented this algorithm in Python, utilizing the CVXPY library with ECOS solver. Below in \ref{table:nonlin} are some parameters I tested for an in-plane maneuver. I used the same constants and weightings as in \cite{6dofsucc}. For this scenario, to redimensionalize, $U_M = 10$kg, $U_L=100$meters, and $U_T = (10)^{1/2}$seconds.
+
+\begin{table}[ht]
+\caption{Parameters Used}
+\centering 
+\begin{tabular}{c c c} 
+\hline\hline
+Param & Units & Value \\ [0.5ex] 
+\hline 
+$\mathbf{g}_I$ 		& $U_L/U_T^2$ 	& $-0.981\mathbf{e}_1$ 		\\ 
+$\alpha_{\dot{m}}$ 	& - 			& 0.004 							\\
+$m_{wet}$ 			& $U_M$ 		& 14		 					\\
+$m_{dry}$ 			& $U_M$ 		& 3  						\\
+$r_{I_0}$ 			& $U_L$ 		& $(4,4,0)$ 							\\
+$v_{I_0}$ 			& $U_L/U_T$	 	& $(-0.1,0,0)$ 							\\
+$q_{{BI}_0}$ 		& - 			& $(1,0,0,0)$ 							\\
+$\omega_{B_0}$ 		& $rad/U_T$ 			& $(0,0,0)$ 							\\[1ex] 
+\hline
+\end{tabular}
+\label{table:nonlin}
+\end{table}
+
+
+% \begin{figure}[!htbp] 
+%   \centering
+%   \includegraphics[width=\textwidth]{guidplots.PNG}
+%   \caption{Top Left - Planar trajectory plotted in 3D with quivers acting as thrust vector and magnitude indicators. The trajectory looks smooth and dynamically consistent. Top Right - This plot displays the thrust on each axis, the magnitude, and the thrust angle. These look very jagged and non-differentiable. Numerical problems could cause this. Ideally we would like to actuate the engine at lower gimbal rates. Lower Left - The attitudes generated look smooth and dynamically consistent. Lower Right - The mass depletion is shown. It seems to only have consumed 4kg of propellant over the $\sigma=$ 6.474.}
+%   \label{fig:guidplots}
+%  \end{figure}
+
+
+\section{Attitude Trajectory Tracking with Cold Gas Thrusters}
+This portion of the project was developed for ASEN6010 Advanced Attitude Control. I will now show how control can be done with thrusters at the top of the vehicle. I am using the attitude trajectory generated from the convex optimal problem. I have converted those quaternions into MRPs and switched from the UEN frame to a more common ENU frame. This is to say that +x is in the direction of thruster 2 on figure \ref{fig:thrusters}; +y goes along thruster 1, and thruster 6/8 generate a positive torque about the z-axis axially through the top.
+
+Please note that I did not implement standard Schmitt trigger "bang bang" control here. This probably would have been a more realistic implementation.
+
+% \begin{figure}[!htbp] 
+% \centering
+% \begin{minipage}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.4\linewidth]{vehicle.png}
+%   \captionof{figure}{Example vehicle where circles represent cold gas thruster placement, $\mathbf{r}_i$ represents distance to thruster, and $g_t$ represents pointing vector.}
+%   \label{fig:vehicle}
+% \end{minipage}%
+% \begin{minipage}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.4\linewidth]{thrustdiag.png}
+%   \captionof{figure}{This represents the placement of thrusters for my implementation. Each arrow is the pointing direction for each engine. For example, thruster 1 would pitch the vehicle over about the x-axis, thruster 2 generates a torque about y-axis, and 6/8 combination rolls about the z-axis}
+%   \label{fig:thrusters}
+% \end{minipage}
+% \end{figure}
+
+
+The distribution matrix $D$ for my configuration is the following:
+
+\begin{align*}
+& \left[D \right] = \left[\vec{r}_1 \times \vec{g}_{t_1} \quad \cdots \quad \vec{r}_N\times \vec{g}_{t_N}\right]  = \\
+&\begin{bmatrix}
+   -1.50   &      0   & 1.50  &       0  &  1.50  & -1.50 &  -1.50  &  1.50 \\
+         0   & 1.50   &      0  & -1.50  &       0  &       0 &        0  &       0 \\
+         0   &      0   &      0  &       0  &  0.61  & -0.61 &   0.61  & -0.61 \\
+\end{bmatrix}
+\end{align*}
+
+We shall no use the MRP version of the Lyapunov control function is the following \cite{sj}:
+
+\begin{align}
+\mathbf{L}_r = -K\mathbf{\epsilon} - \left[P\right]\delta\mathbf{\omega} +
+\left[I\right](\dot{\mathbf{\omega}}_r - \left[\mathbf{\omega}\right]^{\times}\dot{\mathbf{\omega}}_r) + \left[\mathbf{\omega_r}\right]^{\times}\left[I\right]\mathbf{\omega} - \mathbf{L}
+\end{align}
+
+The value $K$ is a scalar gain on the attitude relative MRP (error) $\epsilon$. The value $P$ is a gain on the angular rate error $\delta\omega$. All values labeled with $\omega_{r}$ are the reference angular velocities that we get from the successive conovex problem. The value $\mathbf{L}$ is a measure of the exogenous torque. In our case, this is zero.
+
+The torque imparted on the spacecraft from an active thruster is the following:
+
+\begin{align}
+& \tau_i = \vec{r}_i \times F_i \vec{g}_{t_i} \\
+& \tau_j = \sum _{i=1}^{N} (\vec{r}_i \times \vec{g}_{t_i}) \cdot \hat{c}_j F_i
+\end{align}
+
+Where $\hat{c}_j$ is the body vector we expect to torque about. We can also write this expression as such:
+\begin{align}
+\tau_j = \left[ d_1 \cdots d_N \right]
+	\begin{bmatrix}
+		F_1 \\
+		\vdots \\
+		F_N \\
+ 	\end{bmatrix}
+= \left[D\right]_j\mathbf{F}
+\end{align}
+We see that $\left[D\right] \in \mathbb{R}^{1\times N}$ for our $N$ thrusters. This matrix maps the thruster forces to the spacecraft torque $\tau_j$ along our control axis of interest $\hat{c}_j$. Now we want to find the thrusters that provide a positive force for the desired torque on the system $\mathbf{L}_r$. We can perform the minimum norm  inverse to find the force matrix as such:
+
+\begin{align}
+\mathbf{F}_j = \left[D\right]_j^T (\left[D\right]_j \left[D\right]_j^T)^{-1}
+\mathbf{L}_r \cdot \hat{c}_j
+\end{align}
+
+We then pick which thrusters have positive force values, log their identity, and create a reduced matrix $\bar{\mathbf{F}}_j \in \mathcal{R}^{M\times1}$. We can do the same with $\bar{\left[D\right]}$. And therefore $\bar{\left[D\right]}\bar{\mathbf{F}}_j$ is the torque on a single axis. Doing this for all control axes, we apply the final torque 
+
+\begin{align}
+\mathbf{L_{cg}} = \bar{\left[D\right]}_1\bar{\mathbf{F}}_1 + \bar{\left[D\right]}_2\bar{\mathbf{F}}_2 + \bar{\left[D\right]}_3\bar{\mathbf{F}}_3
+\end{align}
+
+\subsection{Simulation Framework}
+I created a simulation where I numericall integrated the equations of motion for the vehicle. On each cycle I calculated the required torque and fed it back to the system dynamics.
+
+
+\subsection{Starting At Nominal Attitude}
+Let's look at the system response if our initial attitude is the same as the one performed in the convex problem. This would be the case if you performed control immediately after guidance finished, or if it converged quickly. See figure \ref{fig:0sigma}.
+
+% \begin{figure}[!htbp] 
+%   \centering
+%   \includegraphics[width=\textwidth]{0sigma.PNG}
+%   \caption{Top Left - The state MRP and reference MRP are on top of each other, tracking well. Bottom Left - Similar with the state angular rate and the reference. Top Right - The MRP error is in E-4, and very small. Bottom Right - angular error is roughly 0.001 rad/s}
+%   \label{fig:0sigma}
+%  \end{figure}
+
+\subsection{Starting At Off-Nominal Attitude and Angular Rate}
+In this scenario, I have drifter farther from the convex problem initial condition to roughly 32 degrees off axis and with an angular rate of $\omega_0 = \left[.3 .5 .5 \right]^T$ rad/s. This is a large error should be hard to converge to in final time. See figure \ref{fig:n0sigma}. We can also see the output force of each of the 8 thrusters with figure \ref{fig:thrusty}. Notice that the magnitudes don't go over 40N, as that is a hard limit that I set.
+
+
+% \begin{figure}[!htbp] 
+%   \centering
+%   \includegraphics[width=\textwidth]{n0sigma.PNG}
+%   \caption{Top Left - Over time the vehicle seemed to track well. There is a very small amount of steady state error on each axis. Bottom Left - The angular rate also converges smoothly over time, with little steady state error. Top Right - The MRP error approaches zero over time, does not quite hit. Bottom Right - Angular rate error goes to zero quite quickly.}
+%   \label{fig:n0sigma}
+%  \end{figure}
+
+
+% \begin{figure}[!htbp] 
+%   \centering
+%   \includegraphics[width=0.7\linewidth]{thrusters.png}
+%   \caption{Plot of the output thrust of each of the thrusters for the non-nominal initial attitude case.}
+%   \label{fig:thrusty}
+%  \end{figure}

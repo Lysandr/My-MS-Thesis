@@ -1,0 +1,34 @@
+\begin{thebibliography}{1}
+
+\bibitem{boyd2004convex}
+Stephen Boyd and Lieven Vandenberghe.
+\newblock {\em Convex optimization}.
+\newblock Cambridge university press, 2004.
+
+\bibitem{markley2014fundamentals}
+F~Landis Markley and John~L Crassidis.
+\newblock {\em Fundamentals of Spacecraft Attitude Determination and Control},
+  volume~33.
+\newblock Springer, 2014.
+
+\bibitem{sj}
+Hanspeter Schaub and John~L. Junkins.
+\newblock {\em Analytical mechanics of space systems}.
+\newblock American Institute of Aeronautics and Astronautics, Inc, Reston,
+  Virginia, fourth edition, 2018.
+
+\bibitem{szmuk2018successive}
+Michael Szmuk and Behcet Acikmese.
+\newblock Successive convexification for 6-dof mars rocket powered landing with
+  free-final-time.
+\newblock In {\em 2018 AIAA Guidance, Navigation, and Control Conference}, page
+  0617, 2018.
+
+\bibitem{szmuk2017successive}
+Michael Szmuk, Utku Eren, and Behcet Acikmese.
+\newblock Successive convexification for mars 6-dof powered descent landing
+  guidance.
+\newblock In {\em AIAA Guidance, Navigation, and Control Conference}, page
+  1500, 2017.
+
+\end{thebibliography}
