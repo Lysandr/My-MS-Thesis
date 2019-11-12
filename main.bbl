@@ -1,4 +1,29 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{acikmese2007convex}
+Behcet Acikmese and Scott~R Ploen.
+\newblock Convex programming approach to powered descent guidance for mars
+  landing.
+\newblock {\em Journal of Guidance, Control, and Dynamics}, 30(5):1353--1366,
+  2007.
+
+\bibitem{andrle2013geometric}
+Michael~S Andrle and John~L Crassidis.
+\newblock Geometric integration of quaternions.
+\newblock {\em Journal of Guidance, Control, and Dynamics}, 36(6):1762--1767,
+  2013.
+
+\bibitem{blackmore2016bridge}
+Lars Blackmore.
+\newblock Autonomous precision landing of space rockets.
+\newblock {\em Winter Bridge on Frontiers of Engineerin}, 4(46):15--29, 2016.
+
+\bibitem{blackmore2010minimum}
+Lars Blackmore, Behcet Acikmese, and Daniel~P Scharf.
+\newblock Minimum-landing-error powered-descent guidance for mars landing using
+  convex optimization.
+\newblock {\em Journal of guidance, control, and dynamics}, 33(4):1161--1171,
+  2010.
 
 \bibitem{boyd2004convex}
 Stephen Boyd and Lieven Vandenberghe.
@@ -13,9 +38,15 @@ F~Landis Markley and John~L Crassidis.
 
 \bibitem{sj}
 Hanspeter Schaub and John~L. Junkins.
-\newblock {\em Analytical mechanics of space systems}.
+\newblock {\em Analytical Mechanics of Space Systems}.
 \newblock American Institute of Aeronautics and Astronautics, Inc, Reston,
   Virginia, fourth edition, 2018.
+
+\bibitem{szmuk2019successive}
+Michael Szmuk.
+\newblock {\em Successive Convexification \& High Performance Feedback Control
+  for Agile Flight}.
+\newblock PhD thesis, 2019.
 
 \bibitem{szmuk2018successive}
 Michael Szmuk and Behcet Acikmese.

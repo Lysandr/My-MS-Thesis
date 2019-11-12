@@ -33,7 +33,7 @@
 %%		doublespaced abstract
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+% \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{thesis}[2014/03/27]	% version 1.13
 
 \typeout{}
@@ -168,6 +168,7 @@
 \RequirePackage{indentfirst}		% indentfirst.sty, 1995/11/23
 \RequirePackage{ifthen}			% ifthen.sty, 1996/08/02
 \RequirePackage[ULforem,normalbf]{ulem}	% ulem.sty, 1995/12/17
+
 
 
 %%%%%% SPECIAL INTERNAL COMMANDS.  Needed by later routines.
@@ -1254,5 +1255,36 @@
 	\@shortLoTtrue
 	\typeout{Putting page number on short LoT}
 }
+
+
+
+
+
+
+% \RequirePackage[T1]{fontenc}
+% \RequirePackage[utf8]{inputenc}
+% \RequirePackage{microtype}
+% \RequirePackage{newtxtext,newtxmath}
+% \RequirePackage[letterpaper,margin=1in]{geometry}
+% \RequirePackage{enumitem}
+% \RequirePackage[symbol*]{footmisc}
+% \RequirePackage[sort&compress,numbers]{natbib}
+
+
+
+
+
+
 \endinput
 %%%%%%%%%%%%%%%% End of file ``thesis.cls''
+
+
+
+
+
+
+
+
+
+
+

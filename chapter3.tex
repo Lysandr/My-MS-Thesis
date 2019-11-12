@@ -2,11 +2,9 @@
 \chapter{Convex Formulation}
 \label{convex}
 
-
-\section{Convex Form}
 Now we shall derive the convex form of Problem 1. We will convert the non-convex continuous free-final-time problem to a convex fixed-final-time problem. This will be a second order cone sub-problem. We will solve this sub-problem repeatedly to convergence or "successively." This successive process turns each subproblem into a larger free-final-time algorithm.
 
-\subsection{Linearization}
+\section{Linearization}
 Let us define the state vector $\mathbf{x}(t) \in \mathcal{R}^{14\times 1}$ and our control vector $\mathbf{u}(t) \in \mathcal{R}^{3\times 1}$:
 \begin{align}
 & \mathbf{x}(t) \triangleq 
@@ -60,7 +58,7 @@ With this done, we tackle the only source of non-convexity: the non-zero lower b
 
 
 
-\subsection{Discretization Scheme}
+\section{Discretization Scheme}
 This is where things get hairy. We need to "cast" the problem into a finite dimensional optimization problem where the trajectory is discretized into $K$ evenly separated points with respect to the normalized trajectory time $\tau$. Let us define the set $\mathcal{K}\triangleq \{0,1,\cdots, K-1\}$ with which many of the parameter arrays will have the same dimensions.
 
 Given that the trajectory time is normalized on the interval $\tau \in [0,1 ]$, we must define the discrete time step at point $k$ as such
@@ -99,7 +97,7 @@ Using our previous expressions, we can now discretize the dynamics such that eac
 The other boundary, state, and control constraints are already convex and just need to be instantiated for all time or at initial/terminal $\tau$.
 
 
-\subsection{Successive Form, Trust Regions and Relaxations}
+\section{Successive Form, Trust Regions and Relaxations}
 In order to solve a non-convex problem, we iteratively solve a sequence of related convex subproblems. However, before we can reach a concluding framework, we must consider trust regions and dynamic relaxations. In order to make sure that this successive framework stays bounded and feasible through this convergence process, we must bound the divergence of state and inputs from one iteration to another. Unbounded problems can arise from constraints that admit an unbounded cost. To mitigate this issue, we augment the cost function with soft trust regions about the previous iterate's information. Let us define these deviations at iteration $i$ as such:
 \begin{align}
 & \delta \mathbf{x}_k^i \triangleq \mathbf{x}_k^i - \mathbf{x}_k^{i-1} \\
@@ -133,10 +131,10 @@ Because we are going to use this in our cost function as a norm, we shall concat
 
 And of course we augment the cost function again with $w_v \norm{\bar{\bm{\nu}}^i}_1$. As the iteration continues, this value is minimized as the solution becomes more dynamically feasible. Therefore, the magnitude of this norm is indicative of a final solution in the successive iteration process.
 
-\clearpage
-\subsubsection{Convex Sub-Problem}
+\section{Convex Sub-Problem}
 We can now put all of the components together and form the convex version of the continuous problem, but with fixed final time.
 
+\clearpage
 \begin{mdframed}
 \textbf{Problem 2: Discretized Convex Fixed-Final-Time Sub-Problem ($i^{th}$ iteration)}
 \underline{Cost Function:}

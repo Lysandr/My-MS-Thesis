@@ -1,12 +1,13 @@
-\documentclass[defaultstyle,11pt]{thesis}
+\documentclass[modernstyle, 11pt]{thesis}
 
+\usepackage[utf8]{inputenc}
 \usepackage{amssymb}		% to get all AMS symbols
 \usepackage{graphicx}		% to insert figures
 \usepackage{hyperref}		% PDF hyperreferences??
-\usepackage[utf8]{inputenc}
 \usepackage{subcaption}
 \usepackage{sidecap}
 \usepackage{mathtools}
+% \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \usepackage{commath}
 \usepackage{listings}
 \usepackage[version=4]{mhchem}
@@ -16,9 +17,13 @@
 \usepackage{algpseudocode}
 \usepackage{longtable,tabularx}
 \usepackage{amsmath,amsfonts,bm} % Math packages
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode}
+
+\renewcommand*\arraystretch{.7}
+
 
 %%%%%%%%%%%%   All the preamble material:   %%%%%%%%%%%%
-\title{A Study of the Successive Convexification Method for the Powered Descent Guidance Problem}
+\title{A Study of the Successive Convexification Optimal Control Method for the Powered Descent Guidance Problem}
 \author{Pádraig~S.}{Lysandrou}
 \otherdegrees{B.S. ECE, Cornell University, 2018}
 \degree{Masters of Science}				%  #1 {long descr.}
@@ -31,7 +36,13 @@
 \readerThree{Dr. Hanspeter Schaub}		%  3rd person to sign thesis
 \abstract{  \OnePageChapter				% because it is very short
 
-	INPUT ABSTRACT HERE
+	
+	add intro fluff kind of stff here
+
+	This thesis focuses on the implementation and development of a 6 degree-of-freedom (DoF) guidance algorithm that solves the powered descent guidance (PDG) problem. I present a modified version of the Szmuk-Acikmese 6-DoF algorithm presented in \cite{szmuk2018successive}. I present a similar algorithm utilizing Modified Rodrigues Parameters (MRPs) as the attitude formalism. This simplifies the formation to three parameters, from four, and does not require a norm constrain a every time step. 
+
+	????
+
 	}
 
 \dedication[Dedication]{	% NEVER use \OnePageChapter here.
@@ -43,12 +54,12 @@
 	
 	Similarly, I would like to thank my SpaceX colleagues for grounding me in reality while letting me play with vehicles of the heavens. Go Falcon, Dragon, and Starlink!
 	}
-	
+
 % \IRBprotocol{E927F29.001X}	% optional!
-\ToCisShort	% use this only for 1-page Table of Contents
-\LoFisShort	% use this only for 1-page Table of Figures
+% \ToCisShort	% use this only for 1-page Table of Contents
+% \LoFisShort	% use this only for 1-page Table of Figures
 % \emptyLoF	% use this if there is no List of Figures
-\LoTisShort	% use this only for 1-page Table of Tables
+% \LoTisShort	% use this only for 1-page Table of Tables
 % \emptyLoT	% use this if there is no List of Tables
 
 
@@ -56,8 +67,6 @@
 %%%%%%%%%%%%%%%       BEGIN DOCUMENT...         %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-
-\input macros.tex
 \input chapter1.tex
 \input chapter2.tex	
 \input chapter3.tex
