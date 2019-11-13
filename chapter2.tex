@@ -102,7 +102,7 @@ Now that we are intimately familiar with Euler parameters, we shall introduce Mo
 	\sigma_i &= \frac{q_i}{1+q_0} \quad i = 1,2,3 \\
 	\boldsymbol{\sigma}_\mathcal{B/N} &= [\sigma_1 \ \sigma_2 \ \sigma_3]^T = \tan\frac{\phi}{4}\hat{\bm{e}}
 \end{align}
-taking an argument of $\bm{q}_\mathcal{B/N}$. The reverse mapping is simply $q_0 = \frac{1-\sigma^2}{1+\sigma^2}$ and $q_{1:3} = \frac{2\sigma_{1:3}}{1+\sigma^2}$ where $\sigma^2$ is the norm squared of the MRP. We see that small angle approximations can be made for a wider range of displacements. It is clear that there exists a singularity at $\pm 2\pi$. However, handling this singularity, in a computational sense, is very simple. We perform a switch to the MRP shadow set when the angular displacement is $\phi \geq \pi$ and define the shadow set as $\boldsymbol{\sigma}^\mathcal{S} = \frac{-\boldsymbol{\sigma}}{\sigma^2} = \tan{\frac{\phi-2\pi}{4}}\hat{\bm{e}}$. Simply: 
+taking an argument of $\bm{q}_\mathcal{B/N}$. The reverse mapping is simply $q_0 = \frac{1-\sigma^2}{1+\sigma^2}$ and $q_{1:3} = \frac{2\sigma_{1:3}}{1+\sigma^2}$ where $\sigma^2$ here forward will represent the norm squared of the MRP. We see that small angle approximations can be made for a wider range of displacements. It is clear that there exists a singularity at $\pm 2\pi$. However, handling this singularity, in a computational sense, is very simple. We perform a switch to the MRP shadow set when the angular displacement is $\phi \geq \pi$ and define the shadow set as $\boldsymbol{\sigma}^\mathcal{S} = \frac{-\boldsymbol{\sigma}}{\sigma^2} = \tan{\frac{\phi-2\pi}{4}}\hat{\bm{e}}$. Simply: 
 
 \begin{algorithm}
 \caption{MRP Switching}\label{mrpswitch}
@@ -156,19 +156,41 @@ Now, let us look at the state constraints that must be met. The vehicle propulsi
 %
 We shall apply a glide-slope constraint such that the vehicle approaches the landing point from above, limiting large lateral diverts in the terminal phase. We form the convex constraint using the angle $\gamma_{gs}$. This becomes a simple geometrical argument that $\tan{\gamma_{gs}} \leq \frac{r_{Up}}{\norm{[ r_{East} \ r_{North}]}}$. We can form this with the following:
 \begin{align}
-\tan{\gamma_{gs}} \norm{ [\hat{\bm{n}}_2 \quad \hat{\bm{n}}_3 ]^T \mathbf{r}(t)} - \hat{\bm{n}}_1^T \mathbf{r}(t) \leq 0
+\tan{\gamma_{gs}} || [\hat{\bm{n}}_2 \quad \hat{\bm{n}}_3 ]^T \mathbf{r}(t) \lvert\lvert_2 - \hat{\bm{n}}_1^T \mathbf{r}(t) \leq 0
 \end{align}
 This  creates an upward facing cone about the landing point that the vehicle must not lie outside of. This type of convex constraint can also be useful in avoiding rocky terrain and enforcing a landing from directly above an area, minimizing lateral movement close to the ground.
 
 
-It is additionally helpful to restrict the attitude of the vehicle such that it does not tilt over a prescribed angular displacement. This could be to allow for terrain relative navigation sensors to have a view of the ground or to give human passengers visibility over the terrain or landing surface. We start with the constraint derivation $\hat{\bm{b}}_1 \cdot \hat{\bm{n}}_1 \geq \cos{\psi_{max}}$:
+It is additionally helpful to restrict the attitude of the vehicle such that it does not tilt over a prescribed angular displacement. This could be to maintain visibility for terrain relative navigation sensors or to give human passengers visibility over the terrain or landing surface. Therefore we can constrain the angle between the inertial frame Up unit vector and the bore-sight body vector of the vehicle. We start with the constraint derivation $\hat{\bm{b}}_1 \cdot \hat{\bm{n}}_1 \geq \cos{\psi_{max}}$:
 \begin{align}
- STOPPED HERE!!!
+	\left (
+	[\mathcal{NB}]
+	\prescript{\mathcal{B}}{}{
+	\begin{bmatrix}
+		1 \\ 0 \\ 0
+	\end{bmatrix}}
+	\right )^T \
+	\prescript{\mathcal{N}}{}{
+	\begin{bmatrix}
+		1 \\  0 \\ 0
+	\end{bmatrix}}
+	\geq \cos{\psi_{max}}
 \end{align}
+this effectively filters the $(1,1)$ element of the MRP-to-DCM matrix in equation \ref{mrp2c}. Therefore the constraint becomes
 
-Along the same line of thought, we can constrain the angular rate using convex constraints as well:
+%
 \begin{align}
-& \left \lVert \bm{\omega}_B(t) \right \lVert_2 \leq \omega_{max}
+	\frac{1}{(1+\sigma^2)^2}\left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) &\geq \cos{\psi_{max}} \\
+	% \frac{4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2)}{(1+\sigma^2)^2} + \frac{(1-\sigma^2)^2}{(1+\sigma^2)^2} &\geq \cos{\psi_{max}} \\
+	(1+\sigma^2)^2\cos{\psi_{max}} - \left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) &\leq 0
+\end{align}
+This same constraint as a quaternion is $\cos(\psi_{max}) \leq 1-2\sqrt{q_{2}^{2}+q_{3}^{2}}$. The quaternion unity identity must be used in this derivation. Similarly, we can also constrain the entire MRP such that the vehicle does not exceed $\pi$ radians in total angular displacement.
+\begin{align}
+	\left \lVert \boldsymbol{\sigma}_\mathcal{B/N} \right \lVert_2 \leq 1
+\end{align}
+Nominally the vehicle should not have large angular rates throughout the descent and landing, so we can simply constrain this as well.
+\begin{align}
+& \left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 \leq \omega_{max}
 \end{align}
 
 Finally we must encode that the commanded thrust vector needs to be constrained between two magnitudes, which is appropriate. We assume that the engine cannot be re-lit during operation (commonly becoming a bad assumption to make). We also know that there is some limit to the amount of gimbal angle we can perform $\delta_{max}$.
