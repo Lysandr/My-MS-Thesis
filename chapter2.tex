@@ -176,15 +176,14 @@ It is additionally helpful to restrict the attitude of the vehicle such that it 
 	\end{bmatrix}}
 	\geq \cos{\psi_{max}}
 \end{align}
-this effectively filters the $(1,1)$ element of the MRP-to-DCM matrix in equation \ref{mrp2c}. Therefore the constraint becomes
-
+this selects the $(1,1)$ element of the MRP-to-DCM matrix in equation \ref{mrp2c}. Therefore the constraint becomes
 %
 \begin{align}
 	\frac{1}{(1+\sigma^2)^2}\left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) &\geq \cos{\psi_{max}} \\
 	% \frac{4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2)}{(1+\sigma^2)^2} + \frac{(1-\sigma^2)^2}{(1+\sigma^2)^2} &\geq \cos{\psi_{max}} \\
 	(1+\sigma^2)^2\cos{\psi_{max}} - \left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) &\leq 0
 \end{align}
-This same constraint as a quaternion is $\cos(\psi_{max}) \leq 1-2\sqrt{q_{2}^{2}+q_{3}^{2}}$. The quaternion unity identity must be used in this derivation. Similarly, we can also constrain the entire MRP such that the vehicle does not exceed $\pi$ radians in total angular displacement.
+This quaternion version of this same constraint is $\cos(\psi_{max}) \leq 1-2\sqrt{q_{2}^{2}+q_{3}^{2}}$. The quaternion unity identity must be used in this derivation. Similarly, we can also constrain the entire MRP such that the vehicle does not exceed $\pi$ radians in total angular displacement.
 \begin{align}
 	\left \lVert \boldsymbol{\sigma}_\mathcal{B/N} \right \lVert_2 \leq 1
 \end{align}
@@ -193,7 +192,7 @@ Nominally the vehicle should not have large angular rates throughout the descent
 & \left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 \leq \omega_{max}
 \end{align}
 
-Finally we must encode that the commanded thrust vector needs to be constrained between two magnitudes, which is appropriate. We assume that the engine cannot be re-lit during operation (commonly becoming a bad assumption to make). We also know that there is some limit to the amount of gimbal angle we can perform $\delta_{max}$.
+Finally we must constrain the commanded thrust magnitude. As stated before, engines have a minimum and maximum thrust region $[T_{min}, T_{max}] \in \mathbb{R}_{++}$ in which they operate. Also, recall that we have made the single-ignition assumption. The engine thrust vector control system there is some limit to the amount of gimbal angle we can perform $\delta_{max}$.
 \begin{align}
 & 0 < T_{min} \leq \left \lVert \bm{T}_B(t) \right \lVert_2 \leq T_{max} \\
 & \cos(\delta_{max}) \left \lVert \bm{T}_B(t) \right \lVert_2 \leq \bm{e}_1 \cdot \bm{T}_B(t)
