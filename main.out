@@ -8,23 +8,22 @@
 \BOOKMARK [1][-]{section.2.2}{Definitions and Notation}{chapter.2}% 8
 \BOOKMARK [1][-]{section.2.3}{Vehicle Dynamics}{chapter.2}% 9
 \BOOKMARK [2][-]{subsection.2.3.1}{Attitude Dynamics and Formalisms}{section.2.3}% 10
-\BOOKMARK [1][-]{section.2.4}{Boundary Conditions}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.5}{State Constraints}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.6}{Continuous Time Problem}{chapter.2}% 13
-\BOOKMARK [0][-]{chapter.3}{Convex Formulation}{}% 14
-\BOOKMARK [1][-]{section.3.1}{Linearization}{chapter.3}% 15
-\BOOKMARK [1][-]{section.3.2}{Discretization Scheme}{chapter.3}% 16
-\BOOKMARK [1][-]{section.3.3}{Successive Form, Trust Regions and Relaxations}{chapter.3}% 17
-\BOOKMARK [1][-]{section.3.4}{Convex Sub-Problem}{chapter.3}% 18
-\BOOKMARK [1][-]{section.3.5}{Algorithm}{chapter.3}% 19
-\BOOKMARK [0][-]{chapter.4}{Results}{}% 20
-\BOOKMARK [1][-]{section.4.1}{Dimensionalized Simulation Results}{chapter.4}% 21
-\BOOKMARK [1][-]{section.4.2}{Attitude Trajectory Tracking with Cold Gas Thrusters}{chapter.4}% 22
-\BOOKMARK [2][-]{subsection.4.2.1}{Simulation Framework}{section.4.2}% 23
-\BOOKMARK [2][-]{subsection.4.2.2}{Starting At Nominal Attitude}{section.4.2}% 24
-\BOOKMARK [2][-]{subsection.4.2.3}{Starting At Off-Nominal Attitude and Angular Rate}{section.4.2}% 25
-\BOOKMARK [0][-]{chapter.5}{Analysis}{}% 26
-\BOOKMARK [0][-]{chapter.6}{Conclusions}{}% 27
-\BOOKMARK [1][-]{section.6.1}{Conclusions and Future Work}{chapter.6}% 28
-\BOOKMARK [-1][-]{chapter*.7}{ Bibliography}{}% 29
-\BOOKMARK [0][-]{appendix.A}{Planetary Landing Testbed Development}{chapter*.7}% 30
+\BOOKMARK [1][-]{section.2.4}{Boundary Conditions and State Constraints}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.5}{Continuous Time Problem}{chapter.2}% 12
+\BOOKMARK [0][-]{chapter.3}{Convex Formulation}{}% 13
+\BOOKMARK [1][-]{section.3.1}{Linearization}{chapter.3}% 14
+\BOOKMARK [1][-]{section.3.2}{Discretization Scheme}{chapter.3}% 15
+\BOOKMARK [1][-]{section.3.3}{Successive Form, Trust Regions and Relaxations}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.4}{Convex Sub-Problem}{chapter.3}% 17
+\BOOKMARK [1][-]{section.3.5}{Algorithm}{chapter.3}% 18
+\BOOKMARK [0][-]{chapter.4}{Results}{}% 19
+\BOOKMARK [1][-]{section.4.1}{Dimensionalized Simulation Results}{chapter.4}% 20
+\BOOKMARK [1][-]{section.4.2}{Attitude Trajectory Tracking with Cold Gas Thrusters}{chapter.4}% 21
+\BOOKMARK [2][-]{subsection.4.2.1}{Simulation Framework}{section.4.2}% 22
+\BOOKMARK [2][-]{subsection.4.2.2}{Starting At Nominal Attitude}{section.4.2}% 23
+\BOOKMARK [2][-]{subsection.4.2.3}{Starting At Off-Nominal Attitude and Angular Rate}{section.4.2}% 24
+\BOOKMARK [0][-]{chapter.5}{Analysis}{}% 25
+\BOOKMARK [0][-]{chapter.6}{Conclusions}{}% 26
+\BOOKMARK [1][-]{section.6.1}{Conclusions and Future Work}{chapter.6}% 27
+\BOOKMARK [-1][-]{chapter*.7}{ Bibliography}{}% 28
+\BOOKMARK [0][-]{appendix.A}{Planetary Landing Testbed Development}{chapter*.7}% 29

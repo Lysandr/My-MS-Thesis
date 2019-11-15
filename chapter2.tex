@@ -138,7 +138,7 @@ where the torque acting on the vehicle is written as $\mathbf{L}_c(t) \in \mathb
 \end{align}
 
 
-\section{Boundary Conditions}
+\section{Boundary Conditions and State Constraints}
 The boundary conditions for the proposed guidance routine are simple. We must have hard constraints for the initial conditions, being the state vector of the vehicle when the routine is initialized, and terminal state constraints. At the start of the guidance routine, we initialize the states with the current vehicle state vector:
 \begin{align}
 	m(0) = m_0, \quad ^\mathcal{N}\mathbf{r}(0) = \mathbf{r}_0, \quad ^\mathcal{N}\mathbf{v}(0) = \mathbf{v}_0, \quad \boldsymbol{\sigma}_\mathcal{B/N}(0) = \boldsymbol{\sigma}_0, \quad  ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) = \boldsymbol{\omega}_0
@@ -147,7 +147,7 @@ with our given terminal state constraints:
 \begin{align}
 	\quad ^\mathcal{N}\mathbf{r}(0) = \mathbf{0}, \quad ^\mathcal{N}\mathbf{v}(0) = \mathbf{0}, \quad \boldsymbol{\sigma}_\mathcal{B/N}(0) = \mathbf{0}, \quad  ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) = \mathbf{0}
 \end{align}
-leaving the final mass unconstrained and assuming the landing site to be the origin. Of course these can be modified to fit arbitrary landing requirements. The problem proposed in \cite{szmuk2018successive} does not constrain the initial attitude of the vehicle TRY TO TELL WHY HERE!!
+leaving the final mass unconstrained and assuming the landing site to be the origin. An upright attitude assuming the vehicle has landing hardware. We leave the terminal mass unconstrained. Of course these can be modified to fit arbitrary landing requirements. The problem proposed in \cite{szmuk2018successive} does not constrain the initial attitude of the vehicle, but we will in this formulation. TRY TO TELL WHY HERE!!
 
 Now, let us look at the state constraints that must be met. The vehicle propulsion system is limited in fuel which manifests itself as this inequality constraint:
 \begin{align}
@@ -156,7 +156,7 @@ Now, let us look at the state constraints that must be met. The vehicle propulsi
 %
 We shall apply a glide-slope constraint such that the vehicle approaches the landing point from above, limiting large lateral diverts in the terminal phase. We form the convex constraint using the angle $\gamma_{gs}$. This becomes a simple geometrical argument that $\tan{\gamma_{gs}} \leq \frac{r_{Up}}{\norm{[ r_{East} \ r_{North}]}}$. We can form this with the following:
 \begin{align}
-\tan{\gamma_{gs}} || [\hat{\bm{n}}_2 \quad \hat{\bm{n}}_3 ]^T \mathbf{r}(t) \lvert\lvert_2 - \hat{\bm{n}}_1^T \mathbf{r}(t) \leq 0
+\tan{\gamma_{gs}} || [\hat{\bm{n}}_2 \quad \hat{\bm{n}}_3 ]^T \mathbf{r}(t) \lvert\lvert_2 \ - \ \hat{\bm{n}}_1^T \mathbf{r}(t) \leq 0
 \end{align}
 This  creates an upward facing cone about the landing point that the vehicle must not lie outside of. This type of convex constraint can also be useful in avoiding rocky terrain and enforcing a landing from directly above an area, minimizing lateral movement close to the ground.
 
@@ -176,7 +176,7 @@ It is additionally helpful to restrict the attitude of the vehicle such that it 
 	\end{bmatrix}}
 	\geq \cos{\psi_{max}}
 \end{align}
-this selects the $(1,1)$ element of the MRP-to-DCM matrix in equation \ref{mrp2c}. Therefore the constraint becomes
+this selects the $(1,1)$ element of the MRP-to-DCM matrix in equation \ref{mrp2c}. Therefore the constraint becomes:
 %
 \begin{align}
 	\frac{1}{(1+\sigma^2)^2}\left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) &\geq \cos{\psi_{max}} \\
@@ -194,61 +194,58 @@ Nominally the vehicle should not have large angular rates throughout the descent
 
 Finally we must constrain the commanded thrust magnitude. As stated before, engines have a minimum and maximum thrust region $[T_{min}, T_{max}] \in \mathbb{R}_{++}$ in which they operate. Also, recall that we have made the single-ignition assumption. The engine thrust vector control system there is some limit to the amount of gimbal angle we can perform $\delta_{max}$.
 \begin{align}
-& 0 < T_{min} \leq \left \lVert \bm{T}_B(t) \right \lVert_2 \leq T_{max} \\
-& \cos(\delta_{max}) \left \lVert \bm{T}_B(t) \right \lVert_2 \leq \bm{e}_1 \cdot \bm{T}_B(t)
+& 0 < T_{min} \leq \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq T_{max} \\
+& \cos(\delta_{max}) \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq \hat{\bm{b}}_1^T \bm{F}_{thrust}(t)
 \end{align}
-
-
-
-
-We see that the upper thrust bound is clearly convex but the lower bound creates a non-convex constraint. Because of the range of  $\delta_{max}$ turns out to be convex.
-
-For the powered descent guidance problem, the boundary conditions are trivial to identify. The initial mass, position, velocity, attitude, and angular rates are given by the navigation subsystem at the moment in time. We assume the dry mass is known and that and estimate of the wet mass can be backed out. The terminal position is the landing site. The terminal translational and angular velocities can be zero, with the terminal attitude in the upright position. The final mass should be free. The initial thrust vector should be free, while the terminal vector should be along the vehicle up, X-axis. The author intends on the initial attitude being free, which can free up the optimization for shorter final times.
-
-\section{State Constraints}
-
-
-
+it is clear that the upper thrust bound is clearly convex but the lower bound creates a non-convex constraint. This shall be handled later with a slack variable.
+%
 \section{Continuous Time Problem}
-Putting this all together we can pose the continuous time optimization problem. In this form, it is non-convex and requires significant conditioning to work into the convex framework. As stated, the objective is to minimize the time-of-flight required to get to the terminal conditions subject to the aforementioned constraints, dynamics, and boundary conditions. We leave the commanded thrust, gimbal angles, and final time free. It is as follows:
+Putting this all together, we can pose the continuous time optimization problem. In this form, it is non-convex and requires conditioning to work into the convex programming framework. As stated, our objective is to minimize the time-of-flight required to get to the terminal conditions subject to the aforementioned constraints, dynamics, and boundary conditions. The state vector, thrust commands, gimbal angles, and final time are optimization variables and are considered the solution to this problem. We pose this in problem \ref{ctproblem}.
+%
 \clearpage
-
 \begin{mdframed}
+\label{ctproblem}
 \textbf{Problem 1: Continuous Time Non-Convex Free-Final-Time}
 
 \underline{Cost Function:}
 \begin{equation*}
-\min_{\mathbf{T}_B, t_f} t_f
+\min_{\mathbf{x}, \ \mathbf{F}_{th}} t_f
 \end{equation*}
 
 \underline{Boundary Conditions:}  
 \begin{align*}
-& m(0) = m_{wet} \quad \mathbf{r}_I(0) = \mathbf{r}_i \quad \mathbf{v}_I(0) = \mathbf{v}_i \quad \quad \quad{q}_{B/I}(0) = {q}_{B/I _{i}} \quad \bm{\omega}_B(0) = \bm{\omega}_{B _{i}} \\
-& \mathbf{r}_I(t_f) = \mathbf{0} \quad \quad \mathbf{v}_I(t_f) = \mathbf{0} \quad {q}_{B/I}(t_f) = {q}_{B/I _ {f}} \quad \bm{\omega}_B(t_f) = \mathbf{0} \\
-& \mathbf{e}_2 \cdot \mathbf{T}_B(t_f) = \mathbf{e}_3 \cdot \mathbf{T}_B(t_f) = 0
+m(0) &= m_0, &^\mathcal{N}\mathbf{r}(0) &= \mathbf{r}_0, & ^\mathcal{N}\mathbf{v}(0) &= \mathbf{v}_0, & \boldsymbol{\sigma}_\mathcal{B/N}(0) &= \boldsymbol{\sigma}_0, \quad ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) = \boldsymbol{\omega}_0 \\
+% & m(0) = m_{wet} \quad \mathbf{r}_I(0) = \mathbf{r}_i \quad \mathbf{v}_I(0) = \mathbf{v}_i \quad \quad \quad{q}_{B/I}(0) = {q}_{B/I _{i}} \quad \bm{\omega}_B(0) = \bm{\omega}_{B _{i}} \\
+% & \mathbf{r}_I(t_f) = \mathbf{0} \quad \quad \mathbf{v}_I(t_f) = \mathbf{0} \quad {q}_{B/I}(t_f) = {q}_{B/I _ {f}} \quad \bm{\omega}_B(t_f) = \mathbf{0} \\
+% & \mathbf{e}_2 \cdot \mathbf{T}_B(t_f) = \mathbf{e}_3 \cdot \mathbf{T}_B(t_f) = 0
+\quad ^\mathcal{N}\mathbf{r}(0) &= \mathbf{0}, & ^\mathcal{N}\mathbf{v}(0) &= \mathbf{0}, & \boldsymbol{\sigma}_\mathcal{B/N}(0) &= \mathbf{0}, & ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) &= \mathbf{0}
 \end{align*}
 
 \underline{Dynamics:}  
 \begin{align*}
-& \dot{m}(t) = -\alpha_{\dot{m}} \left\lVert \mathbf{T}_B{t} \right\rVert _2 \\
-& \dot{\mathbf{r}}_I(t) = \mathbf{v}_I(t) \\
-& \dot{\mathbf{v}}_I(t) = \frac{C_{I/B}(t)\mathbf{T}_B(t)}{m(t)} + \mathbf{g}_I \\
- & \dot{q}_{B/I}(t) = \frac{1}{2} B(\bm{\omega_B}(t)) q_{B/I}(t) \\
-& J_B \dot{\bm{\omega}}_B(t) = -\left[\bm{\omega}_B ^ \times\right] J_B \bm{\omega}_B + \left[r_{com}^\times \right]\mathbf{T}_B(t)
+ \dot{m}(t) &= -\alpha_{\dot{m}} \left\lVert \mathbf{F}_{th}(t) \right\rVert _2 \\
+ ^\mathcal{N}\dot{\mathbf{r}}(t) &= \mathbf{v}(t) \\
+ ^\mathcal{N}\dot{\mathbf{v}}(t) &= \frac{[\mathcal{NB}(\boldsymbol{\sigma})] \ ^\mathcal{B}\mathbf{F}_{th}(t)}{m(t)} +  \ ^\mathcal{N}\mathbf{g} \\
+ \dot{\boldsymbol{\sigma}}_\mathcal{B/N} &= \frac{1}{4} \left [(1-\sigma^2)\mathbb{I}_3 +  2[\boldsymbol{\sigma}^\times] + 2\boldsymbol{\sigma}\boldsymbol{\sigma}^T \right ] \ ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N} \\
+ ^\mathcal{B}\dot{\boldsymbol{\omega}}_\mathcal{B/N} &= [I_c]^{-1}([\boldsymbol{r}_{\text{COM}}^\times] \ ^\mathcal{B}\mathbf{F}_{th}(t) - [\boldsymbol{\omega}^\times][I_c]\boldsymbol{\omega})
 \end{align*}
 
 \underline{State Constraints:}  
 \begin{align*}
-& m(t) \geq m_{dry} \\
-& \mathbf{e}_1 \cdot \mathbf{r}_I(t) \geq \tan(\gamma_{gs}) \left\lVert \left[\mathbf{e}_2 \quad \mathbf{e}_3\right]^T \mathbf{r}_I(t) \right\lVert_2 \\
-& \cos(\theta_{max}) \leq 1-2(q_{2}^{2}+q_{3}^{2}) \\
-& \left \lVert \bm{\omega}_B(t) \right \lVert_2 \leq \omega_{max}
+m_{dry} - m(t) & \leq 0 \\
+|| [\hat{\bm{n}}_2 \ \ \hat{\bm{n}}_3 ]^T \mathbf{r}(t) \lvert\lvert_2 \ \tan{\gamma_{gs}}  - \hat{\bm{n}}_1^T \mathbf{r}(t) & \leq 0 \\
+%
+(1+\sigma^2)^2\cos{\psi_{max}} - \left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) & \leq 0 \\
+%
+\left \lVert \boldsymbol{\sigma}_\mathcal{B/N}(t) \right \lVert_2 & \leq 1 \\
+%
+\left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 & \leq \omega_{max}
 \end{align*}
 
 \underline{Control Constraints:}  
 \begin{align*}
-& 0 < T_{min} \leq \left \lVert \bm{T}_B(t) \right \lVert_2 \leq T_{max} \\
-& \cos(\delta_{max}) \left \lVert \bm{T}_B(t) \right \lVert_2 \leq \bm{e}_1 \cdot \bm{T}_B(t)
+0 < T_{min} \leq \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq T_{max} \\
+\cos(\delta_{max}) \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq \hat{\bm{b}}_1^T \bm{F}_{th}(t)
 \end{align*}
 
 \end{mdframed}
