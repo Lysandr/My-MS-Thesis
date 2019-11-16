@@ -9,41 +9,49 @@ Let us define the state vector $\mathbf{x}(t) \in \mathbb{R}^{14\times 1}$ and o
 \begin{align}
 & \mathbf{x}(t) \triangleq 
 	\begin{bmatrix}
-	m(t) & \mathbf{r}_I^T(t) & \mathbf{v}_I^T(t) & q_{B/I}^T(t) & \bm{\omega}_B^T(t)   
+	m(t) & ^\mathcal{N}\mathbf{r}^T(t) & ^\mathcal{N}\mathbf{v}^T(t) & \boldsymbol{\sigma}_\mathcal{B/N}^T(t) & ^\mathcal{B}\bm{\omega}_\mathcal{B/N}^T(t)   
 	\end{bmatrix}^T \\
-& \mathbf{u}(t) \triangleq \mathbf{T}_B(t)  
+& \mathbf{u}(t) \triangleq \ ^\mathcal{B}\mathbf{F}_{th}(t)  
 \end{align}
 Therefore we can express the nonlinear dynamics in the following form
 \begin{align}
-& \frac{d}{dt}\mathbf{x}(t) = f(\mathbf{x}(t), \mathbf{u}(t)) =  
+& \frac{d}{dt}\mathbf{x}(t) = \mathbf{f}(\mathbf{x}(t), \mathbf{u}(t)) =  
 	\begin{bmatrix}
-	\dot{m(t)} & \dot{\mathbf{r}}_I^T(t) & \dot{\mathbf{v}}_I^T(t) & \dot{q}_{B/I}^T(t) & \dot{\bm{\omega}}_B^T(t)  
+	\dot{m}(t) & ^\mathcal{N}\dot{\mathbf{r}}^T(t) & ^\mathcal{N}\dot{\mathbf{v}}^T(t) & \dot{\boldsymbol{\sigma}}_\mathcal{B/N}^T(t) & ^\mathcal{B}\dot{\bm{\omega}}_\mathcal{B/N}^T(t)  
 	\end{bmatrix}^T
 \end{align}
 
-In order to make the problem free-final-time, we must manipulate the how time works. We are going to replace $t$ with a normalized trajectory time $\tau \in \left[0,1\right]$. We apply the chain run:
-
-
+In order to formulate our guidance problem with the free-final-time objective we must introduce time dilation. We can evaluate our dynamics on a normalized trajectory time variable $\tau \in [0,1]$. No matter the resolution of the optimization, the terminal value will end at $\tau = 1$. We can then use a differentiation based on this variable to scale the time back and forth, leaving the unscaled final time as an optimization variable. Applying the chain rule of differentiation: 
 \begin{align}
-& \frac{d}{dt}\mathbf{x}(t) = \frac{d\tau}{dt} \frac{d}{d\tau}\mathbf{t}(t)
+& \mathbf{f}(\mathbf{x}(t) , \mathbf{u}(t)) =  \frac{d}{dt}\mathbf{x}(t) = \frac{d\tau}{dt} \frac{d}{d\tau}\mathbf{x}(t) =  \frac{1}{\eta}\frac{d}{d\tau}\mathbf{x}(t)
+\end{align}
+We can now translate between the two by using the dilation coefficient $\eta$ which we define as
+\begin{align}
+& \eta \triangleq \Big(\frac{d\tau}{dt}\Big)^{-1}
 \end{align}
 
-And we can translate between the two by using the dilation coefficient $\sigma$ which is defined
+This $\eta$ will become a variable in the convex subproblem that acts as the non-dimensionalized final time. It is a scaling factor that translates between real work differential time and the normalized version used for our algorithm. We can now write the nonlinear dynamics to take advantage of this normalized time:
 \begin{align}
-& \sigma \triangleq \Big(\frac{d\tau}{dt}\Big)^{-1}
+& \mathbf{x}^\prime(\tau) \triangleq \frac{d}{d\tau}\mathbf{x}(\tau) = \eta \mathbf{f}(\mathbf{x}(\tau), \mathbf{u}(\tau)) = \mathbf{g}(\mathbf{x}(\tau), \mathbf{u}(\tau), \eta)
 \end{align}
 
-This $\sigma$ will become a variable in the convex subproblem that acts as the non-dimensionalized final time. It is a scaling factor that translates between real work differential time and the normalized version used for our algorithm. We can now write the nonlinear dynamics to take advantage of this normalized time:
-
+Taking a first-order Taylor series approximation of the nonlinear dynamics proposed in Problem one, we can write a linear time-varying framework for the system to use in our algorithm. These dynamics will be instantiated at reference values $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\sigma})$ at each time. 
+%
 \begin{align}
-& \mathbf{x}^\prime(\tau) \triangleq \frac{d}{d\tau}\mathbf{x}(\tau) = \sigma f(\mathbf{x}(\tau), \mathbf{u}(\tau))
-\end{align}
-
-We can fit the nonlinear dynamics from problem 1 into a linear framework by performing a first-order Taylor approximation about a reference state, input, and dilation coefficient $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\sigma})$. Therefore we can represent the system using normalized time:
-
-\begin{align}
-& \mathbf{x}^\prime(\tau) = \hat{\sigma}\frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(x(\tau)-\hat{x}(\tau)) + \hat{\sigma}\frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(u(\tau)-\hat{u}(\tau)) + \sigma f(\hat{x}(\tau),\hat{u}(\tau)) \\
-& \mathbf{x}^\prime(\tau) = A(\tau)\mathbf{x(\tau)} + B(\tau)\mathbf{u(\tau)} + \Sigma(\tau)\sigma + \mathbf{z}(\tau)
+\mathbf{x}^\prime(\tau) 
+&= \mathbf{g}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau), \hat{\eta})
++ \frac{\partial \mathbf{g}}{\partial \mathbf{x}} \bigg\rvert_{\hat{x},\hat{u},\hat{\eta}} (\mathbf{x} - \hat{\mathbf{x}}) \ 
++ \frac{\partial \mathbf{g}}{\partial \mathbf{u}} \bigg\rvert_{\hat{x},\hat{u},\hat{\eta}} (\mathbf{u} - \hat{\mathbf{u}}) \ 
++ \frac{\partial \mathbf{g}}{\partial \eta} \bigg\rvert_{\hat{x},\hat{u},\hat{\eta}} (\eta - \hat{\eta}) \\
+&= \hat{\eta} \mathbf{f}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau))
++ \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{x}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{x} - \hat{\mathbf{x}}) \
++ \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{u}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{u} - \hat{\mathbf{u}}) \
++ \mathbf{f}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau)) (\eta - \hat{\eta}) \\
+&= {\eta} \mathbf{f}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau))
++ \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{x}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{x} - \hat{\mathbf{x}}) \
++ \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{u}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{u} - \hat{\mathbf{u}})
+% \hat{\sigma}\frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(x(\tau)-\hat{x}(\tau)) + \hat{\sigma}\frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(u(\tau)-\hat{u}(\tau)) + \sigma f(\hat{x}(\tau),\hat{u}(\tau)) \\
+% & \mathbf{x}^\prime(\tau) = A(\tau)\mathbf{x(\tau)} + B(\tau)\mathbf{u(\tau)} + \Sigma(\tau)\sigma + \mathbf{z}(\tau)
 \end{align}
 
 We can break the Taylor expansion into matrices to make things simpler later on:

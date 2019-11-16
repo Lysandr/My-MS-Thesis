@@ -185,52 +185,53 @@ this selects the $(1,1)$ element of the MRP-to-DCM matrix in equation \ref{mrp2c
 \end{align}
 This quaternion version of this same constraint is $\cos(\psi_{max}) \leq 1-2\sqrt{q_{2}^{2}+q_{3}^{2}}$. The quaternion unity identity must be used in this derivation. Similarly, we can also constrain the entire MRP such that the vehicle does not exceed $\pi$ radians in total angular displacement.
 \begin{align}
-	\left \lVert \boldsymbol{\sigma}_\mathcal{B/N} \right \lVert_2 \leq 1
+	\left \lVert \boldsymbol{\sigma}_\mathcal{B/N} (t) \right \lVert_2 \leq 1
 \end{align}
 Nominally the vehicle should not have large angular rates throughout the descent and landing, so we can simply constrain this as well.
 \begin{align}
 & \left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 \leq \omega_{max}
 \end{align}
 
-Finally we must constrain the commanded thrust magnitude. As stated before, engines have a minimum and maximum thrust region $[T_{min}, T_{max}] \in \mathbb{R}_{++}$ in which they operate. Also, recall that we have made the single-ignition assumption. The engine thrust vector control system there is some limit to the amount of gimbal angle we can perform $\delta_{max}$.
+Finally we must constrain the commanded thrust magnitude. As stated before, engines have a minimum and maximum thrust region $[T_{min}, T_{max}] \in \mathbb{R}_{++}$ in which they operate. Also, recall that we have made the single-ignition assumption. The engine thrust vector control system there is some limit to the amount of gimbal angle we can perform $\delta_{\text{TVC}_{max}}$.
 \begin{align}
 & 0 < T_{min} \leq \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq T_{max} \\
-& \cos(\delta_{max}) \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq \hat{\bm{b}}_1^T \bm{F}_{thrust}(t)
+& \cos(\delta_{\text{TVC}_{max}}) \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq \hat{\bm{b}}_1^T \bm{F}_{thrust}(t)
 \end{align}
 it is clear that the upper thrust bound is clearly convex but the lower bound creates a non-convex constraint. This shall be handled later with a slack variable.
+
+It may also be important to restrict the thrust vector control deflection velocities to maintain pragmatic control commands. Therefore we can construct a numerical differentiation between control steps as such: $\abs{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}} \leq \dot{\delta}_{\text{TVC}_{max}}dt$ where of course $\hat{\bm{b}}_1^T\mathbf{F}_{th} = \norm{\mathbf{F}_{th}}\cos{\delta_{\text{TVC}}}$. We shall show later how this formulation is simplified with the assumed structure of the guidance routine. We can use the dimensionality of our desired solution and a time-dilation final time coefficient to maintain scaling of the differentiation for the general free-final-time solution.
+
+
 %
 \section{Continuous Time Problem}
-Putting this all together, we can pose the continuous time optimization problem. In this form, it is non-convex and requires conditioning to work into the convex programming framework. As stated, our objective is to minimize the time-of-flight required to get to the terminal conditions subject to the aforementioned constraints, dynamics, and boundary conditions. The state vector, thrust commands, gimbal angles, and final time are optimization variables and are considered the solution to this problem. We pose this in problem \ref{ctproblem}.
+Putting this all together, we can pose the continuous time optimization problem. In this form, it is non-convex and requires conditioning to work into the convex programming framework. As stated, our objective is to minimize the time-of-flight required to get to the terminal conditions subject to the aforementioned constraints, dynamics, and boundary conditions. The state vector, thrust commands, gimbal angles, and final time are optimization variables and are considered the solution to this problem. We pose this in Problem one: \ref{ctproblem}.
 %
 \clearpage
 \begin{mdframed}
 \label{ctproblem}
 \textbf{Problem 1: Continuous Time Non-Convex Free-Final-Time}
-
+\newline
 \underline{Cost Function:}
 \begin{equation*}
 \min_{\mathbf{x}, \ \mathbf{F}_{th}} t_f
 \end{equation*}
-
+%
 \underline{Boundary Conditions:}  
 \begin{align*}
 m(0) &= m_0, &^\mathcal{N}\mathbf{r}(0) &= \mathbf{r}_0, & ^\mathcal{N}\mathbf{v}(0) &= \mathbf{v}_0, & \boldsymbol{\sigma}_\mathcal{B/N}(0) &= \boldsymbol{\sigma}_0, \quad ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) = \boldsymbol{\omega}_0 \\
-% & m(0) = m_{wet} \quad \mathbf{r}_I(0) = \mathbf{r}_i \quad \mathbf{v}_I(0) = \mathbf{v}_i \quad \quad \quad{q}_{B/I}(0) = {q}_{B/I _{i}} \quad \bm{\omega}_B(0) = \bm{\omega}_{B _{i}} \\
-% & \mathbf{r}_I(t_f) = \mathbf{0} \quad \quad \mathbf{v}_I(t_f) = \mathbf{0} \quad {q}_{B/I}(t_f) = {q}_{B/I _ {f}} \quad \bm{\omega}_B(t_f) = \mathbf{0} \\
-% & \mathbf{e}_2 \cdot \mathbf{T}_B(t_f) = \mathbf{e}_3 \cdot \mathbf{T}_B(t_f) = 0
 \quad ^\mathcal{N}\mathbf{r}(0) &= \mathbf{0}, & ^\mathcal{N}\mathbf{v}(0) &= \mathbf{0}, & \boldsymbol{\sigma}_\mathcal{B/N}(0) &= \mathbf{0}, & ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) &= \mathbf{0}
 \end{align*}
-
+%
 \underline{Dynamics:}  
 \begin{align*}
- \dot{m}(t) &= -\alpha_{\dot{m}} \left\lVert \mathbf{F}_{th}(t) \right\rVert _2 \\
- ^\mathcal{N}\dot{\mathbf{r}}(t) &= \mathbf{v}(t) \\
- ^\mathcal{N}\dot{\mathbf{v}}(t) &= \frac{[\mathcal{NB}(\boldsymbol{\sigma})] \ ^\mathcal{B}\mathbf{F}_{th}(t)}{m(t)} +  \ ^\mathcal{N}\mathbf{g} \\
- \dot{\boldsymbol{\sigma}}_\mathcal{B/N} &= \frac{1}{4} \left [(1-\sigma^2)\mathbb{I}_3 +  2[\boldsymbol{\sigma}^\times] + 2\boldsymbol{\sigma}\boldsymbol{\sigma}^T \right ] \ ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N} \\
- ^\mathcal{B}\dot{\boldsymbol{\omega}}_\mathcal{B/N} &= [I_c]^{-1}([\boldsymbol{r}_{\text{COM}}^\times] \ ^\mathcal{B}\mathbf{F}_{th}(t) - [\boldsymbol{\omega}^\times][I_c]\boldsymbol{\omega})
+\dot{m}(t) &= -\alpha_{\dot{m}} \left\lVert \mathbf{F}_{th}(t) \right\rVert _2 \\
+^\mathcal{N}\dot{\mathbf{r}}(t) &= \mathbf{v}(t) \\
+^\mathcal{N}\dot{\mathbf{v}}(t) &= \frac{[\mathcal{NB}(\boldsymbol{\sigma})] \ ^\mathcal{B}\mathbf{F}_{th}(t)}{m(t)} +  \ ^\mathcal{N}\mathbf{g} \\
+\dot{\boldsymbol{\sigma}}_\mathcal{B/N} &= \frac{1}{4} \left [(1-\sigma^2)\mathbb{I}_3 +  2[\boldsymbol{\sigma}^\times] + 2\boldsymbol{\sigma}\boldsymbol{\sigma}^T \right ] \ ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N} \\
+^\mathcal{B}\dot{\boldsymbol{\omega}}_\mathcal{B/N} &= [I_c]^{-1}([\boldsymbol{r}_{\text{COM}}^\times] \ ^\mathcal{B}\mathbf{F}_{th}(t) - [\boldsymbol{\omega}^\times][I_c]\boldsymbol{\omega})
 \end{align*}
-
-\underline{State Constraints:}  
+%
+\underline{State and Control Constraints:}  
 \begin{align*}
 m_{dry} - m(t) & \leq 0 \\
 || [\hat{\bm{n}}_2 \ \ \hat{\bm{n}}_3 ]^T \mathbf{r}(t) \lvert\lvert_2 \ \tan{\gamma_{gs}}  - \hat{\bm{n}}_1^T \mathbf{r}(t) & \leq 0 \\
@@ -239,15 +240,11 @@ m_{dry} - m(t) & \leq 0 \\
 %
 \left \lVert \boldsymbol{\sigma}_\mathcal{B/N}(t) \right \lVert_2 & \leq 1 \\
 %
-\left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 & \leq \omega_{max}
-\end{align*}
-
-\underline{Control Constraints:}  
-\begin{align*}
+\left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 & \leq \omega_{max}\\
 0 < T_{min} \leq \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq T_{max} \\
-\cos(\delta_{max}) \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq \hat{\bm{b}}_1^T \bm{F}_{th}(t)
+\cos(\delta_{max}) \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq \hat{\bm{b}}_1^T \bm{F}_{th}(t) \\
+\left \lVert \delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}} \right \lVert_2 & \leq \dot{\delta}_{\text{TVC}_{max}}dt
 \end{align*}
-
 \end{mdframed}
 
 
