@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.3)  18 NOV 2019 10:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.3)  19 NOV 2019 09:17
 entering extended mode
 **./main.tex
 (main.tex
@@ -1760,7 +1760,7 @@ centered
 [14
 
 ] [15] [16] [17] [18] [19]
-Package mdframed Info: Not enough space on this page on input line 187.
+Package mdframed Info: Not enough space on this page on input line 188.
  [20
 
 ]) (chapter4.tex [21
@@ -1828,9 +1828,9 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 91.
  ) 
 Here is how much of TeX's memory you used:
- 23950 strings out of 493305
- 451587 string characters out of 3124581
- 531411 words of memory out of 3000000
+ 23951 strings out of 493305
+ 451602 string characters out of 3124581
+ 532411 words of memory out of 3000000
  27063 multiletter control sequences out of 15000+200000
  543012 words of font info for 69 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1859,9 +1859,9 @@ androu/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.p
 fb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/symbols/msam10.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Prog
 rams/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (39 pages, 336553 bytes).
+Output written on main.pdf (39 pages, 337046 bytes).
 PDF statistics:
- 531 PDF objects out of 1000 (max. 8388607)
- 156 named destinations out of 1000 (max. 500000)
+ 533 PDF objects out of 1000 (max. 8388607)
+ 157 named destinations out of 1000 (max. 500000)
  241 words of extra memory for PDF output out of 10000 (max. 10000000)
 
