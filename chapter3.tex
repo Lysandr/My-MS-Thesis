@@ -49,7 +49,8 @@ Taking a first-order Taylor series approximation of the nonlinear dynamics propo
 + \mathbf{f}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau)) (\eta - \hat{\eta}) \\
 &= {\eta} \mathbf{f}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau))
 + \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{x}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{x} - \hat{\mathbf{x}}) \
-+ \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{u}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{u} - \hat{\mathbf{u}})
++ \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{u}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{u} - \hat{\mathbf{u}}) \\ 
+& = \Sigma(\tau)\eta + \bar{A} (\mathbf{x} - \hat{\mathbf{x}}) + \bar{B}(\mathbf{u} - \hat{\mathbf{u}})
 % \hat{\sigma}\frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(x(\tau)-\hat{x}(\tau)) + \hat{\sigma}\frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(u(\tau)-\hat{u}(\tau)) + \sigma f(\hat{x}(\tau),\hat{u}(\tau)) \\
 % & \mathbf{x}^\prime(\tau) = A(\tau)\mathbf{x(\tau)} + B(\tau)\mathbf{u(\tau)} + \Sigma(\tau)\sigma + \mathbf{z}(\tau)
 \end{align}
@@ -59,7 +60,7 @@ We can break the Taylor expansion into matrices to make things simpler later on:
 & A(\tau) \triangleq \hat{\sigma} \frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}} \\
 & B(\tau) \triangleq \hat{\sigma} \frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}} \\
 & \Sigma(\tau) \triangleq f(\hat{x}(\tau),\hat{u}(\tau)) \\
-& \mathbf{z}(\tau) \triangleq -A(\tau)\hat(x)(\tau) - B(\tau)\hat{u}(\tau)
+& \mathbf{z}(\tau) \triangleq -A(\tau)\hat{x}(\tau) - B(\tau)\hat{u}(\tau)
 \end{align}
 
 With this done, we tackle the only source of non-convexity: the non-zero lower bound to our actuator thrust. With a Taylor series approximation we can say that $T_{min} \leq B_g(\tau)\mathbf(u)(\tau)$ for which $B_g(\tau) \triangleq \frac{\mathbf{\hat{u}}^T(\tau)}{\left\lVert \mathbf{\hat{u}} \right \lVert_2}$.
