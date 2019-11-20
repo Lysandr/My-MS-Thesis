@@ -35,8 +35,10 @@ This $\eta$ will become a variable in the convex subproblem that acts as the non
 & \mathbf{x}^\prime(\tau) \triangleq \frac{d}{d\tau}\mathbf{x}(\tau) = \eta \mathbf{f}(\mathbf{x}(\tau), \mathbf{u}(\tau)) = \mathbf{g}(\mathbf{x}(\tau), \mathbf{u}(\tau), \eta)
 \end{align}
 
-Taking a first-order Taylor series approximation of the nonlinear dynamics proposed in Problem one, we can write a linear time-varying framework for the system to use in our algorithm. These dynamics will be instantiated at reference values $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\sigma})$ at each time. 
+Taking a first-order Taylor series approximation of the nonlinear dynamics proposed in Problem one, we can write a linear time-varying framework equations \ref{taylor} for the system to use in our algorithm. These dynamics will be instantiated at reference values $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\eta})$ at each time. 
 %
+\begin{subequations}
+\label{taylor}
 \begin{align}
 \mathbf{x}^\prime(\tau) 
 &= \mathbf{g}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau), \hat{\eta})
@@ -50,20 +52,21 @@ Taking a first-order Taylor series approximation of the nonlinear dynamics propo
 &= {\eta} \mathbf{f}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau))
 + \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{x}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{x} - \hat{\mathbf{x}}) \
 + \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{u}} \bigg\rvert_{\hat{x},\hat{u}} (\mathbf{u} - \hat{\mathbf{u}}) \\ 
-& = \Sigma(\tau)\eta + \bar{A}(\tau) (\mathbf{x} - \hat{\mathbf{x}}) + \bar{B}(\tau)(\mathbf{u} - \hat{\mathbf{u}}) \\
-& = \Sigma(\tau)\eta + \Pi(\tau) (\mathbf{x} - \hat{\mathbf{x}})
-% \hat{\sigma}\frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(x(\tau)-\hat{x}(\tau)) + \hat{\sigma}\frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}}(u(\tau)-\hat{u}(\tau)) + \sigma f(\hat{x}(\tau),\hat{u}(\tau)) \\
-% & \mathbf{x}^\prime(\tau) = A(\tau)\mathbf{x(\tau)} + B(\tau)\mathbf{u(\tau)} + \Sigma(\tau)\sigma + \mathbf{z}(\tau)
+& = \Sigma(\tau)\eta + A(\tau) (\mathbf{x} - \hat{\mathbf{x}}) + B(\tau)(\mathbf{u} - \hat{\mathbf{u}})  \\ 
+&= \Sigma(\tau)\eta + A(\tau)\mathbf{x} + B(\tau)\mathbf{u} + \mathbf{z}(\tau)
 \end{align}
+\end{subequations}
 
-We can break the Taylor expansion into matrices to make things simpler later on:
+We can simplify this expression by breaking the Taylor expansion intro matrix subcomponents. 
 \begin{align}
-& A(\tau) \triangleq \hat{\sigma} \frac{\partial}{\partial x} f(x,u) \bigg\rvert_{\hat{x},\hat{u}} \\
-& B(\tau) \triangleq \hat{\sigma} \frac{\partial}{\partial u} f(x,u) \bigg\rvert_{\hat{x},\hat{u}} \\
-& \Sigma(\tau) \triangleq f(\hat{x}(\tau),\hat{u}(\tau)) \\
-& \mathbf{z}(\tau) \triangleq -A(\tau)\hat{x}(\tau) - B(\tau)\hat{u}(\tau)
+& A(\tau) \triangleq \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{x}}  \bigg\rvert_{\mathbf{\hat{x}}, \mathbf{\hat{u}}} \\
+& B(\tau) \triangleq \hat{\eta} \frac{\partial \mathbf{f}}{\partial \mathbf{u}}  \bigg\rvert_{\mathbf{\hat{x}}, \mathbf{\hat{u}}} \\
+& \Sigma(\tau) \triangleq \mathbf{f}(\hat{\mathbf{x}}(\tau), \hat{\mathbf{u}}(\tau)) \\
+& \mathbf{z}(\tau) \triangleq -A(\tau)\mathbf{\hat{x}}- B(\tau)\mathbf{\hat{u}}
 \end{align}
 
+
+\subsection{Convexifying the Minimum Thrust Constraint}
 With this done, we tackle the remaining source of non-convexity: the non-zero lower bound to our actuator thrust. With a Taylor series approximation we can say that $T_{min} \leq B_g(\tau)\mathbf(u)(\tau)$ for which $B_g(\tau) \triangleq \frac{\mathbf{\hat{u}}^T(\tau)}{\left\lVert \mathbf{\hat{u}} \right \lVert_2}$.
 
 
