@@ -30,6 +30,13 @@ Stephen Boyd and Lieven Vandenberghe.
 \newblock {\em Convex optimization}.
 \newblock Cambridge university press, 2004.
 
+\bibitem{malyuta2019discrete}
+Danylo Malyuta, Taylor Reynolds~P., Michael Szmuk, Mehran Mesbahi, and Behcet
+  Acikmese.
+\newblock Discretization performance and accuracy analysis for the powered
+  descent guidance problem.
+\newblock 2019.
+
 \bibitem{markley2014fundamentals}
 F~Landis Markley and John~L Crassidis.
 \newblock {\em Fundamentals of Spacecraft Attitude Determination and Control},

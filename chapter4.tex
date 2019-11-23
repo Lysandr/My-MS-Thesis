@@ -3,23 +3,6 @@
 \label{results}
 
 
-\begin{algorithm}
-\caption{Successive Convexification}\label{Successive}
-\begin{algorithmic}[1]
-\Procedure{SCVX}{$x_{ref},\sigma_{ref}$}
-\State Generate initial trajectory by linearly spanning from initial condition to terminal conditions on each state
-\While{$ ||{\Delta}|| \geq \Delta_{tol} \quad \&\& \quad ||{\nu}|| \geq \nu_{tol} $}
-\State Compute $\bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$ from $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}$
-\State Solve Problem 2 using $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}, \bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$
-\State Store the newly found $\mathbf{x}_k^{i}, \mathbf{u}_k^{i}, \sigma^{i}$
-\State $i++;$
-\EndWhile 
-\State \textbf{return} $\mathbf{x}, \mathbf{u}$
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
-
-
 % \begin{figure}[!htb] 
 %   \centering
 %   \includegraphics[width=0.5\textwidth]{alg.PNG}

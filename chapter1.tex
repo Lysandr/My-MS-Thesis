@@ -2,6 +2,15 @@
 \chapter{Introduction}
 \label{introchap}
 
+\section{Background}
+Pin-point landing has been of significant interest in the last 6 decades for a variety of applications. These include safely landing scientific payloads and humans on other planets or back on Earth. Having the ability to land near a site of scientific interest, a base, or refueling station will become a requirement as we build our space transportation infrastructure. Solving this problem has also been of considerable interest to those returning launch vehicle stages 
+
+The ability to soft-land a rocket is fundamentally disruptive to the launch industry and has already had a large impact in reducing the cost of getting to space. Additionally, similar methods, given navigational upgrades, will be conducive of the development of colonies on other planets. Pin-point landing and divert capability is a necessity in these situations.
+
+Every pinpoint landing problem begins with an entry phase where the vehicle descends through an atmosphere to a point where powered descent must begin. Many Mars entry, descent, and landing schemes enter the atmosphere and slow down via parachute. This parachute is then cut away to allow powered descent. With atmospheric qualities being stochastic, the position in which the descent phase must begin is uncertain. Therefore, we would like to look at algorithms which maximize the divert capability of the craft by minimizing the fuel consumption or final time from initial condition to terminal state. We define powered descent guidance as the generation of a fuel-optimal trajectory that takes the vehicle from some initial state condition to a prescribed final state in a uniform gravitational field with standard vehicle given thrust magnitude and direction constraints.
+
+The convex optimization framework is exploited because it is conducive of real-time on-board implementation and has guaranteed convergence properties with deterministic criteria. The convex programming algorithm to solve powered descent guidance that I will present has non-convex controls constraints and will be posed as a finite-dimensional SOCP problem. SOCPs have low complexity and can be solved in polynomial time \cite{boyd2004convex}. Interior-point numerical methods compute optimal solutions with deterministic stopping criteria and are, again conducive to on-board implementation. 
+
 \section{Motivation}
 This thesis focuses on the implementation and development of a 6 degree-of-freedom (DoF) guidance algorithm that solves the powered descent guidance (PDG) problem. I present a modified version of the Szmuk-Açıkmeşe 6-DoF algorithm presented in \cite{szmuk2018successive}.
 
@@ -11,7 +20,7 @@ minimal computational complexity
 
 accurate to the dynamics
 
-can be recomputed online when needed
+can be recomputed online if needed
 
 has a free final time option
 
@@ -23,21 +32,16 @@ guarantees of convergence or optimality
 
 simple FDIR recovery
 
+disperses well and insensitive to parameter variations
+
 % #########################################
 % Introduction basically
-\section{Background}
-Pin-point landing has been of significant interest in the last 6 decades for a variety of applications. These include safely landing scientific payloads and humans on other planets or back on Earth. Having the ability to land near a site of scientific interest, a base, or refueling station will become a requirement as we build our space transportation infrastructure. Solving this problem has also been of considerable interest to those returning launch vehicle stages 
 
-The ability to soft-land a rocket is fundamentally disruptive to the launch industry and has already had a large impact in reducing the cost of getting to space. Additionally, similar methods, given navigational upgrades, will be conducive of the development of colonies on other planets. Pin-point landing and divert capability is a necessity in these situations.
-
-Every pinpoint landing problem begins with an entry phase where the vehicle descends through an atmosphere to a point where powered descent must begin. Many Mars entry, descent, and landing schemes enter the atmosphere and slow down via parachute. This parachute is then cut away to allow powered descent. With atmospheric qualities being stochastic, the position in which the descent phase must begin is uncertain. Therefore, we would like to look at algorithms which maximize the divert capability of the craft by minimizing the fuel consumption or final time from initial condition to terminal state. We define powered descent guidance as the generation of a fuel-optimal trajectory that takes the vehicle from some initial state condition to a prescribed final state in a uniform gravitational field with standard vehicle given thrust magnitude and direction constraints.
-
-The convex optimization framework is exploited because it is conducive of real-time on-board implementation and has guaranteed convergence properties with deterministic criteria. The convex programming algorithm to solve powered descent guidance that I will present has non-convex controls constraints and will be posed as a finite-dimensional SOCP problem. SOCPs have low complexity and can be solved in polynomial time \cite{boyd2004convex}. Interior-point numerical methods compute optimal solutions with deterministic stopping criteria and are, again conducive to on-board implementation. 
 
 
 
 % #########################################
-\section{Related Research}
+\section{Literature Review and Related Research}
 perhaps start with lawden functions linear in control?
 
 "Lossless convexification can be used to convexify non-convex constraints without losing precision,

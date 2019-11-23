@@ -67,74 +67,128 @@ We can simplify this expression by breaking the Taylor expansion intro matrix su
 
 
 \subsection{Convexifying the Minimum Thrust Constraint}
-With this done, we tackle the remaining source of non-convexity: the non-zero lower bound to our actuator thrust. With a Taylor series approximation we can say that $T_{min} \leq B_g(\tau)\mathbf(u)(\tau)$ for which $B_g(\tau) \triangleq \frac{\mathbf{\hat{u}}^T(\tau)}{\left\lVert \mathbf{\hat{u}} \right \lVert_2}$.
+With this done, we tackle the last source of non-convexity: the non-zero lower bound to our actuator thrust. This is done with a first order Taylor series linear approximation. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taking the approximation:
+
+\begin{align}
+	g(\mathbf{u}(\tau)) &= F_{min} - \norm{\hat{\mathbf{u}}(\tau)} - \frac{\hat{\mathbf{u}}(\tau)^T}{\norm{\hat{\mathbf{u}}(\tau)}}(\mathbf{u}(\tau) - \hat{\mathbf{u}}(\tau)) & \leq 0 \\
+	&= F_{min} - \frac{\hat{\mathbf{u}}(\tau)^T}{\norm{\hat{\mathbf{u}}(\tau)}} \mathbf{u}(\tau)  & \leq 0\\
+	&= F_{min} - \Xi(\tau)\mathbf{u}(\tau)  & \leq 0
+\end{align}
+this leads us to the linear, convexified constraint $F_{min} \leq \Xi(\tau)\mathbf{u}(\tau)$. Recall the variable $\hat{\mathbf{u}}(\tau)$ is our reference input history.
+
+
+
 
 
 
 \section{Discretization Scheme}
-This is where things get hairy. We need to "cast" the problem into a finite dimensional optimization problem where the trajectory is discretized into $K$ evenly separated points with respect to the normalized trajectory time $\tau$. Let us define the set $\mathcal{K}\triangleq \{0,1,\cdots, K-1\}$ with which many of the parameter arrays will have the same dimensions.
-
-Given that the trajectory time is normalized on the interval $\tau \in [0,1 ]$, we must define the discrete time step at point $k$ as such
-
+The final step to fitting the dynamics, state, and control constraints to an optimization form is to cast the problem as a finite dimensional discretization. We must choose this finite dimensional problem to occur over $K\in\mathbb{Z}$ evenly separated points with respect to the normalized trajectory time $\tau$. We define can define the index set $\mathcal{K}\in\mathbb{Z}$ as the following:
+\begin{equation*}
+	\mathcal{K}\triangleq \{0,1,\cdots, K-1\}
+\end{equation*}
+%
+Given that the trajectory time is normalized on the interval $\tau \in [0,1 ]$, we can define the discrete time step at point $k$ as such
+%
 \begin{align}
 & \tau_k \triangleq \frac{k}{K-1}, \quad \forall k \in \mathcal{K}
 \end{align}
-
-To help with numerical feasibility issues, we employ a first-order-hold linear scaling on the applied controls for each time step. Over the interval $\tau \in [\tau_k, \tau_{k+1}]$, we must express $\mathbf{u}(\tau)$ in terms of the $\mathbf{u}_k$
+%
+For implementation sake, a first-order-hold linear scaling on the applied controls for each time step. Over the interval $\tau \in [\tau_k, \tau_{k+1}]$, we express $\mathbf{u}(\tau)$ in terms of the $\mathbf{u}_k$
  and $\mathbf{u}_{k+1}$:
-
- \begin{align}
-& \mathbf{u}(\tau) \triangleq \alpha_k(\tau) \mathbf{u}_k + \beta(\tau) \mathbf{u}_{k+1} \\ 
-& \alpha_k(\tau) = \frac{d\tau - \tau}{d\tau} \\
-& \beta_k(\tau) = \frac{\tau}{d\tau} \\
-& d\tau = \frac{1}{K-1}
-\end{align}
-
-I have shown these differently than the author for simplicity.
-
-We can then use a state transition matrix $\Phi(\tau_{k+1},\tau_k)$ to translate the system from $k$ to $k+1$ with no input. This matrix follows these dynamics:
+\begin{equation}
+	\mathbf{u}(\tau) \triangleq \alpha_k(\tau) \mathbf{u}_k + \beta(\tau) \mathbf{u}_{k+1}
+\end{equation}
+%
+The input is spread linearly, on a first order relationship, from the index position $k$ to the next known control value at $k+1$ in the control history. Additionally this allows us to consider the controller interpolation scheme a priori if used in a feed forward regime. The successive convexification algorithm was tested with a number of discretization methods on state and input, where first order hold (FOH) and Legendre-Gauss-Radau (LGR) collocation methods were found to be the most amenable \cite{malyuta2019discrete}. These two provided the fastest computation times with good performance.
+%
+The constants we have defined follow the following form:
 \begin{align}
-& \frac{d}{d\tau} \Phi(\tau,\tau_k) = A(\tau) \Phi(\tau,\tau_k) \quad \forall k \in \mathcal{K}
+& d\tau = \frac{1}{K-1} \\
+& \alpha_k(\tau) = \frac{d\tau - \tau}{d\tau} \\
+& \beta_k(\tau) = \frac{\tau}{d\tau}
+\end{align}
+%
+
+We use the state transition matrix (STM) of the dynamics $\Phi(\tau_{k+1},\tau_k)$ to translate the process from a state at time $k$ to future state at $k+1$. This matrix assumes no input is being imparted, but a convolution can be used to describe the time varying input. The STM follows these dynamics:
+%
+\begin{align}
+& \frac{d}{d\tau} \Phi(\tau,\tau_k) = A(\tau) \Phi(\tau,\tau_k), \quad \forall k \in \mathcal{K}
+\end{align}
+Additionally, the STM has the semigroup, inverse, and identity properties which become useful in the derivation:
+\begin{align}
+	\Phi(t,s) &= \Phi(t, \gamma)\Phi(\gamma, s) \\
+	\Phi(t,s)^{-1} &= \Phi(s,t) \\
+	\Phi(s,s) &= \mathbb{I}_{n \times n}
+\end{align}
+for arbitrary timing parameters $t, \gamma, s$. We can take advantage of this property during the discretization steps to minimize some computation. A general homogeneous solution for a system defined by $\dot{\mathbf{x}}$ using the STM is the following:
+
+\begin{align}
+	\text{given that} \ \ \mathbf{x}(\tau) &= \Phi(\tau, \tau_k) \mathbf{x}(\tau_k)\\
+	\frac{d}{d\tau}\mathbf{x}(\tau) &= \dot{\Phi}(\tau, \tau_k) \mathbf{x}(\tau_k) = A(\tau)\mathbf{x}(\tau) \\ 
+	& = A(\tau) \Phi(\tau, \tau_k) \mathbf{x}(\tau_k)
+\end{align}
+Ingtegration leads to the following fact
+\begin{align}
+	\mathbf{x}(\xi) &= \mathbf{x}(\tau_k) + \int_{\tau_k}^\xi A(\xi) \Phi(\xi, \tau_k) \mathbf{x}(\tau_k) d\xi \\
+	&= \left( \mathbb{I}_{n\times n} + \int_{\tau_k}^\xi A(\xi) \Phi(\xi, \tau_k) d\xi \right)  \mathbf{x}(\tau_k)
+\end{align}
+Therefore the arbitrary state transition mapping from time $\tau_k$ to $\xi$ can be represented as the following:
+\begin{align}
+	\Phi(\xi, \tau_k) = \mathbb{I}_{n\times n} + \int_{\tau_k}^\xi A(\xi) \Phi(\tau, \tau_k) d\xi, \quad \forall \xi \in \ [\tau_k, \tau_{k+1}]
 \end{align}
 
-Using our previous expressions, we can now discretize the dynamics such that each matrix, at each time step requires a short integration:
+Recall our continuous LTV system dynamics expression $\mathbf{x}^\prime(\tau) =  A(\tau)\mathbf{x} + B(\tau)\mathbf{u} + \mathbf{z}(\tau) + \Sigma(\tau)\eta$. Employing our control FOH, we want to form this as the following discrete time system:
+\begin{align}
+	\mathbf{x}_{k+1} = F_k\mathbf{x_k} + G^-_k\mathbf{u_k} + G^+\mathbf{u_{k+1}} + \bar{\mathbf{z}}_k + \bar{\Sigma}_k\eta
+\end{align}
+Converting the continuous time dynamics to discrete time dynamics, we perform a series of convolution integrals to define the impact of the transformations over each discrete time step. *CITE ASTROM HERE ABOUT THE CONTINUOUS TIME CONVOLUTION STUFF* The continuous linear time invariant discretization form is usually written as $G=\int_{0}^{dt} e^{A \tau} d \tau$, but given the LTV dynamics and our FOH control assumption, we reformulate as:
+%
+\begin{subequations}
+\label{disc}
  \begin{align}
-& \mathbf{x}_{k+1} = \bar{A}_k\mathbf{x_k} + \bar{B}_k\mathbf{u_k} + \bar{C}\mathbf{u_{k+1}} + \bar{\Sigma}_k\sigma + \bar{\mathbf{z}}_k  \\
-& \bar{A}_k \triangleq  \Phi(\tau_{k+1},\tau_k)\\
-& \bar{B}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \alpha_k(\xi) \Phi(\tau_{k+1},\xi) B(\xi) d\xi\\
-& \bar{C}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \beta_k(\xi) \Phi(\tau_{k+1},\xi) B(\xi)  d\xi\\
-& \bar{\Sigma}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \Phi(\tau_{k+1},\xi) \Sigma(\xi) d\xi\\
-& \bar{\mathbf{z}}_k \triangleq \int_{\tau_k}^{\tau_{k+1}} \Phi(\tau_{k+1},\xi) \mathbf{z}(\xi) d\xi\\
+ F_k &\triangleq  \Phi(\tau_{k+1},\tau_k)\\
+ %
+ G^-_k &\triangleq \int_{\tau_k}^{\tau_{k+1}}  \Phi(\tau_{k+1},\xi) \alpha_k(\xi)B(\xi) d\xi\\
+ %
+ &\triangleq F_k \int_{\tau_k}^{\tau_{k+1}}  \Phi^{-1}(\xi,\tau_{k}) \alpha_k(\xi)B(\xi) d\xi\\
+ %
+ G^+_k &\triangleq F_k \int_{\tau_k}^{\tau_{k+1}}  \Phi^{-1}(\xi,\tau_{k}) \beta_k(\xi)B(\xi) d\xi\\
+ %
+ \bar{\Sigma}_k &\triangleq  F_k \int_{\tau_k}^{\tau_{k+1}} \Phi^{-1}(\xi,\tau_{k}) \Sigma(\xi) d\xi\\
+ %
+ \bar{\mathbf{z}}_k &\triangleq F_k \int_{\tau_k}^{\tau_{k+1}} \Phi^{-1}(\xi,\tau_{k}) \mathbf{z}(\xi) d\xi
 \end{align}
+\end{subequations}
 
-The other boundary, state, and control constraints are already convex and just need to be instantiated for all time or at initial/terminal $\tau$.
+MAKE A POINT TO DERIVE SOME OF THIS STUFF USING THE ANTSAKLIS LINEAR SYSTEMS THEORY TEXT
 
+It should be noted that the number of temporal nodes $K$, where $\mathcal{K} \in \mathbb{Z}^K$, chosen for this problem to be evaluated at does not affect the accuracy of the solution, only the optimality. An optimization solution where $K=10$ will still accurately land the vehicle within all the constraints defined, but may do so in more time and with larger cost than the same problem solved at $K=25$. However, the former is computed faster and generally produces a cost quite close to the higher temporal-density solution depending on the problem statement.
 
 \section{Successive Form, Trust Regions and Relaxations}
 In order to solve a non-convex problem, we iteratively solve a sequence of related convex subproblems. However, before we can reach a concluding framework, we must consider trust regions and dynamic relaxations. In order to make sure that this successive framework stays bounded and feasible through this convergence process, we must bound the divergence of state and inputs from one iteration to another. Unbounded problems can arise from constraints that admit an unbounded cost. To mitigate this issue, we augment the cost function with soft trust regions about the previous iterate's information. Let us define these deviations at iteration $i$ as such:
 \begin{align}
 & \delta \mathbf{x}_k^i \triangleq \mathbf{x}_k^i - \mathbf{x}_k^{i-1} \\
 & \delta \mathbf{u}_k^i \triangleq \mathbf{u}_k^i - \mathbf{u}_k^{i-1}, \quad \forall k \in \mathcal{K}\\
-& \delta \sigma^i \triangleq \sigma^i - \sigma^{i-1}
+& \delta \eta^i \triangleq \eta^i - \eta^{i-1}
 \end{align}
 
-We can then fabricate the following constraints with $\bm{\bar{\Delta}}^i \in \mathcal{R}^K$ and $\Delta_\sigma^i \in \mathcal{R}$
+We can then fabricate the following constraints with $\bm{\bar{\Delta}}^i \in \mathbb{R}^K$ and $\Delta_\eta^i \in \mathbb{R}$
 \begin{align}
 & \delta \mathbf{x}_k^i \cdot \delta \mathbf{x}_k^i + \delta \mathbf{u}_k^i \cdot \delta \mathbf{u}_k^i \leq \mathbf{e}_k \cdot \bm{\bar{\Delta}}^i \\
-& \delta \sigma^i \cdot \delta \sigma^i \leq \Delta_\sigma^i
+& \delta \eta^i \leq \Delta_\eta^i
 \end{align}
 
-We can now append $w_\Delta^i \norm{{\bar{\Delta}}^i} + w_{\Delta_\sigma}\norm{\Delta_\sigma^i}$ to the cost function to attempt to minimize input, state, and final time deviations and keeping their deviation bounded via constraint, where $w_\Delta^i$ and $w_{\Delta_\sigma}$ are weighting scalars.
-Here the author makes an important note. Given that the trust regions are centered about previous points $(\mathbf{x}_{k}^{i-1},\mathbf{u}_{k}^{i-1},\sigma^{i-1})$, we must evaluate the Jacobian about the nonlinear trajectory beginning at $\mathbf{x}_{k}^{i-1}$. We can then use the zero-order-hold input vector $\mathbf{u}(\tau)$. Doing this $\forall k \in \mathcal{K}$ defines the linearization path $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\sigma})$.
+We can now append $w_\Delta^i \norm{{\bar{\Delta}}^i} + w_{\Delta_\eta}\norm{\Delta_\eta^i}$ to the cost function to minimize input, state, and final time deviations and keeping their deviation bounded via constraint, where $w_\Delta^i$ and $w_{\Delta_\eta}$ are weighting scalars depending on the preferences of the scenario. While the norm magnitudes are bounded, we consider these soft constraints.
+Given that the trust regions are centered about previous points $(\mathbf{x}_{k}^{i-1},\mathbf{u}_{k}^{i-1},\eta^{i-1})$, we must evaluate the Jacobian about the nonlinear trajectory beginning at $\mathbf{x}_{k}^{i-1}$. We can then use the FOH input vector $\mathbf{u}(\tau)$. Doing this $\forall k \in \mathcal{K}$ defines the aforementioned linearization path $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\eta})$. 
 
-Finally we must speak to dynamic relaxation. "Artificial Infeasibility" is  encountered during the convergence process when the linearization becomes infeasible. For example, if the dynamics are linearized about unrealistic conditions, it because dynamically inconsistent. It will not produce a feasible solution. This is encountered during the first couple iterations of a successive convexification due to poor initial trajectory or time-of-flight estimation. To get rid of this issue, we employ dynamic relaxation, where a slack variable is added to the dynamics in order to "make room" for the iteration to proceed. However, you can guess that this will inevitably be something we try to minimize in the cost function in order to make sure that our final trajectories are as dynamically consistent as possible. Therefore, we must now write our dynamics as follows: 
 
+We now add a dynamic relaxation variable to discount artificial infeasibility. This is encountered during the convergence process when the linearization becomes infeasible. For example, if the dynamics are linearized about unrealistic conditions, it because dynamically inconsistent. It will not produce a feasible solution. This is encountered during the first couple iterations of a successive convexification due to poor initial trajectory or time-of-flight estimation. To get rid of this issue, we employ dynamic relaxation, where a slack variable is added to the dynamics in order to "make room" for the iteration to proceed. However, you can guess that this will inevitably be something we try to minimize in the cost function in order to make sure that our final trajectories are as dynamically consistent as possible. Therefore, we must now write our dynamics as follows: 
+%
 \begin{align}
 & \mathbf{x}_{k+1}^i = \bar{A}_k^i\mathbf{x_k}^i + \bar{B}_k^i\mathbf{u_k}^i + \bar{C}^i\mathbf{u_{k+1}}^i + \bar{\Sigma}_k^i\sigma^i + \bar{\mathbf{z}}^i_k + \bm{\nu}_k^i
 \end{align}
 
 Because we are going to use this in our cost function as a norm, we shall concatenate the time history of the slack variable as
-
 \begin{align}
 \bar{\bm{\nu}}^i = 
 	\begin{bmatrix}
@@ -152,7 +206,7 @@ We can now put all of the components together and form the convex version of the
 \textbf{Problem 2: Discretized Convex Fixed-Final-Time Sub-Problem ($i^{th}$ iteration)}
 \underline{Cost Function:}
 \begin{equation*}
-\min_{\sigma^i, \mathbf{u}_k^i} \quad \sigma^i + w_\Delta^i \left\lVert \bar{\Delta}^i \right\lVert_2 + w_{\Delta_\sigma}\left\lVert\Delta_\sigma^i\right\lVert_1 + w_v \left\lVert\bar{\bm{\nu}}^i\right\lVert_1
+\min_{\sigma^i, \mathbf{u}_k^i} \quad \sigma^i + w_\Delta^i || \bar{\Delta}^i ||_2 + w_{\Delta_\sigma} || \Delta_\sigma^i ||_1 + w_v || \bar{\bm{\nu}}^i ||_1
 \end{equation*}
 
 \underline{Boundary Conditions:}  
@@ -195,3 +249,20 @@ We can now put all of the components together and form the convex version of the
 \clearpage
 \section{Algorithm}
 The goal is for the successive convexification algorithm to continue iterating until $\Delta_{tol}$ and $\nu_{tol}$ are met. These are defined by the magnitude of each vector.
+
+
+\begin{algorithm}
+\caption{Successive Convexification}\label{Successive}
+\begin{algorithmic}[1]
+\Procedure{SCvx}{$x_{ref},\sigma_{ref}$}
+\State Generate initial trajectory by linearly spanning from initial condition to terminal conditions on each state
+\While{$ ||{\Delta}|| \geq \Delta_{tol} \quad \&\& \quad ||{\nu}|| \geq \nu_{tol} $}
+\State Compute $\bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$ from $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}$
+\State Solve Problem 2 using $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}, \bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$
+\State Store the newly found $\mathbf{x}_k^{i}, \mathbf{u}_k^{i}, \sigma^{i}$
+\State $i++;$
+\EndWhile 
+\State \textbf{return} $\mathbf{x}, \mathbf{u}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
