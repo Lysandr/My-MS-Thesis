@@ -114,11 +114,10 @@ taking an argument of $\bm{q}_\mathcal{B/N}$. The reverse mapping is simply $q_0
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
-
 However, if we constrain ourselves to never encounter a full rotation, we will not need such a structure. In optimization routines where large angular displacements must be made, it could be possible to encode switches as a state triggered constraint (STC) \cite{szmuk2019successive}. Now we shall recognize the MRP-to-DCM mapping that will be required \ref{mrp2c}:
 \begin{align}
 \label{mrp2c}
-	C_{\mathcal{B/N}} = [\mathcal{BN}]= \mathbb{I}_3 +  \frac{8[\boldsymbol{\sigma}^\times] - 4(1-\sigma^2)[\boldsymbol{\sigma}^\times]}{(1+\sigma^2)^2}
+	C_{\mathcal{B/N}} = [\mathcal{BN}]= \mathbb{I}_3 +  \frac{8[\boldsymbol{\sigma}^\times]^2 - 4(1-\sigma^2)[\boldsymbol{\sigma}^\times]}{(1+\sigma^2)^2}
 \end{align}
 taking an argument of $\boldsymbol{\sigma}_\mathcal{B/N}$ and where $\mathbb{I}_3$ is the identity matrix. The kinematic differential equation is \ref{mrpkde}
 %
@@ -132,10 +131,21 @@ Differentiating the angular momentum vector of system, and making the rigid body
 \begin{align}
 \dot{\bm{H}} &= \mathbf{L}_c = [I_c]\dot{\boldsymbol{\omega}} + [\boldsymbol{\omega}^\times][I_c]\boldsymbol{\omega}
 \end{align}
-where the torque acting on the vehicle is written as $\mathbf{L}_c(t) \in \mathbb{R}^3$ in the body frame. Rearranged, we have the canonical Euler rotational equations of motion
+where the torque acting on the vehicle is written as $\mathbf{L}_c(t) \in \mathbb{R}^3$ in the body frame. Rearranged, we have the canonical Euler rotational equations of motion:
 \begin{align}
 	\dot{\boldsymbol{\omega}} = [I_c]^{-1}(\mathbf{L}_c - [\boldsymbol{\omega}^\times][I_c]\boldsymbol{\omega})
 \end{align}
+While the moment of inertia matrix would normally be determined from the design of the vehicle, we shall simply use a cylinder rotating about it's center with a homogeneous mass distribution for out presentation. We also assume that the mass is constant throughout the optimization for this matrix, although that modification can be made if required. We use the following expression:
+\begin{align}
+[I_c] = 
+	\begin{bmatrix}
+		\frac{1}{2} m r^{2} & 0 & 0 \\
+		0 & \frac{1}{12}\left(3 r^{2}+h^{2}\right) & 0 \\
+		0 & 0 & \frac{1}{12}\left(3 r^{2}+h^{2}\right)
+	\end{bmatrix}
+\end{align}
+
+
 
 
 \section{Boundary Conditions and State Constraints}
@@ -179,11 +189,10 @@ It is additionally helpful to restrict the attitude of the vehicle such that it 
 this selects the $(1,1)$ element of the MRP-to-DCM matrix in equation \ref{mrp2c}. Therefore the constraint becomes:
 %
 \begin{align}
-	\frac{1}{(1+\sigma^2)^2}\left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) &\geq \cos{\psi_{max}} \\
-	% \frac{4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2)}{(1+\sigma^2)^2} + \frac{(1-\sigma^2)^2}{(1+\sigma^2)^2} &\geq \cos{\psi_{max}} \\
-	(1+\sigma^2)^2\cos{\psi_{max}} - \left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) &\leq 0
+\label{alignconstraint}
+	1- \frac{8(\sigma_2^2 + \sigma_3^2)}{(1+\sigma^2)^2} \geq \cos{\psi_{max}}
 \end{align}
-This quaternion version of this same constraint is $\cos(\psi_{max}) \leq 1-2\sqrt{q_{2}^{2}+q_{3}^{2}}$. The quaternion unity identity must be used in this derivation. Similarly, we can also constrain the entire MRP such that the vehicle does not exceed $\pi$ radians in total angular displacement.
+This quaternion version of this same constraint is $1-2(q_{2}^{2}+q_{3}^{2}) \geq \cos(\psi_{max})$. The quaternion unity identity must be used in this derivation. The quaternion definition is convex, but the MRP version is not. We shall handle this later with a simple linearization. Similarly, we can also constrain the entire MRP such that the vehicle does not exceed $\pi$ radians in total angular displacement.
 \begin{align}
 	\left \lVert \boldsymbol{\sigma}_\mathcal{B/N} (t) \right \lVert_2 \leq 1
 \end{align}
@@ -194,13 +203,15 @@ Nominally the vehicle should not have large angular rates throughout the descent
 
 Finally we must constrain the commanded thrust magnitude. As stated before, engines have a minimum and maximum thrust region $[T_{min}, T_{max}] \in \mathbb{R}_{++}$ in which they operate. Also, recall that we have made the single-ignition assumption. The engine thrust vector control system there is some limit to the amount of gimbal angle we can perform $\delta_{\text{TVC}_{max}}$.
 \begin{align}
-& 0 < T_{min} \leq \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq T_{max} \\
+& 0 < F_{min} \leq \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq F_{max} \\
 & \cos(\delta_{\text{TVC}_{max}}) \left \lVert \bm{F}_{thrust}(t) \right \lVert_2 \leq \hat{\bm{b}}_1^T \bm{F}_{thrust}(t)
 \end{align}
 it is clear that the upper thrust bound is clearly convex but the lower bound creates a non-convex constraint. This shall be handled later in our discretization step.
 
-It may also be important to restrict the thrust vector control deflection velocities to maintain pragmatic control commands. This effectively limits the commandable bandwidth to the actuator. Therefore we can construct a numerical differentiation between control steps as such: $\abs{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}} \leq \dot{\delta}_{\text{TVC}_{max}}dt$ where of course $\hat{\bm{b}}_1^T\mathbf{F}_{th} = \norm{\mathbf{F}_{th}}_2\cos{\delta_{\text{TVC}}}$. The value $\dot{\delta}_{\text{TVC}_{max}}$ is just a constant determined by the guidance engineer a priori. We shall show later how this formulation is simplified with the assumed structure of the guidance routine. We can use the dimensionality of our desired solution and a time-dilation final time coefficient to maintain scaling of the differentiation for the general free-final-time solution.
+It may also be important to restrict the thrust vector control deflection velocities to maintain pragmatic control commands. This effectively limits the commandable bandwidth to the actuator. Therefore we can construct a numerical differentiation between control steps as such: $|{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}| \leq \dot{\delta}_{\text{TVC}_{max}}dt$ where of course $\hat{\bm{b}}_1^T\mathbf{F}_{th} = \norm{\mathbf{F}_{th}}_2\cos{\delta_{\text{TVC}}}$. The value $\dot{\delta}_{\text{TVC}_{max}}$ is just a constant determined by the guidance engineer a priori. We shall show later how this formulation is simplified with the assumed structure of the guidance routine. We can use the dimensionality of our desired solution and a time-dilation final time coefficient to maintain scaling of the differentiation for the general free-final-time solution.
 
+
+WHAT DO I DO HERE???
 
 %
 \section{Continuous Time Problem}
@@ -219,7 +230,7 @@ Putting this all together, we can pose the continuous time optimization problem.
 \underline{Boundary Conditions:}  
 \begin{align*}
 m(0) &= m_0, &^\mathcal{N}\mathbf{r}(0) &= \mathbf{r}_0, & ^\mathcal{N}\mathbf{v}(0) &= \mathbf{v}_0, & \boldsymbol{\sigma}_\mathcal{B/N}(0) &= \boldsymbol{\sigma}_0, \quad ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) = \boldsymbol{\omega}_0 \\
-\quad ^\mathcal{N}\mathbf{r}(0) &= \mathbf{0}, & ^\mathcal{N}\mathbf{v}(0) &= \mathbf{0}, & \boldsymbol{\sigma}_\mathcal{B/N}(0) &= \mathbf{0}, & ^\mathcal{B}\boldsymbol{\omega}_\mathcal{B/N}(0) &= \mathbf{0}
+\quad ^\mathcal{N}\mathbf{r}_{T} &= \mathbf{0}, & ^\mathcal{N}\mathbf{v}_T &= \mathbf{0}, & \boldsymbol{\sigma}_{\mathcal{B/N}_T} &= \mathbf{0}, & ^\mathcal{B}\boldsymbol{\omega}_{\mathcal{B/N}_{T}} &= \mathbf{0}
 \end{align*}
 %
 \underline{Dynamics:}  
@@ -236,14 +247,14 @@ m(0) &= m_0, &^\mathcal{N}\mathbf{r}(0) &= \mathbf{r}_0, & ^\mathcal{N}\mathbf{v
 m_{dry} - m(t) & \leq 0 \\
 || [\hat{\bm{n}}_2 \ \ \hat{\bm{n}}_3 ]^T \mathbf{r}(t) \lvert\lvert_2 \ \tan{\gamma_{gs}}  - \hat{\bm{n}}_1^T \mathbf{r}(t) & \leq 0 \\
 %
-(1+\sigma^2)^2\cos{\psi_{max}} - \left(4(\sigma_1^2 - \sigma_2^2 - \sigma_3^2) + (1-\sigma^2)^2 \right) & \leq 0 \\
+\frac{8(\sigma_2^2 + \sigma_3^2)}{(1+\sigma^2)^2}-1 &\leq \cos{\psi_{max}}\\
 %
 \left \lVert \boldsymbol{\sigma}_\mathcal{B/N}(t) \right \lVert_2 & \leq 1 \\
 %
 \left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 & \leq \omega_{max}\\
-0 < T_{min} \leq \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq T_{max} \\
+0 < F_{min} \leq \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq F_{max} \\
 \cos(\delta_{max}) \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq \hat{\bm{b}}_1^T \bm{F}_{th}(t) \\
-\left \lVert \delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}} \right \lVert_2 & \leq \dot{\delta}_{\text{TVC}_{max}}dt
+\left \lVert \delta_{\text{TVC}_{t+dt}} - \delta_{\text{TVC}_{t}} \right \lVert_2 & \leq \dot{\delta}_{\text{TVC}_{max}}dt
 \end{align*}
 \end{mdframed}
 

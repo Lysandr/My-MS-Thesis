@@ -27,7 +27,7 @@ In order to formulate our guidance problem with the free-final-time objective we
 \end{align}
 We can now translate between the two by using the dilation coefficient $\eta$ which we define as
 \begin{align}
-& \eta \triangleq \Big(\frac{d\tau}{dt}\Big)^{-1}
+& \eta \triangleq \left(\frac{d\tau}{dt}\right)^{-1}
 \end{align}
 
 This $\eta$ will become a variable in the convex subproblem that acts as the non-dimensionalized final time. It is a scaling factor that translates between real work differential time and the normalized version used for our algorithm. We can now write the nonlinear dynamics to take advantage of this normalized time:
@@ -66,9 +66,19 @@ We can simplify this expression by breaking the Taylor expansion intro matrix su
 \end{align}
 
 
-\subsection{Convexifying the Minimum Thrust Constraint}
-With this done, we tackle the last source of non-convexity: the non-zero lower bound to our actuator thrust. This is done with a first order Taylor series linear approximation. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taking the approximation:
+\subsection{Convexifying the Alignment Constraint}
+Additionally, the convexity of the constraint proposed in \ref{alignconstraint} is not immediately clear. After analysis, it is shown to be non-convex. This is a downside to using MRP attitude coordinates over quaternions: the quaternion expression is exactly convex in the original form. Performing the first order Taylor linear approximation, we have the convexified form of this constraint:
+%
+\begin{align*}
+    \frac{16\,\hat{\sigma}_2\,\left(\hat{\sigma}_2-\sigma_{2}\right)\,\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1 -2 (\hat{\sigma}_2^2 + \hat{\sigma}_3^2)\right)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^3}-\frac{32\,\hat{\sigma}_1\,\left(\hat{\sigma}_1-\sigma_{1}\right)\,\left(\hat{\sigma}_2^2+ \hat{\sigma}_3^2\right)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^3}
+    -\frac{8(\hat{\sigma}_2^2+\hat{\sigma}_3^2)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^2}
+    \\ +\frac{16\,\hat{\sigma}_3\,\left(\hat{\sigma}_3-\sigma_{3}\right)\,\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1-2(\hat{\sigma}_2^2+\hat{\sigma}_3^2)\right)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^3}+1 \geq \cos\psi_{max}
+\end{align*}
+We shall refer to this constraint as $\Psi (\boldsymbol{\sigma},\hat{\boldsymbol{\sigma}}) + 1 \geq \cos \psi_{max}$ going forward.
 
+\subsection{Convexifying the Minimum Thrust Constraint}
+With this done, we tackle the last source of non-convexity: the non-zero lower bound to our actuator thrust. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taleing the first orde Tayloar series linear approximation, we have the following convexified constraint formulation:
+%
 \begin{align}
 	g(\mathbf{u}(\tau)) &= F_{min} - \norm{\hat{\mathbf{u}}(\tau)} - \frac{\hat{\mathbf{u}}(\tau)^T}{\norm{\hat{\mathbf{u}}(\tau)}}(\mathbf{u}(\tau) - \hat{\mathbf{u}}(\tau)) & \leq 0 \\
 	&= F_{min} - \frac{\hat{\mathbf{u}}(\tau)^T}{\norm{\hat{\mathbf{u}}(\tau)}} \mathbf{u}(\tau)  & \leq 0\\
@@ -81,11 +91,13 @@ this leads us to the linear, convexified constraint $F_{min} \leq \Xi(\tau)\math
 
 
 
+
 \section{Discretization Scheme}
-The final step to fitting the dynamics, state, and control constraints to an optimization form is to cast the problem as a finite dimensional discretization. We must choose this finite dimensional problem to occur over $K\in\mathbb{Z}$ evenly separated points with respect to the normalized trajectory time $\tau$. We define can define the index set $\mathcal{K}\in\mathbb{Z}$ as the following:
-\begin{equation*}
-	\mathcal{K}\triangleq \{0,1,\cdots, K-1\}
-\end{equation*}
+The final step to fitting the dynamics, state, and control constraints to an optimization form is to cast the problem as a finite dimensional discretization. We must choose this finite dimensional problem to occur over $K\in\mathbb{Z}$ evenly separated points with respect to the normalized trajectory time $\tau$. We can define the index set $\mathcal{K}\in\mathbb{Z}^{K}$ and $\mathcal{K}_-\in\mathbb{Z}^{K-1}$ for the state and input histories as the following:
+\begin{align*}
+	\mathcal{K} &\triangleq \{0,1,\cdots, K-1\} \\
+	\mathcal{K}_- &\triangleq \{0,1,\cdots, K-2 \}
+\end{align*}
 %
 Given that the trajectory time is normalized on the interval $\tau \in [0,1 ]$, we can define the discrete time step at point $k$ as such
 %
@@ -103,9 +115,9 @@ The input is spread linearly, on a first order relationship, from the index posi
 %
 The constants we have defined follow the following form:
 \begin{align}
-& d\tau = \frac{1}{K-1} \\
-& \alpha_k(\tau) = \frac{d\tau - \tau}{d\tau} \\
-& \beta_k(\tau) = \frac{\tau}{d\tau}
+d\tau &= \frac{1}{K-1} \\
+\alpha_k(\tau) &= \frac{d\tau - \tau}{d\tau} \\
+\beta_k(\tau) &= \frac{\tau}{d\tau}
 \end{align}
 %
 
@@ -139,9 +151,9 @@ Therefore the arbitrary state transition mapping from time $\tau_k$ to $\xi$ can
 
 Recall our continuous LTV system dynamics expression $\mathbf{x}^\prime(\tau) =  A(\tau)\mathbf{x} + B(\tau)\mathbf{u} + \mathbf{z}(\tau) + \Sigma(\tau)\eta$. Employing our control FOH, we want to form this as the following discrete time system:
 \begin{align}
-	\mathbf{x}_{k+1} = F_k\mathbf{x_k} + G^-_k\mathbf{u_k} + G^+\mathbf{u_{k+1}} + \bar{\mathbf{z}}_k + \bar{\Sigma}_k\eta
+	\mathbf{x}_{k+1} = F_k\mathbf{x_k} + G^-_k\mathbf{u_k} + G^+_k\mathbf{u_{k+1}} + \bar{\mathbf{z}}_k + \bar{\Sigma}_k\eta
 \end{align}
-Converting the continuous time dynamics to discrete time dynamics, we perform a series of convolution integrals to define the impact of the transformations over each discrete time step. *CITE ASTROM HERE ABOUT THE CONTINUOUS TIME CONVOLUTION STUFF* The continuous linear time invariant discretization form is usually written as $G=\int_{0}^{dt} e^{A \tau} d \tau$, but given the LTV dynamics and our FOH control assumption, we reformulate as:
+Converting the continuous time dynamics to discrete time dynamics, we perform a series of convolution integrals to define the impact of the transformations over each discrete time step. *CITE ASTROM HERE ABOUT THE CONTINUOUS TIME CONVOLUTION STUFF* The continuous linear time invariant discretization form is usually written as $G=\int_{0}^{dt} e^{A \tau} d \tau B$, but given the LTV dynamics and our FOH control assumption, we reformulate as:
 %
 \begin{subequations}
 \label{disc}
@@ -165,6 +177,8 @@ MAKE A POINT TO DERIVE SOME OF THIS STUFF USING THE ANTSAKLIS LINEAR SYSTEMS THE
 It should be noted that the number of temporal nodes $K$, where $\mathcal{K} \in \mathbb{Z}^K$, chosen for this problem to be evaluated at does not affect the accuracy of the solution, only the optimality. An optimization solution where $K=10$ will still accurately land the vehicle within all the constraints defined, but may do so in more time and with larger cost than the same problem solved at $K=25$. However, the former is computed faster and generally produces a cost quite close to the higher temporal-density solution depending on the problem statement.
 
 \section{Successive Form, Trust Regions and Relaxations}
+WRITE A BUNCH MORE HERE ABOUT THE MODIFICATIONS TO THE OBJECTIVE FUNCTION
+
 In order to solve a non-convex problem, we iteratively solve a sequence of related convex subproblems. However, before we can reach a concluding framework, we must consider trust regions and dynamic relaxations. In order to make sure that this successive framework stays bounded and feasible through this convergence process, we must bound the divergence of state and inputs from one iteration to another. Unbounded problems can arise from constraints that admit an unbounded cost. To mitigate this issue, we augment the cost function with soft trust regions about the previous iterate's information. Let us define these deviations at iteration $i$ as such:
 \begin{align}
 & \delta \mathbf{x}_k^i \triangleq \mathbf{x}_k^i - \mathbf{x}_k^{i-1} \\
@@ -174,95 +188,116 @@ In order to solve a non-convex problem, we iteratively solve a sequence of relat
 
 We can then fabricate the following constraints with $\bm{\bar{\Delta}}^i \in \mathbb{R}^K$ and $\Delta_\eta^i \in \mathbb{R}$
 \begin{align}
-& \delta \mathbf{x}_k^i \cdot \delta \mathbf{x}_k^i + \delta \mathbf{u}_k^i \cdot \delta \mathbf{u}_k^i \leq \mathbf{e}_k \cdot \bm{\bar{\Delta}}^i \\
-& \delta \eta^i \leq \Delta_\eta^i
+& \delta \mathbf{x}_k^i \cdot \delta \mathbf{x}_k^i + \delta \mathbf{u}_k^i \cdot \delta \mathbf{u}_k^i \leq \bar{\Delta}_k^i \\
+& \delta \eta^i \cdot \delta \eta^i \leq \Delta_\eta^i
 \end{align}
 
-We can now append $w_\Delta^i \norm{{\bar{\Delta}}^i} + w_{\Delta_\eta}\norm{\Delta_\eta^i}$ to the cost function to minimize input, state, and final time deviations and keeping their deviation bounded via constraint, where $w_\Delta^i$ and $w_{\Delta_\eta}$ are weighting scalars depending on the preferences of the scenario. While the norm magnitudes are bounded, we consider these soft constraints.
+We can now append $w_\Delta^i \norm{{\bar{\Delta}}^i} + w_{\Delta_\eta} ||\Delta_\eta^i ||$ to the cost function to minimize input, state, and final time deviations and keeping their deviation bounded via constraint, where $w_\Delta^i$ and $w_{\Delta_\eta}$ are weighting scalars depending on the preferences of the scenario. While the norm magnitudes are bounded, we consider these soft constraints.
 Given that the trust regions are centered about previous points $(\mathbf{x}_{k}^{i-1},\mathbf{u}_{k}^{i-1},\eta^{i-1})$, we must evaluate the Jacobian about the nonlinear trajectory beginning at $\mathbf{x}_{k}^{i-1}$. We can then use the FOH input vector $\mathbf{u}(\tau)$. Doing this $\forall k \in \mathcal{K}$ defines the aforementioned linearization path $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\eta})$. 
 
 
-We now add a dynamic relaxation variable to discount artificial infeasibility. This is encountered during the convergence process when the linearization becomes infeasible. For example, if the dynamics are linearized about unrealistic conditions, it because dynamically inconsistent. It will not produce a feasible solution. This is encountered during the first couple iterations of a successive convexification due to poor initial trajectory or time-of-flight estimation. To get rid of this issue, we employ dynamic relaxation, where a slack variable is added to the dynamics in order to "make room" for the iteration to proceed. However, you can guess that this will inevitably be something we try to minimize in the cost function in order to make sure that our final trajectories are as dynamically consistent as possible. Therefore, we must now write our dynamics as follows: 
+We now add a dynamic relaxation variable to discount artificial infeasibility. This is encountered during the convergence process when the linearization becomes infeasible. For example, if the dynamics are linearized about unrealistic conditions, the problem becomes dynamically inconsistent and will not produce solution. We modify the control such that we have guaranteed subproblem solutions that have non-empty feasible sets. This is encountered during the first couple iterations of a successive convexification due to poor initial trajectory or time-of-flight estimation. To get rid of this issue, we employ dynamic relaxation, where a slack variable is added to the dynamics in order to ``make room'' for the iteration to proceed. You can also think of this as a virtual control or dynamic padding. However, you can guess that this will inevitably be something we want to minimize in the cost function in order to make sure that our final trajectories are as dynamically consistent as possible. Therefore, we must now write our dynamics as follows: 
 %
 \begin{align}
-& \mathbf{x}_{k+1}^i = \bar{A}_k^i\mathbf{x_k}^i + \bar{B}_k^i\mathbf{u_k}^i + \bar{C}^i\mathbf{u_{k+1}}^i + \bar{\Sigma}_k^i\sigma^i + \bar{\mathbf{z}}^i_k + \bm{\nu}_k^i
+& \mathbf{x}_{k+1}^i = F_k^i\mathbf{x}_k^i + G^{-,i}_k\mathbf{u}_k^i + G_k^{+,i}\mathbf{u}_{k+1}^i + \bar{\mathbf{z}}^i_k +\bar{\Sigma}_k^i\eta^i + \bm{\nu}_k^i
 \end{align}
+The right super script $^i$ indicates the iterate of the algorithm, where the subscript $_k$ of course means the ordered parameter entrance in our array shaped by $\mathcal{K}$.
 
 Because we are going to use this in our cost function as a norm, we shall concatenate the time history of the slack variable as
 \begin{align}
-\bar{\bm{\nu}}^i = 
+\bm{\nu}^i = 
 	\begin{bmatrix}
 	{\bm{\nu}_0^i}^T & \cdots & {\bm{\nu}^i_{K-2}}^T 
 	\end{bmatrix}^T
 \end{align}
 
-And of course we augment the cost function again with $w_v \norm{\bar{\bm{\nu}}^i}_1$. As the iteration continues, this value is minimized as the solution becomes more dynamically feasible. Therefore, the magnitude of this norm is indicative of a final solution in the successive iteration process.
+And of course we augment the cost function again with $w_v \norm{\bm{\nu}^i}_1$. As the iteration continues, this value is minimized as the solution becomes more dynamically feasible. Therefore, the magnitude of this norm is indicative of a final solution in the successive iteration process.
 
 \section{Convex Sub-Problem}
-We can now put all of the components together and form the convex version of the continuous problem, but with fixed final time.
+Now that we have linearized and convexified the proposed problem, we can put these components together as the full free-final-time problem shown in \ref{problem2} where we use the following objective function:
+\begin{align}
+	\min_{\eta^i, \mathbf{u}_k^i} \quad \eta^i + w_\Delta^i || \bm{\bar{\Delta}}^i ||_2 + w_{\Delta_\eta} || \Delta_\eta^i ||_1 + w_v || \bar{\bm{\nu}}^i ||_1
+\end{align}
 
-\clearpage
-\begin{mdframed}
-\textbf{Problem 2: Discretized Convex Fixed-Final-Time Sub-Problem ($i^{th}$ iteration)}
-\underline{Cost Function:}
-\begin{equation*}
-\min_{\sigma^i, \mathbf{u}_k^i} \quad \sigma^i + w_\Delta^i || \bar{\Delta}^i ||_2 + w_{\Delta_\sigma} || \Delta_\sigma^i ||_1 + w_v || \bar{\bm{\nu}}^i ||_1
-\end{equation*}
-
-\underline{Boundary Conditions:}  
-\begin{align*}
-& m_0 = m_{wet} \quad \mathbf{r}_{I_0} = \mathbf{r}_i \quad \mathbf{v}_{I_0} = \mathbf{v}_i \quad \quad \quad{q}_{B/I_0} = {q}_{B/I _{i}} \quad \bm{\omega}_B(0) = \bm{\omega}_{B _{i}} \\
-& \mathbf{r}_{I_K} = \mathbf{0} \quad \quad \mathbf{v}_{I_K} = \mathbf{0} \quad {q}_{B/I _K} = {q}_{B/I _ {f}} \quad \bm{\omega}_{B_K} = \mathbf{0} \\
-& \mathbf{e}_2 \cdot \mathbf{T}_{B_K}= \mathbf{e}_3 \cdot \mathbf{T}_{B_K}= 0
-\end{align*}
-
-\underline{Dynamics:}  
-\begin{align*}
-& \mathbf{x}_{k+1}^i = \bar{A}_k^i\mathbf{x_k}^i + \bar{B}_k^i\mathbf{u_k}^i + \bar{C}^i\mathbf{u_{k+1}}^i + \bar{\Sigma}_k^i\sigma^i + \bar{\mathbf{z}}^i_k + \bm{\nu}_k^i
-\end{align*}
-
-\underline{State Constraints:}  
-\begin{align*}
-& m_k \geq m_{dry} \\
-& \mathbf{e}_1 \cdot \mathbf{r}_{I_k} \geq \tan(\gamma_{gs}) \left\lVert \left[\mathbf{e}_2 \quad \mathbf{e}_3\right]^T \mathbf{r}_{I_k} \right\lVert_2 \\
-& \cos(\theta_{max}) \leq 1-2(q_{2_k}^{2}+q_{3_k}^{2}) \\
-& \left \lVert \bm{\omega}_{B_k} \right \lVert_2 \leq \omega_{max}
-\end{align*}
-
-\underline{Control Constraints:}  
-\begin{align*}
-& T_{min} \leq B_g(\tau_k)\mathbf{u}_k^i \\
-& \left \lVert \mathbf{u}_k^i \right \lVert_2 \leq T_{max} \\
-& \cos(\delta_{max}) \left \lVert \mathbf{u}_k^i \right \lVert_2 \leq \bm{e}_1 \cdot \mathbf{u}_k
-\end{align*}
-
-\underline{Trust Regions:}  
-\begin{align*}
-& \delta \mathbf{x}_k^i \cdot \delta \mathbf{x}_k^i + \delta \mathbf{u}_k^i \cdot \delta \mathbf{u}_k^i \leq \mathbf{e}_k \cdot \bm{\bar{\Delta}}^i \\
-& \delta \sigma^i \cdot \delta \sigma^i \leq \Delta_\sigma^i
-\end{align*}
-
-\end{mdframed}
-
-
-
-\clearpage
-\section{Algorithm}
-The goal is for the successive convexification algorithm to continue iterating until $\Delta_{tol}$ and $\nu_{tol}$ are met. These are defined by the magnitude of each vector.
-
+\subsection{Algorithm}
+The goal is for the successive convexification algorithm \ref{Successive} to continue iterating until $\Delta_{tol}$ and $\nu_{tol}$ are met. We define these by the magnitude of each vector. Their magnitudes are checked at the end of each iteration of the routine. Additionally, to ensure boundedness on the trust regions and to prevent an admitted unbounded cost, we turn the cost weighting of the trust region up after each iteration.
 
 \begin{algorithm}
 \caption{Successive Convexification}\label{Successive}
 \begin{algorithmic}[1]
-\Procedure{SCvx}{$x_{ref},\sigma_{ref}$}
-\State Generate initial trajectory by linearly spanning from initial condition to terminal conditions on each state
-\While{$ ||{\Delta}|| \geq \Delta_{tol} \quad \&\& \quad ||{\nu}|| \geq \nu_{tol} $}
-\State Compute $\bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$ from $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}$
-\State Solve Problem 2 using $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \sigma^{i-1}, \bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$
-\State Store the newly found $\mathbf{x}_k^{i}, \mathbf{u}_k^{i}, \sigma^{i}$
+\Procedure{SCvx}{$x_{ref}, u_{ref}, \eta_{ref}$}
+\State Generate initial reference trajectory by linearly spanning states and inputs from initial conditions to terminal constraints.
+\While{$ ||{\Delta}|| \geq \Delta_{tol} \quad \&\& \quad ||{\nu}|| \geq \nu_{tol} \quad \&\& \quad i \leq i_{max}$}
+\State Compute $\bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$ from $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \eta^{i-1}$
+\State Solve Problem 2 using $\mathbf{x}_k^{i-1}, \mathbf{u}_k^{i-1}, \eta^{i-1}, \bar{A}_k^{i-1}, \bar{B}_k^{i-1}, \bar{C}_k^{i-1}, \bar{\Sigma}_k^{i-1}, \bar{z}_k^{i-1}$
+\State Store the newly found $\mathbf{x}_k^{i}, \mathbf{u}_k^{i}, \eta^{i}$
+\State $w^{i+1}_\Delta = 1.7*w^{i}_\Delta$
 \State $i++;$
 \EndWhile 
 \State \textbf{return} $\mathbf{x}, \mathbf{u}$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
+
+
+
+
+To finish proposing the convex sub-problem we must convert all state and control constraints to discrete time versions. The only constraint that is not immediately apparent is the TVC bandwidth constraint derivation. As previously proposed, we have that $|{\delta_{\text{TVC}_{t+dt}} - \delta_{\text{TVC}_{t}}}| \leq \dot{\delta}_{\text{TVC}_{max}}dt$. The discrete time equivalent is $|{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}| \leq \delta^\prime_{\text{TVC}_{max}}d\tau$. We know that the dilated system works as $dt = \eta d\tau$ and of course that $d\tau = \frac{1}{K}$. It can then simply be encoded as the following constraint:
+%
+\begin{align}
+	||{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}||_2 &\leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}} \\
+	|| \Delta_\delta || & \leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}  \\ 
+	\left \lVert \cos^{-1}\left (\frac{\mathbf{u}_k^T\mathbf{u}_{k+1}}{u_k u_{k+1}} \right) \right \rVert & \leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}
+\end{align}
+Given that we know the domain of the angle differences is constrained to a positive semidefinite arena of operation, we can perform a small angle approximation where $\mathbf{u}_k^T\mathbf{u}_{k+1} \leq u_k u_{k+1}\frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}$.
+
+THIS SHIT IS NONCONVEX WHAT SHOULD I TRY TO DO HERE???
+
+
+\clearpage
+\begin{mdframed}
+\label{problem2}
+\textbf{Problem 2: Discretized Convex Fixed-Final-Time Sub-Problem ($i^{th}$ iteration)}
+\underline{Cost Function:}
+\begin{equation*}
+\min_{\eta^i, \mathbf{u}_k^i} \quad \eta^i + w_\Delta^i || \bm{\bar{\Delta}}^i ||_2 + w_{\Delta_\eta} || \Delta_\eta^i ||_1 + w_v || \bar{\bm{\nu}}^i ||_1
+\end{equation*}
+%
+\underline{Boundary Conditions:}  
+\begin{align*}
+m_0 &= m_0, &^\mathcal{N}\mathbf{r}_0 &= \mathbf{r}_0, & ^\mathcal{N}\mathbf{v}_0 &= \mathbf{v}_0, & \boldsymbol{\sigma}_{\mathcal{B/N}_0} &= {\boldsymbol{\sigma}_0}, \quad ^\mathcal{B}\boldsymbol{\omega}_{\mathcal{B/N}_0} = \boldsymbol{\omega}_0 \\
+\quad ^\mathcal{N}\mathbf{r}_{K-1} &= \mathbf{0}, & ^\mathcal{N}\mathbf{v}_{K-1} &= \mathbf{0}, & \boldsymbol{\sigma}_{\mathcal{B/N}_{K-1}} &= \mathbf{0}, & ^\mathcal{B}\boldsymbol{\omega}_{\mathcal{B/N}_{K-1}} &= \mathbf{0}
+\end{align*}
+%
+\underline{Dynamics:}  
+\begin{align*}
+& \mathbf{x}_{k+1}^i = F_k^i\mathbf{x}_k^i + G^{-,i}_k\mathbf{u}_k^i + G_k^{+,i}\mathbf{u}_{k+1}^i + \bar{\mathbf{z}}^i_k +\bar{\Sigma}_k^i\eta^i + \bm{\nu}_k^i
+\end{align*}
+%
+\underline{State and Control Constraints:}
+\begin{align*}
+m_{dry} - m_k & \leq 0 \\
+|| [\hat{\bm{n}}_2 \ \ \hat{\bm{n}}_3 ]^T \mathbf{r}_k \lvert\lvert_2 \ \tan{\gamma_{gs}}  - \hat{\bm{n}}_1^T \mathbf{r}_k & \leq 0 \\
+%
+\cos \psi_{max} &\leq 1 + \Psi (\boldsymbol{\sigma}^i,\boldsymbol{\sigma}^{i-1}) \\
+%
+|| \boldsymbol{\sigma}_{\mathcal{B/N}_k}||_2 & \leq 1 \\
+%
+|| \bm{\omega}_{\mathcal{B/N}_k} ||_2 & \leq \omega_{max}
+\end{align*}
+%
+\underline{Control Constraints:}  
+\begin{align*}
+F_{min} \leq \Xi_k^i\mathbf{u}_k^i, \quad \quad
+|| \mathbf{u}_k^i ||_2 &\leq F_{max} \\
+\cos(\delta_{max}) || \mathbf{u}_k^i ||_2 \leq \hat{\bm{b}}_1^T \mathbf{u}_k^i
+% || \delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}} ||_2 &\leq \frac{ \eta^i}{K}\dot{\delta}_{\text{TVC}_{max}}
+\end{align*}
+%
+\underline{Trust Regions:}  
+\begin{align*}
+& ||{\delta \mathbf{x}_k^i}^T  \delta \mathbf{x}_k^i + {\delta \mathbf{u}_k^i}^T \delta \mathbf{u}_k^i ||_2 \leq \bar{\Delta}_k^i \\
+& || \delta \eta^i ||_2 \leq \Delta_\eta^i
+\end{align*}
+\end{mdframed}
+

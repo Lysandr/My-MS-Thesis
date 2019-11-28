@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.3)  23 NOV 2019 10:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.3)  27 NOV 2019 21:47
 entering extended mode
 **./main.tex
 (main.tex
@@ -1536,31 +1536,56 @@ LaTeX Font Info:    Try loading font information for OT1+pcr on input line 228.
 ("C:\Users\Padraig Lysandrou\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss
 \ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)) (main.aux)
+)) (main.aux
+
+LaTeX Warning: Label `table:tableplanar' multiply defined.
+
+
+LaTeX Warning: Label `fig:nplanarcontrols' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `fig:nplanarcontrols' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `fig:nplanarcontrols' multiply defined.
+
+
+LaTeX Warning: Label `' multiply defined.
+
+
+LaTeX Warning: Label `fig:nplanarcontrols' multiply defined.
+
+)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 70.
-LaTeX Font Info:    ... okay on input line 70.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 70.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 70.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 68.
 
 ("C:\Users\Padraig Lysandrou\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t
 s1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 70.
+LaTeX Font Info:    ... okay on input line 68.
 
 ("C:\Users\Padraig Lysandrou\AppData\Local\Programs\MiKTeX 2.9\tex\context\base
 \supp-pdf.mkii"
@@ -1593,7 +1618,7 @@ G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
 \AtBeginShipoutBox=\box69
-Package hyperref Info: Link coloring OFF on input line 70.
+Package hyperref Info: Link coloring OFF on input line 68.
 
 ("C:\Users\Padraig Lysandrou\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperr
 ef\nameref.sty"
@@ -1605,9 +1630,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count335
 )
-LaTeX Info: Redefining \ref on input line 70.
-LaTeX Info: Redefining \pageref on input line 70.
-LaTeX Info: Redefining \nameref on input line 70.
+LaTeX Info: Redefining \ref on input line 68.
+LaTeX Info: Redefining \pageref on input line 68.
+LaTeX Info: Redefining \nameref on input line 68.
  (main.out) (main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
@@ -1653,7 +1678,7 @@ LaTeX Info: Redefining \selectfont on input line 126.
 .................................................
 . chemgreek info: "mapping-activated"
 . 
-. Activating mapping `default' on line 70.
+. Activating mapping `default' on line 68.
 .................................................
 
 ("C:\Users\Padraig Lysandrou\AppData\Local\Programs\MiKTeX 2.9\tex\latex\transl
@@ -1751,7 +1776,7 @@ centered
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 108.
  [8] [9] [10] [11] [12]
-Package mdframed Info: Not enough space on this page on input line 248.
+Package mdframed Info: Not enough space on this page on input line 259.
 ) (chapter3.tex [13
 
 ]
@@ -1784,110 +1809,232 @@ l.57 \end{align}
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.71 
-     ] [16] [17] [18] [19] [20] [21]
-Package mdframed Info: Not enough space on this page on input line 245.
- [22
-
-]) (chapter4.tex [23
+l.72 \begin{align*}
+                   ] [16] [17] [18] [19] [20] [21] [22]
+Package mdframed Info: Not enough space on this page on input line 302.
+) (chapter4.tex [23
 
 ]
  \th@ChapterStyle\th@DoChapCenterChapter \th@ChapterStyle 4.
 centered
-
-LaTeX Warning: Reference `fig:succ' on page 24 undefined on input line 18.
-
-
-LaTeX Warning: Citation `6dofsucc' on page 24 undefined on input line 18.
-
-
-LaTeX Warning: Reference `fig:thrusters' on page 24 undefined on input line 50.
-
-
 [24
 
-] [25]
+]
+Package epstopdf Info: Source file: <figs/planar_traj.eps>
+(epstopdf)                    date: 2019-11-27 11:01:50
+(epstopdf)                    size: 79129 bytes
+(epstopdf)             Output file: <figs/planar_traj-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-11-27 11:03:24
+(epstopdf)                    size: 23641 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/planar_traj-eps-conver
+ted-to.pdf figs/planar_traj.eps>
+(epstopdf)             \includegraphics on input line 23.
+Package epstopdf Info: Output file is already uptodate.
+<figs/planar_traj-eps-converted-to.pdf, id=485, 462.72874pt x 239.89626pt>
+File: figs/planar_traj-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/planar_traj-eps-converted-to.pdf>
+Package pdftex.def Info: figs/planar_traj-eps-converted-to.pdf  used on input l
+ine 23.
+(pdftex.def)             Requested size: 469.75499pt x 243.54153pt.
+Package epstopdf Info: Source file: <figs/planar_controls.eps>
+(epstopdf)                    date: 2019-11-27 11:20:35
+(epstopdf)                    size: 36763 bytes
+(epstopdf)             Output file: <figs/planar_controls-eps-converted-to.pdf>
 
-LaTeX Warning: Reference `fig:0sigma' on page 26 undefined on input line 126.
+(epstopdf)                    date: 2019-11-27 12:52:41
+(epstopdf)                    size: 19405 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/planar_controls-eps-co
+nverted-to.pdf figs/planar_controls.eps>
+(epstopdf)             \includegraphics on input line 31.
+Package epstopdf Info: Output file is already uptodate.
+<figs/planar_controls-eps-converted-to.pdf, id=486, 486.81876pt x 317.185pt>
+File: figs/planar_controls-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/planar_controls-eps-converted-to.pdf>
+Package pdftex.def Info: figs/planar_controls-eps-converted-to.pdf  used on inp
+ut line 31.
+(pdftex.def)             Requested size: 469.75499pt x 306.06706pt.
+ [25
 
-[26]
+ <./figs/planar_traj-eps-converted-to.pdf> <./figs/planar_controls-eps-converte
+d-to.pdf>] [26]
+Package epstopdf Info: Source file: <figs/nonplanar_3dtraj.eps>
+(epstopdf)                    date: 2019-11-26 21:25:22
+(epstopdf)                    size: 62285 bytes
+(epstopdf)             Output file: <figs/nonplanar_3dtraj-eps-converted-to.pdf
+>
+(epstopdf)                    date: 2019-11-26 21:27:28
+(epstopdf)                    size: 14342 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/nonplanar_3dtraj-eps-c
+onverted-to.pdf figs/nonplanar_3dtraj.eps>
+(epstopdf)             \includegraphics on input line 82.
+Package epstopdf Info: Output file is already uptodate.
+<figs/nonplanar_3dtraj-eps-converted-to.pdf, id=522, 458.71375pt x 437.635pt>
+File: figs/nonplanar_3dtraj-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/nonplanar_3dtraj-eps-converted-to.pdf>
+Package pdftex.def Info: figs/nonplanar_3dtraj-eps-converted-to.pdf  used on in
+put line 82.
+(pdftex.def)             Requested size: 469.75499pt x 448.19147pt.
+Package epstopdf Info: Source file: <figs/nonplanar_controls.eps>
+(epstopdf)                    date: 2019-11-27 11:16:25
+(epstopdf)                    size: 42240 bytes
+(epstopdf)             Output file: <figs/nonplanar_controls-eps-converted-to.p
+df>
+(epstopdf)                    date: 2019-11-27 12:52:41
+(epstopdf)                    size: 20045 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/nonplanar_controls-eps
+-converted-to.pdf figs/nonplanar_controls.eps>
+(epstopdf)             \includegraphics on input line 88.
+Package epstopdf Info: Output file is already uptodate.
+<figs/nonplanar_controls-eps-converted-to.pdf, id=523, 486.81876pt x 317.185pt>
 
-LaTeX Warning: Reference `fig:n0sigma' on page 27 undefined on input line 136.
+File: figs/nonplanar_controls-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/nonplanar_controls-eps-converted-to.pdf>
+Package pdftex.def Info: figs/nonplanar_controls-eps-converted-to.pdf  used on 
+input line 88.
+(pdftex.def)             Requested size: 469.75499pt x 306.06706pt.
+) (chapter5.tex [27
 
-
-LaTeX Warning: Reference `fig:thrusty' on page 27 undefined on input line 136.
-
-) (chapter5.tex [27]
+ <./figs/nonplanar_3dtraj-eps-converted-to.pdf>] [28 <./figs/nonplanar_controls
+-eps-converted-to.pdf>] [29]
  \th@ChapterStyle\th@DoChapCenterChapter \th@ChapterStyle 5.
 centered
-) (chapter6.tex [28
+Package epstopdf Info: Source file: <figs/etavsK.eps>
+(epstopdf)                    date: 2019-11-27 14:08:03
+(epstopdf)                    size: 21245 bytes
+(epstopdf)             Output file: <figs/etavsK-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-11-27 14:11:37
+(epstopdf)                    size: 11794 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/etavsK-eps-converted-t
+o.pdf figs/etavsK.eps>
+(epstopdf)             \includegraphics on input line 52.
+Package epstopdf Info: Output file is already uptodate.
+<figs/etavsK-eps-converted-to.pdf, id=559, 365.365pt x 187.70125pt>
+File: figs/etavsK-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/etavsK-eps-converted-to.pdf>
+Package pdftex.def Info: figs/etavsK-eps-converted-to.pdf  used on input line 5
+2.
+(pdftex.def)             Requested size: 469.75499pt x 241.34227pt.
+Package epstopdf Info: Source file: <figs/iteratetiming.eps>
+(epstopdf)                    date: 2019-11-27 14:08:02
+(epstopdf)                    size: 20387 bytes
+(epstopdf)             Output file: <figs/iteratetiming-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-11-27 14:11:38
+(epstopdf)                    size: 11180 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/iteratetiming-eps-conv
+erted-to.pdf figs/iteratetiming.eps>
+(epstopdf)             \includegraphics on input line 59.
+Package epstopdf Info: Output file is already uptodate.
+<figs/iteratetiming-eps-converted-to.pdf, id=560, 354.32375pt x 187.70125pt>
+File: figs/iteratetiming-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/iteratetiming-eps-converted-to.pdf>
+Package pdftex.def Info: figs/iteratetiming-eps-converted-to.pdf  used on input
+ line 59.
+(pdftex.def)             Requested size: 469.75499pt x 248.85762pt.
+Package epstopdf Info: Source file: <figs/massvsK.eps>
+(epstopdf)                    date: 2019-11-27 14:08:05
+(epstopdf)                    size: 17860 bytes
+(epstopdf)             Output file: <figs/massvsK-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-11-27 14:11:39
+(epstopdf)                    size: 10210 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/massvsK-eps-converted-
+to.pdf figs/massvsK.eps>
+(epstopdf)             \includegraphics on input line 66.
+Package epstopdf Info: Output file is already uptodate.
+<figs/massvsK-eps-converted-to.pdf, id=561, 365.365pt x 188.705pt>
+File: figs/massvsK-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/massvsK-eps-converted-to.pdf>
+Package pdftex.def Info: figs/massvsK-eps-converted-to.pdf  used on input line 
+66.
+(pdftex.def)             Requested size: 469.75499pt x 242.63286pt.
+Package epstopdf Info: Source file: <figs/solvetimevsK.eps>
+(epstopdf)                    date: 2019-11-27 14:08:04
+(epstopdf)                    size: 19657 bytes
+(epstopdf)             Output file: <figs/solvetimevsK-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-11-27 14:11:40
+(epstopdf)                    size: 10411 bytes
+(epstopdf)             Command: <epstopdf --outfile=figs/solvetimevsK-eps-conve
+rted-to.pdf figs/solvetimevsK.eps>
+(epstopdf)             \includegraphics on input line 73.
+Package epstopdf Info: Output file is already uptodate.
+<figs/solvetimevsK-eps-converted-to.pdf, id=562, 350.30875pt x 188.705pt>
+File: figs/solvetimevsK-eps-converted-to.pdf Graphic file (type pdf)
+<use figs/solvetimevsK-eps-converted-to.pdf>
+Package pdftex.def Info: figs/solvetimevsK-eps-converted-to.pdf  used on input 
+line 73.
+(pdftex.def)             Requested size: 469.75499pt x 253.06493pt.
+[30
 
-]
+] [31 <./figs/etavsK-eps-converted-to.pdf> <./figs/iteratetiming-eps-converted-
+to.pdf>] [32 <./figs/massvsK-eps-converted-to.pdf> <./figs/solvetimevsK-eps-con
+verted-to.pdf>]) (chapter6.tex [33]
  \th@ChapterStyle\th@DoChapCenterChapter \th@ChapterStyle 6.
 centered
-[29
+[34
 
-]) (main.bbl [30
+]) (main.bbl [35
 
 ]
 centered
-) (appendixA.tex [31
+) (appendixA.tex [36
 
 ]
  \th@ChapterStyle\th@DoChapCenterAppendix \th@ChapterStyle A.
 centered
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 90.
- [32
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 88.
+ [37
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 90.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 88.
  (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 90.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 90.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 88.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 88.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 604E93517115DC67279C43E5196AE812;2392.
+(rerunfilecheck)             Checksum: B549DE39CF7CA1E0FB5092AA5E4AA5E7;2714.
 
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 90.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 88.
  ) 
 Here is how much of TeX's memory you used:
- 23972 strings out of 493305
- 452181 string characters out of 3124581
- 531551 words of memory out of 3000000
- 27069 multiletter control sequences out of 15000+200000
- 543012 words of font info for 69 fonts, out of 3000000 for 9000
+ 24044 strings out of 493305
+ 454297 string characters out of 3124581
+ 532298 words of memory out of 3000000
+ 27112 multiletter control sequences out of 15000+200000
+ 543353 words of font info for 70 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,21n,42p,10369b,857s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmbx10.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Padraig Lysandrou
-/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:
-/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmcsc10.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Padraig Lysandrou/App
-Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Us
-ers/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmmi6.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9
-/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Padraig Lysandrou/AppData/L
-ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/P
-adraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cmextra/cmmib8.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Padraig Lysandrou/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/Pad
-raig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
-/cmr8.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmr9.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Padraig Lys
-androu/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.p
-fb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/symbols/msam10.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (41 pages, 348552 bytes).
+ <C:\Users\Padraig Lysandrou\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappe
+n\ec\dpi600\tcrm1095.pk><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Padraig Lysandrou/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/U
+sers/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmbx8.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/Padraig Lysandrou/AppDat
+a/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users
+/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmmi10.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/Padraig Lysandrou/AppData/Loc
+al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Padra
+ig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mmib10.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cmextra/cmmib8.pfb><C:/Users/Padraig Lysandrou/AppData/Lo
+cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Padr
+aig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
+cmr6.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmr8.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Padraig Lysand
+rou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmsy6.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/Padraig Lysandrou/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+<C:/Users/Padraig Lysandrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (46 pages, 476890 bytes).
 PDF statistics:
- 570 PDF objects out of 1000 (max. 8388607)
- 172 named destinations out of 1000 (max. 500000)
- 265 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 739 PDF objects out of 1000 (max. 8388607)
+ 190 named destinations out of 1000 (max. 500000)
+ 345 words of extra memory for PDF output out of 10000 (max. 10000000)
 

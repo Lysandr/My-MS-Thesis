@@ -1,8 +1,6 @@
 
 
 
-
-
 Bhasin:
   ☐ background on tasks and why important
   ☐ research goal
@@ -16,56 +14,45 @@ Bhasin:
     ☐ glideslope
     ☐ close up on pit and stuff
     ☐ timing and monte carlo, runtime
-    ☐ 
 
-
-
-Sections:
-  ☐ Introduction
-    ☐ background
-      ☐ need basic entry figures
-    ☐ motivation
-      ☐ attributes of a good guidance algorithm write in details
-    ☐ literature review
-      ☐ GFOLD
-      ☐ SQP
-      ☐ other miki algs?
-      ☐ polynomial guidance
-      ☐ peg backwards
-      ☐ ignition time opimization
-    ☐ research scope
-      ☐ talk about scope of this project
-  ☐ The PDG Problem
-    ☐ add in more writing
-  ☐ Convex Formulation
-    ☐ add in more FLUFF writing
-    ☐ add in more derivation about the discrete time derivations
-    ☐ go back over the trust regions and relaxations...
-    ☐ talk more about the convex subproblem
-    ☐ elaborate on the SCVX algorithm structure
-  ☐ Guidance Results
-    ☐ planar problem results
-    ☐ non planar problem results
-    ☐ looking at constraints and glideslope shit being met
-  ☐ Analysis
-    ☐ timing, runtime
-    ☐ looking at \eta convergence with increase in K
-    ☐ runtime over different constraint sets
-    ☐ monte carlo runs with differing initial conditions
-    ☐ MRP inclusion timing comparison?
-    ☐ initial ref traj outside constraint space
-    ☐ glideslope vs subterminal constraints
-  ☐ Conclusions
-    ☐ future work
-      ☐ ignition time optimization
-      ☐ stcs and cstcs
-      ☐ hypersonic patch guidance work
+DO:
+ ☐ abstract fill 
+ ☐ background
+   ☐ entry figure!!!
+ ☐ motivation
+   ☐ attributes of a good guidance alg
+     ☐ keeping within mission constraints
+ ☐ literature review
+ ☐ basic  scope coverage
+ ☐ add more fluff in chapter 2
+ ☐ add more intro fluff to chapter 3
+ ☐ figure out what is wrong with aligment constraint in 3.1.1
+ ☐ talk about continuous time convolution stuff
+ ☐ do antsaklis linear derivations in section 3.2
+ ☐ talk more about trust regions and relaxations
+ ☐ figure out TVC bandwidth shit in section 3.4.1
+ ☐ finish nonplanar talk
+ ☐ show the glideslops works
+ ☐ do runtime analysis with constraints active plots etc
+ ☐ do temporal node count variation writing shit
+ ☐ do parameter variation and plots
+ ☐ mrps vs quats
+ ☐ corner conditions
+ ☐ glideslope vs subterminal constraints
+ ☐ conclusions
+   ☐ igition time optimization
+   ☐ stcs cstcs
+   ☐ hypersonic patch
 
 
 Analysis extra:
   ☐ perfect feedforward control simulation
     ☐ rk4 right down to the K windows
   ☐ feedforward with feedback control simulation
+
+
+
+
 
 
 
