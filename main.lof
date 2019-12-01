@@ -1,16 +1,19 @@
 \contentsline {part} {\figurenameToC }{\relax }{}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Landing Trajectory Example\relax }}{2}{figure.caption.6}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Planar Guidance Problem: Vehicle Descends In-line with Target\relax }}{25}{figure.caption.6}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Planar Guidance Problem: Control and Angular Rate During Landing\relax }}{25}{figure.caption.7}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Non-Planar Guidance Problem: Vehicle Approaches Offset from Target\relax }}{27}{figure.caption.9}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Non-Planar Guidance Problem: Controls and Angular rate of Landing Vehicle\relax }}{28}{figure.caption.10}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Planar Guidance Problem: Vehicle Descends In-line with Target\relax }}{31}{figure.caption.7}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Planar Guidance Problem: Control and Angular Rate During Landing\relax }}{31}{figure.caption.8}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Planar Guidance Problem: Total Alignment Constraint Met\relax }}{32}{figure.caption.10}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Non-Planar Guidance Problem: Controls and Angular rate of Landing Vehicle\relax }}{33}{figure.caption.11}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Non-Planar Guidance Problem: Vehicle Approaches Offset from Target\relax }}{34}{figure.caption.12}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Non-Planar Guidance Problem: Position and Velocity Histories\relax }}{35}{figure.caption.13}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Non-Planar Guidance Problem: Vehicle Approaches Offset from Target\relax }}{31}{figure.caption.13}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Non-Planar Guidance Problem: Vehicle Approaches Offset from Target\relax }}{31}{figure.caption.14}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Non-Planar Guidance Problem: Vehicle Approaches Offset from Target\relax }}{32}{figure.caption.15}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Non-Planar Guidance Problem: Vehicle Approaches Offset from Target\relax }}{32}{figure.caption.16}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Planar Guidance Problem: Final-Time $\eta $ versus Temporal Node Count K\relax }}{38}{figure.caption.16}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Planar Guidance Problem: Terminal Vehicle Mass versus K Node Count\relax }}{38}{figure.caption.17}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Planar Guidance Problem: Final-Time $\eta $ Convergence for many K Node Count Runs\relax }}{39}{figure.caption.18}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Planar Guidance Problem: Computation Time versus Temporal Node Count K\relax }}{39}{figure.caption.19}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -2,8 +2,12 @@
 \chapter{Conclusions}
 \label{conclusions}
 
-
-\clearpage
 \section{Conclusions and Future Work}
-It should be known that while I do not consider this work novel, I do think it may lend a useful insight to those interested in using or implementing such strategies of motion.
+This type of algorithm is highly versatile and amenable to real-time implementation for agile landing vehicles. This could be used as a trajectory generator, sequential guidance routine, guidance and feed-forward routine, or simply as an offline validation and mission design tool. It's ability to quickly generate dynamically feasible trajectories is impressive.
 
+In the future, it may be interesting to apply a TVC bandwidth constraint to the system as well as state triggered constraints (STCs) for mission specific actions like initial ignition timing as shown in \cite{szmuk2018successivestcs}. The hypersonic reentry problem has hybrid-discrete dynamic switching events where the vehicle changes properties. For example, during entry, a capsule may shed it's protective ablative shield and dawn a parachute for a deceleration phase. It may be interesting to explore trajectory optimization and discrete event timing using successive convexification and state triggered constraints. The MRP switching mechanism can easily be encoded with STCs and may yield interesting model predictive attitude slewing algorithms. Tackling the ascent objective with a number of active aerodynamic disturbances seems like a worthwhile objective. The problem can be split up into a couple smaller in-plane and out-of-plane problems, making the full solutions easier and perhaps more computationally tractable.
+
+It would be valuable to write this routine in C/C++ for small embedded single board computers (SBCs). These SBCs could be dedicated path planning computers for small landing testbeds, robotic platforms, and other GN\&C validation hardware.
+
+
+Although the majority of this thesis is implementation and adaptation, I hope it serves as an example of the versatility and usefulness of the SCvx routine and it's capabilities. It is evident that online optimization routines such as this will be valuable and shape the future of autonomous robotics, spacecraft, and real-time decision making.

@@ -66,18 +66,8 @@ We can simplify this expression by breaking the Taylor expansion intro matrix su
 \end{align}
 
 
-\subsection{Convexifying the Alignment Constraint}
-Additionally, the convexity of the constraint proposed in \ref{alignconstraint} is not immediately clear. After analysis, it is shown to be non-convex. This is a downside to using MRP attitude coordinates over quaternions: the quaternion expression is exactly convex in the original form. Performing the first order Taylor linear approximation, we have the convexified form of this constraint:
-%
-\begin{align*}
-    \frac{16\,\hat{\sigma}_2\,\left(\hat{\sigma}_2-\sigma_{2}\right)\,\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1 -2 (\hat{\sigma}_2^2 + \hat{\sigma}_3^2)\right)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^3}-\frac{32\,\hat{\sigma}_1\,\left(\hat{\sigma}_1-\sigma_{1}\right)\,\left(\hat{\sigma}_2^2+ \hat{\sigma}_3^2\right)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^3}
-    -\frac{8(\hat{\sigma}_2^2+\hat{\sigma}_3^2)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^2}
-    \\ +\frac{16\,\hat{\sigma}_3\,\left(\hat{\sigma}_3-\sigma_{3}\right)\,\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1-2(\hat{\sigma}_2^2+\hat{\sigma}_3^2)\right)}{{\left(\mathrm{\norm{\hat{\boldsymbol{\sigma}}}}+1\right)}^3}+1 \geq \cos\psi_{max}
-\end{align*}
-We shall refer to this constraint as $\Psi (\boldsymbol{\sigma},\hat{\boldsymbol{\sigma}}) + 1 \geq \cos \psi_{max}$ going forward.
-
 \subsection{Convexifying the Minimum Thrust Constraint}
-With this done, we tackle the last source of non-convexity: the non-zero lower bound to our actuator thrust. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taleing the first orde Tayloar series linear approximation, we have the following convexified constraint formulation:
+With this done, we tackle the last source of non-convexity: the non-zero lower bound to our actuator thrust. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taking the first order Taylor series linear approximation, we have the following convexified constraint formulation:
 %
 \begin{align}
 	g(\mathbf{u}(\tau)) &= F_{min} - \norm{\hat{\mathbf{u}}(\tau)} - \frac{\hat{\mathbf{u}}(\tau)^T}{\norm{\hat{\mathbf{u}}(\tau)}}(\mathbf{u}(\tau) - \hat{\mathbf{u}}(\tau)) & \leq 0 \\
@@ -111,7 +101,7 @@ For implementation sake, a first-order-hold linear scaling on the applied contro
 	\mathbf{u}(\tau) \triangleq \alpha_k(\tau) \mathbf{u}_k + \beta(\tau) \mathbf{u}_{k+1}
 \end{equation}
 %
-The input is spread linearly, on a first order relationship, from the index position $k$ to the next known control value at $k+1$ in the control history. Additionally this allows us to consider the controller interpolation scheme a priori if used in a feed forward regime. The successive convexification algorithm was tested with a number of discretization methods on state and input, where first order hold (FOH) and Legendre-Gauss-Radau (LGR) collocation methods were found to be the most amenable \cite{malyuta2019discrete}. These two provided the fastest computation times with good performance.
+The input is spread linearly, on a first order relationship, from the index position $k$ to the next known control value at $k+1$ in the control history. This also allows us to consider controller interpolation scheme a priori if used in a feed forward regime. The successive convexification algorithm was tested with a number of discretization methods on state and input, where first order hold (FOH) and Legendre-Gauss-Radau (LGR) collocation methods were found to be the most amenable \cite{malyuta2019discrete}. These two provided the fastest computation times with good performance.
 %
 The constants we have defined follow the following form:
 \begin{align}
@@ -139,7 +129,7 @@ for arbitrary timing parameters $t, \gamma, s$. We can take advantage of this pr
 	\frac{d}{d\tau}\mathbf{x}(\tau) &= \dot{\Phi}(\tau, \tau_k) \mathbf{x}(\tau_k) = A(\tau)\mathbf{x}(\tau) \\ 
 	& = A(\tau) \Phi(\tau, \tau_k) \mathbf{x}(\tau_k)
 \end{align}
-Ingtegration leads to the following fact
+Integration leads to the following fact
 \begin{align}
 	\mathbf{x}(\xi) &= \mathbf{x}(\tau_k) + \int_{\tau_k}^\xi A(\xi) \Phi(\xi, \tau_k) \mathbf{x}(\tau_k) d\xi \\
 	&= \left( \mathbb{I}_{n\times n} + \int_{\tau_k}^\xi A(\xi) \Phi(\xi, \tau_k) d\xi \right)  \mathbf{x}(\tau_k)
@@ -153,7 +143,7 @@ Recall our continuous LTV system dynamics expression $\mathbf{x}^\prime(\tau) = 
 \begin{align}
 	\mathbf{x}_{k+1} = F_k\mathbf{x_k} + G^-_k\mathbf{u_k} + G^+_k\mathbf{u_{k+1}} + \bar{\mathbf{z}}_k + \bar{\Sigma}_k\eta
 \end{align}
-Converting the continuous time dynamics to discrete time dynamics, we perform a series of convolution integrals to define the impact of the transformations over each discrete time step. *CITE ASTROM HERE ABOUT THE CONTINUOUS TIME CONVOLUTION STUFF* The continuous linear time invariant discretization form is usually written as $G=\int_{0}^{dt} e^{A \tau} d \tau B$, but given the LTV dynamics and our FOH control assumption, we reformulate as:
+Converting the continuous time dynamics to discrete time dynamics, we perform a series of convolution integrals to define the impact of the transformations over each discrete time step. The continuous linear time invariant discretization form is usually written as $G=\int_{0}^{dt} e^{A \tau} d \tau B$, but given the LTV dynamics and our FOH control assumption, we reformulate as:
 %
 \begin{subequations}
 \label{disc}
@@ -172,12 +162,9 @@ Converting the continuous time dynamics to discrete time dynamics, we perform a 
 \end{align}
 \end{subequations}
 
-MAKE A POINT TO DERIVE SOME OF THIS STUFF USING THE ANTSAKLIS LINEAR SYSTEMS THEORY TEXT
-
 It should be noted that the number of temporal nodes $K$, where $\mathcal{K} \in \mathbb{Z}^K$, chosen for this problem to be evaluated at does not affect the accuracy of the solution, only the optimality. An optimization solution where $K=10$ will still accurately land the vehicle within all the constraints defined, but may do so in more time and with larger cost than the same problem solved at $K=25$. However, the former is computed faster and generally produces a cost quite close to the higher temporal-density solution depending on the problem statement.
 
 \section{Successive Form, Trust Regions and Relaxations}
-WRITE A BUNCH MORE HERE ABOUT THE MODIFICATIONS TO THE OBJECTIVE FUNCTION
 
 In order to solve a non-convex problem, we iteratively solve a sequence of related convex subproblems. However, before we can reach a concluding framework, we must consider trust regions and dynamic relaxations. In order to make sure that this successive framework stays bounded and feasible through this convergence process, we must bound the divergence of state and inputs from one iteration to another. Unbounded problems can arise from constraints that admit an unbounded cost. To mitigate this issue, we augment the cost function with soft trust regions about the previous iterate's information. Let us define these deviations at iteration $i$ as such:
 \begin{align}
@@ -241,19 +228,6 @@ The goal is for the successive convexification algorithm \ref{Successive} to con
 
 
 
-
-To finish proposing the convex sub-problem we must convert all state and control constraints to discrete time versions. The only constraint that is not immediately apparent is the TVC bandwidth constraint derivation. As previously proposed, we have that $|{\delta_{\text{TVC}_{t+dt}} - \delta_{\text{TVC}_{t}}}| \leq \dot{\delta}_{\text{TVC}_{max}}dt$. The discrete time equivalent is $|{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}| \leq \delta^\prime_{\text{TVC}_{max}}d\tau$. We know that the dilated system works as $dt = \eta d\tau$ and of course that $d\tau = \frac{1}{K}$. It can then simply be encoded as the following constraint:
-%
-\begin{align}
-	||{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}||_2 &\leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}} \\
-	|| \Delta_\delta || & \leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}  \\ 
-	\left \lVert \cos^{-1}\left (\frac{\mathbf{u}_k^T\mathbf{u}_{k+1}}{u_k u_{k+1}} \right) \right \rVert & \leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}
-\end{align}
-Given that we know the domain of the angle differences is constrained to a positive semidefinite arena of operation, we can perform a small angle approximation where $\mathbf{u}_k^T\mathbf{u}_{k+1} \leq u_k u_{k+1}\frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}$.
-
-THIS SHIT IS NONCONVEX WHAT SHOULD I TRY TO DO HERE???
-
-
 \clearpage
 \begin{mdframed}
 \label{problem2}
@@ -279,18 +253,16 @@ m_0 &= m_0, &^\mathcal{N}\mathbf{r}_0 &= \mathbf{r}_0, & ^\mathcal{N}\mathbf{v}_
 m_{dry} - m_k & \leq 0 \\
 || [\hat{\bm{n}}_2 \ \ \hat{\bm{n}}_3 ]^T \mathbf{r}_k \lvert\lvert_2 \ \tan{\gamma_{gs}}  - \hat{\bm{n}}_1^T \mathbf{r}_k & \leq 0 \\
 %
-\cos \psi_{max} &\leq 1 + \Psi (\boldsymbol{\sigma}^i,\boldsymbol{\sigma}^{i-1}) \\
-%
-|| \boldsymbol{\sigma}_{\mathcal{B/N}_k}||_2 & \leq 1 \\
+\left \lVert \boldsymbol{\sigma}_{\mathcal{B/N}_k} \right \lVert_2 &\leq \tan \left( \frac{\psi_{max}}{4} \right) \\
 %
 || \bm{\omega}_{\mathcal{B/N}_k} ||_2 & \leq \omega_{max}
 \end{align*}
 %
 \underline{Control Constraints:}  
 \begin{align*}
-F_{min} \leq \Xi_k^i\mathbf{u}_k^i, \quad \quad
+F_{min} &\leq \Xi_k^i\mathbf{u}_k^i \\
 || \mathbf{u}_k^i ||_2 &\leq F_{max} \\
-\cos(\delta_{max}) || \mathbf{u}_k^i ||_2 \leq \hat{\bm{b}}_1^T \mathbf{u}_k^i
+\cos(\delta_{max}) || \mathbf{u}_k^i ||_2 &\leq \hat{\bm{b}}_1^T \mathbf{u}_k^i
 % || \delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}} ||_2 &\leq \frac{ \eta^i}{K}\dot{\delta}_{\text{TVC}_{max}}
 \end{align*}
 %

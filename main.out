@@ -10,13 +10,13 @@
 \BOOKMARK [1][-]{section.2.1}{Problem Description}{chapter.2}% 10
 \BOOKMARK [1][-]{section.2.2}{Definitions and Notation}{chapter.2}% 11
 \BOOKMARK [1][-]{section.2.3}{Vehicle Dynamics}{chapter.2}% 12
-\BOOKMARK [2][-]{subsection.2.3.1}{Attitude Dynamics and Formalisms}{section.2.3}% 13
-\BOOKMARK [1][-]{section.2.4}{Boundary Conditions and State Constraints}{chapter.2}% 14
-\BOOKMARK [1][-]{section.2.5}{Continuous Time Problem}{chapter.2}% 15
-\BOOKMARK [0][-]{chapter.3}{Convex Formulation}{}% 16
-\BOOKMARK [1][-]{section.3.1}{Linearization}{chapter.3}% 17
-\BOOKMARK [2][-]{subsection.3.1.1}{Convexifying the Alignment Constraint}{section.3.1}% 18
-\BOOKMARK [2][-]{subsection.3.1.2}{Convexifying the Minimum Thrust Constraint}{section.3.1}% 19
+\BOOKMARK [2][-]{subsection.2.3.1}{Translational Dynamics}{section.2.3}% 13
+\BOOKMARK [2][-]{subsection.2.3.2}{Attitude Dynamics and Formalisms}{section.2.3}% 14
+\BOOKMARK [1][-]{section.2.4}{Boundary Conditions and State Constraints}{chapter.2}% 15
+\BOOKMARK [1][-]{section.2.5}{Continuous Time Problem}{chapter.2}% 16
+\BOOKMARK [0][-]{chapter.3}{Convex Formulation}{}% 17
+\BOOKMARK [1][-]{section.3.1}{Linearization}{chapter.3}% 18
+\BOOKMARK [2][-]{subsection.3.1.1}{Convexifying the Minimum Thrust Constraint}{section.3.1}% 19
 \BOOKMARK [1][-]{section.3.2}{Discretization Scheme}{chapter.3}% 20
 \BOOKMARK [1][-]{section.3.3}{Successive Form, Trust Regions and Relaxations}{chapter.3}% 21
 \BOOKMARK [1][-]{section.3.4}{Convex Sub-Problem}{chapter.3}% 22
@@ -26,13 +26,15 @@
 \BOOKMARK [1][-]{section.4.2}{Planar Problem Solutions}{chapter.4}% 26
 \BOOKMARK [1][-]{section.4.3}{Non-Planar Problem Solutions}{chapter.4}% 27
 \BOOKMARK [0][-]{chapter.5}{Analysis}{}% 28
-\BOOKMARK [1][-]{section.5.1}{Algorithm Runtime with Constraints active}{chapter.5}% 29
+\BOOKMARK [1][-]{section.5.1}{Computation Preface}{chapter.5}% 29
 \BOOKMARK [1][-]{section.5.2}{Temporal Node Count Variation}{chapter.5}% 30
 \BOOKMARK [1][-]{section.5.3}{A Parameter Variation Study}{chapter.5}% 31
-\BOOKMARK [1][-]{section.5.4}{MRPs vs Quaternions}{chapter.5}% 32
+\BOOKMARK [1][-]{section.5.4}{Runtime: MRPs vs Quaternions}{chapter.5}% 32
 \BOOKMARK [1][-]{section.5.5}{Corner Conditions}{chapter.5}% 33
 \BOOKMARK [1][-]{section.5.6}{Glideslope and Subterminal Constraints}{chapter.5}% 34
 \BOOKMARK [0][-]{chapter.6}{Conclusions}{}% 35
 \BOOKMARK [1][-]{section.6.1}{Conclusions and Future Work}{chapter.6}% 36
-\BOOKMARK [-1][-]{chapter*.17}{ Bibliography}{}% 37
-\BOOKMARK [0][-]{appendix.A}{Planetary Landing Testbed Development}{chapter*.17}% 38
+\BOOKMARK [-1][-]{chapter*.20}{ Bibliography}{}% 37
+\BOOKMARK [0][-]{appendix.A}{Additional Constraint Considerations}{chapter*.20}% 38
+\BOOKMARK [1][-]{section.A.1}{TVC Bandwidth Constraints}{appendix.A}% 39
+\BOOKMARK [1][-]{section.A.2}{Convexifying the Alignment Constraint}{appendix.A}% 40

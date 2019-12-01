@@ -1,7 +1,27 @@
 \begin{thebibliography}{10}
 
-\bibitem{acikmese2007convex}
-Behcet Acikmese and Scott~R Ploen.
+\bibitem{acikmese2012g}
+B~Acikmese, J~Casoliva, JM~Carson, and L~Blackmore.
+\newblock G-fold: A real-time implementable fuel optimal large divert guidance
+  algorithm for planetary pinpoint landing.
+\newblock In {\em Concepts and Approaches for Mars Exploration}, volume 1679,
+  2012.
+
+\bibitem{acikmese2013flight}
+Behcet Acikmese, M~Aung, Jordi Casoliva, Swati Mohan, Andrew Johnson, Daniel
+  Scharf, David Masten, Joel Scotkin, Aron Wolf, and Martin~W Regehr.
+\newblock Flight testing of trajectories computed by g-fold: Fuel optimal large
+  divert guidance algorithm for planetary landing.
+\newblock In {\em AAS/AIAA spaceflight mechanics meeting}, 2013.
+
+\bibitem{accikmecse2011lossless}
+Beh{\c{c}}et A{\c{c}}{\i}kme{\c{s}}e and Lars Blackmore.
+\newblock Lossless convexification of a class of optimal control problems with
+  non-convex control constraints.
+\newblock {\em Automatica}, 47(2):341--347, 2011.
+
+\bibitem{Acikmese2007convex}
+Behçet Açikmeşe and Scott~R Ploen.
 \newblock Convex programming approach to powered descent guidance for mars
   landing.
 \newblock {\em Journal of Guidance, Control, and Dynamics}, 30(5):1353--1366,
@@ -19,7 +39,7 @@ Lars Blackmore.
 \newblock {\em Winter Bridge on Frontiers of Engineerin}, 4(46):15--29, 2016.
 
 \bibitem{blackmore2010minimum}
-Lars Blackmore, Behcet Acikmese, and Daniel~P Scharf.
+Lars Blackmore, Behçet Açikmeşe, and Daniel~P Scharf.
 \newblock Minimum-landing-error powered-descent guidance for mars landing using
   convex optimization.
 \newblock {\em Journal of guidance, control, and dynamics}, 33(4):1161--1171,
@@ -30,18 +50,72 @@ Stephen Boyd and Lieven Vandenberghe.
 \newblock {\em Convex optimization}.
 \newblock Cambridge university press, 2004.
 
+\bibitem{domahidi2013ecos}
+Alexander Domahidi, Eric Chu, and Stephen Boyd.
+\newblock Ecos: An socp solver for embedded systems.
+\newblock In {\em 2013 European Control Conference (ECC)}, pages 3071--3076.
+  IEEE, 2013.
+
+\bibitem{d1997optimal}
+Christopher D'Souza and Christopher D'Souza.
+\newblock An optimal guidance law for planetary landing.
+\newblock In {\em Guidance, Navigation, and Control Conference}, page 3709,
+  1997.
+
+\bibitem{jones2018recent}
+Harry Jones.
+\newblock The recent large reduction in space launch cost.
+\newblock 48th International Conference on Environmental Systems, 2018.
+
+\bibitem{klumpp1974apollo}
+Allan~R Klumpp.
+\newblock Apollo lunar descent guidance.
+\newblock {\em Automatica}, 10(2):133--146, 1974.
+
 \bibitem{malyuta2019discrete}
-Danylo Malyuta, Taylor Reynolds~P., Michael Szmuk, Mehran Mesbahi, and Behcet
-  Acikmese.
+Danylo Malyuta, Taylor Reynolds~P., Michael Szmuk, Mehran Mesbahi, and Behçet
+  Açikmeşe.
 \newblock Discretization performance and accuracy analysis for the powered
   descent guidance problem.
 \newblock 2019.
+
+\bibitem{mao2016successive}
+Yuanqi Mao, Michael Szmuk, and Beh{\c{c}}et A{\c{c}}{\i}kme{\c{s}}e.
+\newblock Successive convexification of non-convex optimal control problems and
+  its convergence properties.
+\newblock In {\em 2016 IEEE 55th Conference on Decision and Control (CDC)},
+  pages 3636--3641. IEEE, 2016.
+
+\bibitem{mao2018successive}
+Yuanqi Mao, Michael Szmuk, Xiangru Xu, and Behçet Açikmeşe.
+\newblock Successive convexification: A superlinearly convergent algorithm for
+  non-convex optimal control problems.
+\newblock {\em arXiv preprint arXiv:1804.06539}, 2018.
 
 \bibitem{markley2014fundamentals}
 F~Landis Markley and John~L Crassidis.
 \newblock {\em Fundamentals of Spacecraft Attitude Determination and Control},
   volume~33.
 \newblock Springer, 2014.
+
+\bibitem{mchenry1979space}
+RL~McHenry, AD~Long, BF~Cockrell, JR~Thibodeau~III, and TJ~Brand.
+\newblock Space shuttle ascent guidance, navigation, and control.
+\newblock {\em Journal of the Astronautical Sciences}, 27:1--38, 1979.
+
+\bibitem{nesterov1994interior}
+Yurii Nesterov and Arkadii Nemirovskii.
+\newblock {\em Interior-point polynomial algorithms in convex programming},
+  volume~13.
+\newblock Siam, 1994.
+
+\bibitem{scharf2014adapt}
+Daniel~P Scharf, Martin~W Regehr, Geoffery~M Vaughan, Joel Benito, Homayoon
+  Ansari, MiMi Aung, Andrew Johnson, Jordi Casoliva, Swati Mohan, Daniel Dueri,
+  et~al.
+\newblock Adapt demonstrations of onboard large-divert guidance with a vtvl
+  rocket.
+\newblock In {\em 2014 IEEE Aerospace Conference}, pages 1--18. IEEE, 2014.
 
 \bibitem{sj}
 Hanspeter Schaub and John~L. Junkins.
@@ -56,17 +130,29 @@ Michael Szmuk.
 \newblock PhD thesis, 2019.
 
 \bibitem{szmuk2018successive}
-Michael Szmuk and Behcet Acikmese.
+Michael Szmuk and Behçet Açikmeşe.
 \newblock Successive convexification for 6-dof mars rocket powered landing with
   free-final-time.
 \newblock In {\em 2018 AIAA Guidance, Navigation, and Control Conference}, page
   0617, 2018.
 
 \bibitem{szmuk2017successive}
-Michael Szmuk, Utku Eren, and Behcet Acikmese.
+Michael Szmuk, Utku Eren, and Behçet Açikmeşe.
 \newblock Successive convexification for mars 6-dof powered descent landing
   guidance.
 \newblock In {\em AIAA Guidance, Navigation, and Control Conference}, page
   1500, 2017.
+
+\bibitem{szmuk2018successivestcs}
+Michael Szmuk, Taylor~P Reynolds, and Behçet Açikmeşe.
+\newblock Successive convexification for real-time 6-dof powered descent
+  guidance with state-triggered constraints.
+\newblock {\em arXiv preprint arXiv:1811.10803}, 2018.
+
+\bibitem{wolf2006performance}
+Aron~A Wolf, Jeff Tooley, Scott Ploen, Mark Ivanov, Behçet Açikmeşe, and
+  Konstantin Gromov.
+\newblock Performance trades for mars pinpoint landing.
+\newblock In {\em 2006 IEEE Aerospace Conference}, pages 16--pp. IEEE, 2006.
 
 \end{thebibliography}

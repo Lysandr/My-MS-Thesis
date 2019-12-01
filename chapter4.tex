@@ -56,7 +56,7 @@ $\omega_{\mathcal{B/N}_0}$ 		& $rad/U_T$ 	& $(0,0,0)$ \\[1ex]
 \hline\hline
 Param & Units & Value \\ [0.5ex] 
 \hline 
-$\gamma_{gs}$ 					& $deg$ 		& $5$  \\ 
+$\gamma_{gs}$ 					& $deg$ 		& $45$  \\ 
 $\delta_{max}$	 				& $deg$ 		& $10$  \\
 $F_{max}$ 						& $U_F$ 		& $0.164$ \\
 $F_{min}$ 						& $U_F$ 		& $0.024$  \\
@@ -70,11 +70,24 @@ $U_T$					 		& s			 	& $3.132$ \\[1ex]
 \label{table:tableplanar}
 \end{table}
 
-The vehicle following the planar path in figure \ref{fig:planar} reached it's terminal state after $22.2$ seconds and with a final mass of $373.62$kg with a starting mass of $408.23$kg only using $11.7$\% of it's fuel.
+The vehicle following the planar path in figure \ref{fig:planar} reached it's terminal state after $22.4$ seconds and with a final mass of $373.62$kg with a starting mass of $408.23$kg only using $11.7$\% of it's fuel. Additionally, we see that the total aligntment MRP constraint is met throughout the flight \ref{fig:nplanar_align}.
 
+\begin{figure}[!htbp] 
+  \centering
+  \includegraphics[width=\textwidth]{figs/planar_alignment.eps}
+  \caption{Planar Guidance Problem: Total Alignment Constraint Met}
+  \label{fig:nplanar_align}
+ \end{figure}
 
 \section{Non-Planar Problem Solutions}
-We now look at a non-planar problem where the initial condition of the vehicle is off-nominal and must make an out-of-plane maneuver to land on the target. The parameters and initial conditions are found in table \ref{table:tablenplanar}. Figure \ref{fig:nplanar} shows a vehicle coming towards the landing pad with an offset lateral position of 100m and with a velocity not pointed directly in-line with the target. 
+We now look at a non-planar problem where the initial condition of the vehicle is off-nominal and must make an out-of-plane maneuver to land on the target. The parameters and initial conditions are found in table \ref{table:tablenplanar}. Figure \ref{fig:nplanar} shows a vehicle coming towards the landing pad with an offset lateral position of 100m and with a velocity not pointed directly in-line with the target. All constraints are met and the vehicle uses maximum thrust nearly the entire duration where cosine throttling and attitude control becomes required are employed. The simple MRP constraint is also met.
+
+\begin{figure}[!htbp] 
+  \centering
+  \includegraphics[width=\textwidth]{figs/nonplanar_controls.eps}
+  \caption{Non-Planar Guidance Problem: Controls and Angular rate of Landing Vehicle}
+  \label{fig:nplanarcontrols}
+ \end{figure}
 
 \clearpage
 \begin{figure}[!htbp] 
@@ -83,47 +96,47 @@ We now look at a non-planar problem where the initial condition of the vehicle i
   \caption{Non-Planar Guidance Problem: Vehicle Approaches Offset from Target}
   \label{fig:nplanar}
  \end{figure}
-\begin{figure}[!htbp] 
+
+The vehicle following the non-planar path in figure \ref{fig:planar} reached it's terminal state after $19.95$ seconds and with a final mass of $376.784$kg with a starting mass of $408.23$kg only using $10.6$\% of it's fuel. Additionally, from figure \ref{fig:nplanar_rv} we can see the terminal position and velocity constraints are met, and the vehicle reaches the landing pad with a safe terminal velocity
+\begin{figure}[ht] 
   \centering
-  \includegraphics[width=\textwidth]{figs/nonplanar_controls.eps}
-  \caption{Non-Planar Guidance Problem: Controls and Angular rate of Landing Vehicle}
-  \label{fig:nplanarcontrols}
- \end{figure}
-
-
+  \includegraphics[width=.5\linewidth]{figs/nonplanar_rv.eps}
+  \caption{Non-Planar Guidance Problem: Position and Velocity Histories}
+  \label{fig:nplanar_rv}
+\end{figure}
 \begin{table}[ht]
-\caption{Parameters Used for Non-Planar Problem}
-\centering 
-\begin{tabular}{c c c} 
-\hline\hline
-Param & Units & Value \\ [0.5ex] 
-\hline 
-$^\mathcal{N}\mathbf{g}$ 		& $U_L/U_T^2$ 	& $\hat{\mathbf{n}}_1$  \\ 
-$\alpha_{\dot{m}}$ 				& - 			& 0.0738  \\
-$m_{wet}$ 						& $U_M$ 		& 1  \\
-$m_{dry}$ 						& $U_M$ 		& 0.277  \\
-$^\mathcal{N}r_{0}$ 			& $U_L$ 		& $(0.65,0.65,0.39)$  \\
-$^\mathcal{N}v_{0}$ 			& $U_L/U_T$	 	& $(0,-0.4,0)$  \\
-$\sigma_{\mathcal{B/N}_0}$ 		& - 			& $(0,0,0.32)$  \\
-$\omega_{\mathcal{B/N}_0}$ 		& $rad/U_T$ 	& $(0,0,0)$ \\[1ex] 
-\hline
-\end{tabular}
-\begin{tabular}{c c c} 
-\hline\hline
-Param & Units & Value \\ [0.5ex] 
-\hline 
-$\gamma_{gs}$ 					& $deg$ 		& $5$  \\ 
-$\delta_{max}$	 				& $deg$ 		& $10$  \\
-$F_{max}$ 						& $U_F$ 		& $0.166$ \\
-$F_{min}$ 						& $U_F$ 		& $0.025$  \\
-$\psi_{max}$ 					& $deg$ 		& $85$  \\
-$\omega_{max}$ 					& $deg/U_T$	 	& $43.84$  \\
-$U_M$ 							& kg 			& $408.233$  \\
-$U_L$					 		& m			 	& $768.114$ \\
-$U_T$					 		& s			 	& $3.132$ \\[1ex] 
-\hline
-\end{tabular}
-\label{table:tablenplanar}
+  \caption{Parameters Used for Non-Planar Problem}
+  \centering 
+  \begin{tabular}{c c c} 
+    \hline\hline
+    Param & Units & Value \\ [0.5ex] 
+    \hline 
+    $^\mathcal{N}\mathbf{g}$ 		& $U_L/U_T^2$ 	& $\hat{\mathbf{n}}_1$  \\ 
+    $\alpha_{\dot{m}}$ 				& - 			& 0.0738  \\
+    $m_{wet}$ 						& $U_M$ 		& 1  \\
+    $m_{dry}$ 						& $U_M$ 		& 0.277  \\
+    $^\mathcal{N}r_{0}$ 			& $U_L$ 		& $(0.65,0.65,0.39)$  \\
+    $^\mathcal{N}v_{0}$ 			& $U_L/U_T$	 	& $(0,-0.4,0)$  \\
+    $\sigma_{\mathcal{B/N}_0}$ 		& - 			& $(0,0,0.32)$  \\
+    $\omega_{\mathcal{B/N}_0}$ 		& $rad/U_T$ 	& $(0,0,0)$ \\[1ex] 
+    \hline
+    \end{tabular}
+    \begin{tabular}{c c c} 
+    \hline\hline
+    Param & Units & Value \\ [0.5ex] 
+    \hline 
+    $\gamma_{gs}$ 					& $deg$ 		& $5$  \\ 
+    $\delta_{max}$	 				& $deg$ 		& $10$  \\
+    $F_{max}$ 						& $U_F$ 		& $0.166$ \\
+    $F_{min}$ 						& $U_F$ 		& $0.025$  \\
+    $\psi_{max}$ 					& $deg$ 		& $85$  \\
+    $\omega_{max}$ 					& $deg/U_T$	 	& $43.84$  \\
+    $U_M$ 							& kg 			& $408.233$  \\
+    $U_L$					 		& m			 	& $768.114$ \\
+    $U_T$					 		& s			 	& $3.132$ \\[1ex] 
+    \hline
+  \end{tabular}
+  \label{table:tablenplanar}
 \end{table}
 
 

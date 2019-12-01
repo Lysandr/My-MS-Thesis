@@ -1,14 +1,48 @@
-\chapter{Planetary Landing Testbed Development}	% *NOT* \OnePageChapter
+% !TEX root = main.tex
+\chapter{Additional Constraint Considerations}	% *NOT* \OnePageChapter
 
-\paragraph{About appendices:}
-	Each appendix follow the same page-numbering rules
-	% as a regular chapter; the first page of a
-	% (multi-page) appendix is not numbered.
-	% By the way, the following are supposedly
-	% authentic answers to English GCSE exams!
+% \paragraph{About appendices:}
+% 	Each appendix follow the same page-numbering rules
+% 	% as a regular chapter; the first page of a
+% 	% (multi-page) appendix is not numbered.
+% 	% By the way, the following are supposedly
+% 	% authentic answers to English GCSE exams!
+
+\section{TVC Bandwidth Constraints}
+
+It may also be important to restrict the thrust vector control deflection velocities to maintain pragmatic control commands. This effectively limits the commandable bandwidth to the actuator. Therefore we can construct a numerical differentiation between control steps as such: $|{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}| \leq \dot{\delta}_{\text{TVC}_{max}}dt$ where of course $\hat{\bm{b}}_1^T\mathbf{F}_{th} = \norm{\mathbf{F}_{th}}_2\cos{\delta_{\text{TVC}}}$. The value $\dot{\delta}_{\text{TVC}_{max}}$ is just a constant determined by the guidance engineer a priori. We can use the dimensionality of our desired solution and a time-dilation final time coefficient to maintain scaling of the differentiation for the general free-final-time solution.
+
+As proposed, we have that $|{\delta_{\text{TVC}_{t+dt}} - \delta_{\text{TVC}_{t}}}| \leq \dot{\delta}_{\text{TVC}_{max}}dt$. The discrete time equivalent is $|{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}| \leq \delta^\prime_{\text{TVC}_{max}}d\tau$. We know that the dilated system works as $dt = \eta d\tau$ and of course that $d\tau = \frac{1}{K}$. It can then simply be encoded as the following constraint:
+%
+\begin{align}
+	||{\delta_{\text{TVC}_{k+1}} - \delta_{\text{TVC}_{k}}}||_2 &\leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}} \\
+	|| \Delta_\delta || & \leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}  \\ 
+	\left \lVert \cos^{-1}\left (\frac{\mathbf{u}_k^T\mathbf{u}_{k+1}}{u_k u_{k+1}} \right) \right \rVert & \leq \frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}
+\end{align}
+Given that we know the domain of the angle differences is constrained to a positive semidefinite arena of operation in the bodt frame, we can perform a small angle approximation where $\mathbf{u}_k^T\mathbf{u}_{k+1} \leq u_k u_{k+1}\frac{\eta}{K}\dot{\delta}_{\text{TVC}_{max}}$. This is not apparently convex, but there may be simpler approaches to this constraint which avoid adding an extra order term to the input dynamics. Of course, that may very well be the best way of implementing a first order constraint on TVC deflection.
 
 
-% \begin{enumerate}
 
-% \item test
-% \end{enumerate}
+
+
+
+\section{Convexifying the Alignment Constraint}
+Additionally, the convexity of the constraint proposed in \ref{alignconstraint} is not immediately clear. After analysis, it is shown to be non-convex. Performing the first order Taylor linear approximation, we have the convexified form of this constraint:
+%
+\begin{align*}
+    \frac{16\,\hat{\sigma}_2\,\left(\hat{\sigma}_2-\sigma_{2}\right)\,\left(\mathrm{\hat{\sigma}^2}+1 -2 (\hat{\sigma}_2^2 + \hat{\sigma}_3^2)\right)}{{\left(\mathrm{\hat{\sigma}^2}+1\right)}^3}-\frac{32\,\hat{\sigma}_1\,\left(\hat{\sigma}_1-\sigma_{1}\right)\,\left(\hat{\sigma}_2^2+ \hat{\sigma}_3^2\right)}{{\left(\mathrm{\hat{\sigma}^2}+1\right)}^3}
+    -\frac{8(\hat{\sigma}_2^2+\hat{\sigma}_3^2)}{{\left(\mathrm{\hat{\sigma}^2}+1\right)}^2}
+    \\ +\frac{16\,\hat{\sigma}_3\,\left(\hat{\sigma}_3-\sigma_{3}\right)\,\left(\mathrm{\hat{\sigma}^2}+1-2(\hat{\sigma}_2^2+\hat{\sigma}_3^2)\right)}{{\left(\mathrm{\hat{\sigma}^2}+1\right)}^3}+1 \geq \cos\psi_{max} \\
+    \Psi (\boldsymbol{\sigma},\hat{\boldsymbol{\sigma}}) + 1 \geq \cos \psi_{max}
+\end{align*}
+
+This constraint is not used in lieu of the simple MRP magnitude constraint.
+
+
+
+
+
+
+
+
+

@@ -3,66 +3,96 @@
 \label{introchap}
 
 \section{Background}
-Pin-point landing has been of significant interest for a variety of applications. These include safely landing scientific payloads and humans on other planets, returning them back to Earth, and reusable launch vehicles (RLVs). Additionally, having the capability to land near a site of scientific interest, base, or refueling station will become a requirement for our interplanetary space transportation infrastructure. Pin-point landing and divert capability will be a necessity for our advancement in .
+Pin-point landing has been of significant interest for a variety of applications. These include safely landing scientific payloads and humans on other planets, returning them back to Earth, and reusable launch vehicles (RLVs). The ability to soft-land a rocket is fundamentally disruptive to the launch industry and has already showed promise in reducing the cost of getting to space \cite{jones2018recent}. For planetary exploration, it will be a requirement to land near a site of scientific interest, base, or refueling stations. It is apparent that having a robust and reliable powered descent guidance routine will be a necessity for our future space transport infrastructure.
 
-The ability to soft-land a rocket is fundamentally disruptive to the launch industry and has already showed promise in reducing the cost of getting to space. 
+Every pinpoint landing problem begins with an entry phase where the vehicle descends through an atmosphere to a point where the landing regime begins. Many Mars entry, descent, and landing schemes enter the atmosphere and decelerate via an ablative shield and supersonic parachutes. The parachute is then cut away to allow powered descent to occur. With atmospheric qualities being non-deterministic, the position in which the descent phase must begin is uncertain. Therefore, landing algorithms which maximize the divert capability of the vehicle by minimizing the fuel consumption of the final landing time are of interest. We define powered descent guidance as the generation of a fuel-optimal trajectory and/or input sequence that takes the vehicle from some initial state condition to a prescribed final state in a uniform gravitational field with standard vehicle given thrust magnitude and direction constraints in finite time. Figure \ref{fig:intro} shows an example of an RLV in a return-to-launch-site maneuver (RTLS).
 
-Every pinpoint landing problem begins with an entry phase where the vehicle descends through an atmosphere to a point where powered descent must begin. Many Mars entry, descent, and landing schemes enter the atmosphere and slow down via parachute. This parachute is then cut away to allow powered descent. With atmospheric qualities being stochastic, the position in which the descent phase must begin is uncertain. Therefore, we would like to look at algorithms which maximize the divert capability of the craft by minimizing the fuel consumption or final time from initial condition to terminal state. We define powered descent guidance as the generation of a fuel-optimal trajectory that takes the vehicle from some initial state condition to a prescribed final state in a uniform gravitational field with standard vehicle given thrust magnitude and direction constraints.
+The convex optimization framework is exploited because it is conducive of real-time on-board implementation and has guaranteed convergence properties with deterministic criteria. The convex programming algorithm to solve powered descent guidance that I will present has non-convex controls constraints and will be posed as a finite-dimensional SOCP problem. SOCPs have low complexity and can be solved in polynomial time \cite{boyd2004convex}. Interior-point numerical methods compute optimal solutions with deterministic stopping criteria and are conducive to on-board implementation.
 
-The convex optimization framework is exploited because it is conducive of real-time on-board implementation and has guaranteed convergence properties with deterministic criteria. The convex programming algorithm to solve powered descent guidance that I will present has non-convex controls constraints and will be posed as a finite-dimensional SOCP problem. SOCPs have low complexity and can be solved in polynomial time \cite{boyd2004convex}. Interior-point numerical methods compute optimal solutions with deterministic stopping criteria and are, again conducive to on-board implementation. 
+This thesis focuses on the implementation and development of a 6 degree-of-freedom (DoF) guidance algorithm that solves the non-convex nonlinear powered descent guidance (PDG) problem. I employ a method called successive convexification or SCvx. In this method, we first initialize the algorithm with a reference trajectory, then linearize and discretize the problem as an SOCP problem. We then structure the problem as an iterative solution process where the current problem is linearized about the previous trajectory. We do this in such a way that the solution satisfies the original nonlinear dynamics, non-convex constraints, and other state and control constraints. 
+\begin{figure}[!htbp] 
+  \centering
+  \includegraphics[width=0.25\textwidth]{figs/3dtraj_intro.eps}
+  \caption{Landing Trajectory Example}
+  \label{fig:intro}
+ \end{figure}	
+
+
 
 \section{Motivation}
-This thesis focuses on the implementation and development of a 6 degree-of-freedom (DoF) guidance algorithm that solves the powered descent guidance (PDG) problem. I present a modified version of the Szmuk-Açıkmeşe 6-DoF algorithm presented in \cite{szmuk2018successive}.
-
+Autonomous optimal guidance strategies enable vehicle recovery from a wider range disturbances accrued from the entry and descent process. This allows the vehicle to optimally maximize the divert and transport capability after dispersions, increasing the probability of safe landing and mission success. The proof of this value is apparent in the efforts and successes of commercial space companies landing and reusing space launch vehicles in recent years. The presented work has a number of desirable traits which make it amenable to implementation in this context. To sufficiently motivate and further our discussion, we must discuss what factors are important in the selection of a flight guidance algorithm.
 
 \subsection{Attributes of a Good Guidance Algorithm}
-minimal computational complexity
+Nominally, the guidance routine must be computationally tractable. If it is run iteratively, the cycle time could be from 1Hz for slow systems, up to 20Hz for fast systems. This is one of the main reasons guidance tends to be run ``offline,'' or not during flight, and stored in look up tables (LUTs). This may also be called ``implicit'' guidance. These are simply stored solutions for the flight computer to use a later time. Sophisticated guidance algorithms that have a full understanding of the problem at hand tend to be quite intensive. So the engineer is always looking for simple and fast solutions.
 
-accurate to the dynamics
+A guidance routine must be tractable not only for speed, but also to reduce resource congestion. Other processes, namely navigation and control, also require compute power and should not be throttled. Real-time operating systems have strict schedulers where each task is guaranteed to run to completion in finite time. If a deadline is unable to be met, a priority inversion system is put in place to pause one task and move on to another, for single-threaded operations.
 
-can be recomputed online if needed
+The guidance routine must be accurate to the vehicle, actuator, and environmental dynamics. Often the routine is not aware of larger perturbations and can accrue significant errors. Even offline LUT methods fall short here, especially when a guidance phase starts with high uncertainty in the initial condition.
 
-has a free final time option
+An online method, or one ``explicitly'' computed onboard the flight computer during operation, is a good solution for systems where the initial condition of that phase of flight may disperse widely. If there is high confidence in the navigation solution at the beginning of the guidance routine, but it errs from the nominal point, an online method is attractive. This algorithm can calculate the new, optimal solution for the exact problem at hand. If a rocket is 20 meters from the nominal position, a new state trajectory and input history can be computed on the spot and fed to the control loop. A LUT method would require a neighboring optimal control solution to bring it back to the original proposed trajectory, which at this point is suboptimal. This scenario has no guarantees of meeting the mission requirements and constraints.
 
-incorporates important system and mission constraints
+Optimality is important. If the vehicle has fast moving dynamics and has stringent fuel requirements, a sense of optimality with respect to these key metrics becomes important. If your vehicle must land on the surface of Mars at a specific position, would you not want to get there while minimizing fuel usage to ensure you don't overspend and crash? What if the vehicle must be somewhere in the least amount of time? A trajectory and input sequence which is tailored to these metrics will then be required.
 
-optimality of some sorts
+Time ambiguity is another important factor in a good guidance algorithm. Will this algorithm create a control history which meets your objective with free or fixed-final-time? The former means that the terminal time is free and is a solution of the algorithm itself: I will land on Mars with this trajectory, these inputs, and at exactly 34.5235 seconds from now. The latter first asks you what time you'd like to be there, then produces the required trajectory. The first tends to have a larger sense of optimality than the smaller, more restricted second problem.
 
-guarantees of convergence or optimality
+A good algorithm must also be conducive to the inclusion of mission, vehicular, and environmental constraints. Do the crew members enjoy 10g's of acceleration and 45 degrees per second of rotation? Would you like to stay above the ground and never use more fuel than you have? These are important pieces of information to have when making a vital decision about the motion and plan of your space vehicle.
 
-simple FDIR recovery
+Guarantees of convergence and aforementioned optimality are important for validation and testing of the GN\&C subsystem. What if the algorithm actually never converges in flight, or the output is entirely suboptimal and performs poorly. Having these guarantees mathematically proven becomes very important when it comes to flying critical hardware and humans.
 
-disperses well and insensitive to parameter variations
+Fault detection, isolation, and recovery (FDIR) is another critical component. Can the state machine of the vehicle or craft detect a fault and correctly recover? If a system, for some reason, behaves anomalously, there must be a robust way to detect this and communicate to other subsystems what has happened. If a guidance routine does not converge, another trajectory or control strategy must be chosen and used quickly before something off-nominal occurs.
 
-% #########################################
-% Introduction basically
-
+The performance with respect to dispersions and sensitive parameters is also important. The algorithm performance in the face of randomness must not degrade significantly. Additionally, the routine should not be overly sensitive to any single parameter. If any algorithm is highly sensitive to a single parameters, say a valve actuation speed variation, it could significantly limit the operational dynamic range of that algorithm. These analyses should be performed rigorously a priori before flight implementation.
 
 
 
 % #########################################
 \section{Literature Review and Related Research}
-perhaps start with lawden functions linear in control?
+Optimal control and guidance strategies are generally split into two categories: Indirect and Direct methods.
+Classical indirect methods are applications of calculus of variations and Pontryagin's Maximum Principle to derive the necessary conditions of optimality, such as adjoint equations and transversality conditions. Although the optimality of the indirect method can be guaranteed, solving the resulted two-point boundary value problem is a difficult task, and good initial guesses of the adjoint variables are hard to come by.
 
-"Lossless convexification can be used to convexify non-convex constraints without losing precision,
-unfortunately, only a few types of constraint can be convexified by lossless convexification. The nonlinear dynamics
-and constraints are the primary factors for non-convexity in P1 and they are not in the scope of lossless
-convexification. In this subsection, an improved successive convexification algorithm is proposed to circumvent the
-non-convexity from nonlinearity. "
+The direct method does not require explicit derivation of first-order necessary conditions; instead, the original optimal control problem is approximated with a parameter optimization problem and solved using nonlinear programming (NLP) algorithms, such as sequential quadratic programming (SQP) algorithms. Although large-scale problems can be handled due to the development of NLP algorithms, the solution process is still time-consuming for complicated problems and dependent upon good initial guesses. Convex optimization approaches are direct optimization methods, however can be reliably solved in polynomial time \cite{nesterov1994interior}.
 
-COMPARE AND CONTRAST WITH SIMILAR ONLINE MTHODS LIKE LOSSLESS CONVEXIFICAION
 
-COMPARE AND CONTRAST FRAMEWORKW ITH SQP
+
+
+
+
+
+\underline{Polynomial Guidance} was famously used on the Apollo lunar lander, first landing men on the moon in 1969. The Apollo guidance computer (AGC) had limited compute capability with the algorithms requiring manual re-targeting and flight by the mission pilot. This algorithm was an analytical solution to a boundary valued problem with a fixed time-to-go \cite{klumpp1974apollo}. The final braking law is represented by a quartic polynomial function which connect the initial and terminal states. This result does not satisfy vehicle thrust constraints, and errors introduced by this law must be compensated for by other calculations. Besides the boundary values, there are no state constraints and no optimality with respect to fuel or time. Although compute power was so limited, all lunar powered descent missions were successful thanks to the polynomial and astronaut guidance. Modified versions of this law are still in the literature with an outer time-of-flight search mechanism to effectively make it a free final time-to-go algorithm as well as adding in fuel optimality \cite{d1997optimal}.
+
+\underline{Powered Explicit Guidance} or PEG is another prevalent guidance routine. This was developed to handle all phases of the Shuttle exoatmospheric powered flight and their cutoff constraints \cite{mchenry1979space}. This is a simplified vector form of a linear tangent steering law. It provides robust guidance for situations which vary widely in thrust-to-weight ratios (TWRs). During the second stage of Shuttle ascent, the TWRs range from 1 to 3 with altitude, velocity, flightpath angle, and orbital plane cutoff constraints. The objective of this algorithm is to generate steering and throttle commands such that the cutoff constraints are satisfied in a fuel-efficient manner. This linear tangent scheme is based on an indirect calculus of variations solution to the minimum-fuel ascent trajectory problem. The thrust attitude takes the form of $\lambda_F = \lambda_v + \dot{\lambda}(t - t_\lambda)$ where $\lambda_F$ is the vector defining the thrust direction, $\lambda_v$ is the unit vector in the direction of velocity-to-be-gained, $\dot{\lambda}$ is a vector normal to $\lambda_v$ representing the rate of change of $\lambda_F$. The variable $t$ is continuous time where $t_\lambda$ is a chosen time such that the total velocity change due to thrust is along the vector $\lambda_v$. To satisfy the required cutoff constraints, the algorithm takes the form of a predictor corrector mechanism where $\lambda_v$ is computed such that the terminal velocity constraints are satisfied.
+
+A backwards recursive version of this steering law was developed for the powered descent guidance problem as well. This law minimizes the control required for soft landing but does not guarantee to meet actuator constraints and is naive to the nonlinear dynamics.
+
+\underline{Lossless Convexification} is a method to produce a perfect convex second order cone program (SOCP) sub-problem from an originally non-convex problem statement. It is used for convexifying a non-convex constraint without loosing any precision. This method, championed by Blackmore, Açikmeşe, and Ploen, is at the heart of the G-FOLD landing algorithm \cite{blackmore2010minimum} \cite{accikmecse2011lossless} \cite{acikmese2012g}. The Guidance algorithm for Fuel Optimal Large Diverts, or G-FOLD, is a recent advancement in PDG solutions. It very quickly calculates a 3DoF fuel optimal divert maneuver with free-final-time, inequality and equality constraints on the states and inputs, and losslessly convexifying the lower thrust constraint. Some of these constraints include a glideslope around the target and maximum velocity. The routine solves a lossless convex SOCP problem iteratively with an outer time of flight search loop to find the optimal final time. This was successfully demonstrated in a family of flight experiments on Masten Space landing vehicles \cite{acikmese2013flight} \cite{scharf2014adapt}.
+
+Unfortunately only a couple types of constraint can be convexified in this fashion, where the remaining nonlinear dynamics are the primary sources of non-convexity. These must be included into the problem statement with another process.
 
 
 \section{Brief Introduction to Convex Optimization}
+A convex optimization problem is one that takes the following form:
+
+\begin{align*}
+	\text{minimize} \quad & f_0(x) \\ 
+	\text{subject to} \quad & f_i(x) \leq b_i, \ \ i = 1, \cdots, m
+\end{align*}
+where each of the functions $f_0,...,f_m \ :\mathbb{R}^n \rightarrow \mathbb{R}$ are convex. This means they satisfy the inequality $f_i(\alpha x + \beta y) \leq \alpha f_i(x) + \beta f_i(y) \quad \forall x, y \in \mathbb{R}^n$ where all $\alpha, \beta \in \mathbb{R}$ with $\alpha + \beta = 1$ and each positive semi-definite. Many optimization problems are just special cases of this problem, including the general least-squares and linear programming problems.
+
+Using convex optimization is much like using any other optimization framework. If a problem can be identified or formulated as a convex problem, then we can solve it efficiently. Recognizing a convex function is nontrivial and there are many tricks for transforming non-convex problems into convex ones. The Boyd and Vandenberghe text \cite{boyd2004convex} gives significant insight into these tricks and the skills required to recognize and formulate convex problems.
 
 \section{On Successive Convexification}
+The successive convexification framework (SCvx) is able to solve optimal control problems with nonlinear dynamics and non-convex state and control constraints. It does this by iteratively solving convex optimization sub-problems, obtained by linearizing non-convexities in dynamics and constraints around the previous iteration solution. These sub-problems employ techniques of virtual control (dynamic relaxation), virtual buffer zones, and trust regions to prevent solution artificial infeasibility and artificial unboundedness. This linearization acts as an approximation, but the solution is driven to convergence within the user's tolerances to solve exactly the originally proposed non-convex optimal control problem with local optimality.
+
+For general real-time autonomy tasks where safety and determinism are prioritized, it is often much better to find a locally optimal solution quickly rather than a globally optimal solution slowly. Generally speaking, nonlinear programming tends to be the method of choice for locally optimal solutions. However, their convergence behaviour is dependent upon the initial guess provided to the solver and do not offer bounds on computational effort required for convergence. These facts are at odds with requirements for real-time embedded applications.
+
+So we turn to convex optimization methods with can be reliably solved in polynomial time \cite{nesterov1994interior}. Sequential convex programming (SCP) offers a way to solve problems with more general nonlinear dynamics and non-convex constraints. While SCP performs well empirically, no general convergence results have been reported. SCvx differs from other SCP approaches in many ways, including proofs for (weak and strong) global convergence and superlinear convergence rate \cite{mao2016successive}.
+
+
+
 
 % #########################################
 \section{Statement of Scope}
-
-
+In this thesis, we shall describe the nonlinear equations of motion for a space vehicle, pose a guidance problem, and then modify it such that it is iteratively solveable. We do this by creating a linear time varying version of the dynamics, discretizing it, and convexifying the problem contraints. Once this is done, we generate a reference trajectory as a linearization path for the SCvx to solve the problem with and iteratively feed the output trajectory and input history back into the problem until convergence. The derivations and analysis are shown in this document.
 
 
 

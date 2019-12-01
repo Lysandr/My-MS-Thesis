@@ -1,54 +1,60 @@
 
 
-
-Bhasin:
-  ☐ background on tasks and why important
-  ☐ research goal
-  ☐ related work: polynomial guidance, pinpoint stuff
-  ☐ method
-    ☐ gfold
-    ☐ pit landing version
-    ☐ qcml and ecos
-  ☐ results
-    ☐ planar
-    ☐ glideslope
-    ☐ close up on pit and stuff
-    ☐ timing and monte carlo, runtime
-
 DO:
- ☐ abstract fill 
- ☐ background
-   ☐ entry figure!!!
- ☐ motivation
-   ☐ attributes of a good guidance alg
-     ☐ keeping within mission constraints
- ☐ literature review
- ☐ basic  scope coverage
- ☐ add more fluff in chapter 2
- ☐ add more intro fluff to chapter 3
- ☐ figure out what is wrong with aligment constraint in 3.1.1
- ☐ talk about continuous time convolution stuff
- ☐ do antsaklis linear derivations in section 3.2
- ☐ talk more about trust regions and relaxations
- ☐ figure out TVC bandwidth shit in section 3.4.1
- ☐ finish nonplanar talk
- ☐ show the glideslops works
- ☐ do runtime analysis with constraints active plots etc
+ ✔ abstract fill @done (19-11-27 23:03)
+   ✔ fill more @done (19-11-28 21:59)
+ ✔ background @done (19-11-29 02:01)
+   ✔ entry figure!!! @done (19-11-29 02:01)
+ ✔ motivation @done (19-11-28 19:11)
+   ✔ attributes of a good guidance alg @done (19-11-28 19:11)
+     ✔ keeping within mission constraints @done (19-11-28 19:11)
+ ✔ literature review @done (19-11-29 02:01)
+ ✔ basic scope coverage @done (19-11-29 02:06)
+ ✔ add more fluff in chapter 2 @done (19-11-29 02:43)
+ ✔ add more intro fluff to chapter 3 @done (19-11-29 02:43)
+ ✔ figure out what is wrong with aligment constraint in 3.1.1 @done (19-11-28 11:50)
+   ✔ look into the MRP norm constraint as an alignment @done (19-11-28 11:50)
+ ✔ talk about continuous time convolution stuff @done (19-11-29 02:44)
+ ✔ do antsaklis linear derivations in section 3.2 @done (19-11-29 02:44)
+ ✔ talk more about trust regions and relaxations @done (19-11-29 02:44)
+ ✔ figure out TVC bandwidth shit in section 3.4.1 @done (19-11-28 16:52)
+ ✔ finish nonplanar talk @done (19-11-28 16:52)
+ ✔ show the glideslops works @done (19-11-28 16:52)
+ ✔ do runtime analysis with constraints active plots etc @done (19-11-29 02:48)
  ☐ do temporal node count variation writing shit
  ☐ do parameter variation and plots
  ☐ mrps vs quats
- ☐ corner conditions
+ ✔ corner conditions @done (19-11-28 22:02)
  ☐ glideslope vs subterminal constraints
- ☐ conclusions
-   ☐ igition time optimization
-   ☐ stcs cstcs
-   ☐ hypersonic patch
+ ✔ conclusions @done (19-11-28 15:17)
+   ✔ igition time optimization @done (19-11-28 15:17)
+   ✔ stcs cstcs @done (19-11-28 15:17)
+   ✔ hypersonic patch @done (19-11-28 15:17)
 
+
+after draft submission:
+ ☐ write more background
+ ☐ write more motivation
+ ☐ write more on "onscvx section"
+ ☐ more fluff in ch 2 and 3
+ ☐ maybe do antsaklis derivations
+ ☐ talk more avout theory of trust regions and virtual controls
+ ☐ \section{Algorithm Runtime with Constraints active}
+  ☐ \begin{itemize}
+    ☐ \item  glideslope constraint
+    ☐ \item alignment constraint
+    ☐ \item sigma constraint
+    ☐ \item omega max constraint
+  ☐ \end{itemize}
+ ☐ monte carlo analysis
+ ☐ MRP vs Quats timing analysis
+ ☐ corner condition discussion
+ ☐ glideslope vs subterminal contraints
 
 Analysis extra:
-  ☐ perfect feedforward control simulation
-    ☐ rk4 right down to the K windows
-  ☐ feedforward with feedback control simulation
+  ✔ perfect feedforward control simulation @done (19-11-28 22:00)
+    ✔ rk4 right down to the K windows @done (19-11-28 22:00)
+  ✔ feedforward with feedback control simulation @done (19-11-28 22:00)
 
 
 
