@@ -207,8 +207,13 @@ it is clear that the upper thrust bound is clearly convex but the lower bound cr
 %
 \section{Continuous Time Problem}
 Putting this all together, we can pose the continuous time optimization problem. In this form, it is non-convex and requires conditioning to work into the convex programming framework. As stated, our objective is to minimize the time-of-flight required to get to the terminal conditions subject to the aforementioned constraints, dynamics, and boundary conditions. The state vector, thrust commands, gimbal angles, and final time are optimization variables and are considered the solution to this problem. We pose this in Problem one: \ref{ctproblem}.
-%
+
+
+
+
+
 \clearpage
+\begin{singlespace}
 \begin{mdframed}
 \label{ctproblem}
 \textbf{Problem 1: Continuous Time Non-Convex Free-Final-Time}
@@ -242,10 +247,10 @@ m_{dry} - m(t) & \leq 0 \\
 %
 \left \lVert \bm{\omega}_\mathcal{B/N}(t) \right \lVert_2 & \leq \omega_{max}\\
 0 < F_{min} \leq \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq F_{max} \\
-\cos(\delta_{max}) \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq \hat{\bm{b}}_1^T \bm{F}_{th}(t) \\
-\left \lVert \delta_{\text{TVC}_{t+dt}} - \delta_{\text{TVC}_{t}} \right \lVert_2 & \leq \dot{\delta}_{\text{TVC}_{max}}dt
+\cos(\delta_{max}) \left \lVert \bm{F}_{th}(t) \right \lVert_2 &\leq \hat{\bm{b}}_1^T \bm{F}_{th}(t)
 \end{align*}
 \end{mdframed}
+\end{singlespace}
 
 
 

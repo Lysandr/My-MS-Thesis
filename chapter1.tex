@@ -68,15 +68,13 @@ A backwards recursive version of this steering law was developed for the powered
 
 Unfortunately only a couple types of constraint can be convexified in this fashion, where the remaining nonlinear dynamics are the primary sources of non-convexity. These must be included into the problem statement with another process.
 
-
 \section{Brief Introduction to Convex Optimization}
 A convex optimization problem is one that takes the following form:
-
 \begin{align*}
 	\text{minimize} \quad & f_0(x) \\ 
 	\text{subject to} \quad & f_i(x) \leq b_i, \ \ i = 1, \cdots, m
 \end{align*}
-where each of the functions $f_0,...,f_m \ :\mathbb{R}^n \rightarrow \mathbb{R}$ are convex. This means they satisfy the inequality $f_i(\alpha x + \beta y) \leq \alpha f_i(x) + \beta f_i(y) \quad \forall x, y \in \mathbb{R}^n$ where all $\alpha, \beta \in \mathbb{R}$ with $\alpha + \beta = 1$ and each positive semi-definite. Many optimization problems are just special cases of this problem, including the general least-squares and linear programming problems.
+where each of the functions $f_0,...,f_m \ :\mathbb{R}^n \rightarrow \mathbb{R}$ are convex. This means they satisfy the inequality $f_i(\alpha x + \beta y) \leq \alpha f_i(x) + \beta f_i(y) \quad \forall x, y \in \mathbb{R}^n$ where all $\alpha, \beta \in \mathbb{R}$ with $\alpha + \beta = 1,\ \ \forall \alpha,\beta \geq 0$. Many optimization problems are just special cases of this problem, including the general least-squares and linear programming problems.
 
 Using convex optimization is much like using any other optimization framework. If a problem can be identified or formulated as a convex problem, then we can solve it efficiently. Recognizing a convex function is nontrivial and there are many tricks for transforming non-convex problems into convex ones. The Boyd and Vandenberghe text \cite{boyd2004convex} gives significant insight into these tricks and the skills required to recognize and formulate convex problems.
 
