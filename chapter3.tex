@@ -66,7 +66,12 @@ We can simplify this expression by breaking the Taylor expansion intro matrix su
 \end{align}
 
 
+
+
+
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \subsection{Convexifying the Minimum Thrust Constraint}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
 With this done, we tackle the last source of non-convexity: the non-zero lower bound to our actuator thrust. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taking the first order Taylor series linear approximation, we have the following convexified constraint formulation:
 %
 \begin{align}
@@ -206,7 +211,7 @@ Now that we have linearized and convexified the proposed problem, we can put the
 	\min_{\eta^i, \mathbf{u}_k^i} \quad \eta^i + w_\Delta^i || \bm{\bar{\Delta}}^i ||_2 + w_{\Delta_\eta} || \Delta_\eta^i ||_1 + w_v || \bar{\bm{\nu}}^i ||_1
 \end{align}
 
-\subsection{Algorithm}
+\section{Algorithm}
 The goal is for the successive convexification algorithm \ref{Successive} to continue iterating until $\Delta_{tol}$ and $\nu_{tol}$ are met. We define these by the magnitude of each vector. Their magnitudes are checked at the end of each iteration of the routine. Additionally, to ensure boundedness on the trust regions and to prevent an admitted unbounded cost, we turn the cost weighting of the trust region up after each iteration.
 
 \begin{algorithm}

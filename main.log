@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.12)  2 DEC 2019 23:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.12)  12 DEC 2019 15:43
 entering extended mode
 **./main.tex
 (main.tex
@@ -1449,7 +1449,7 @@ Package epstopdf Info: Source file: <figs/3dtraj_intro.eps>
 rted-to.pdf figs/3dtraj_intro.eps>
 (epstopdf)             \includegraphics on input line 15.
 Package epstopdf Info: Output file is already uptodate.
-<figs/3dtraj_intro-eps-converted-to.pdf, id=286, 226.8475pt x 446.66875pt>
+<figs/3dtraj_intro-eps-converted-to.pdf, id=279, 226.8475pt x 446.66875pt>
 File: figs/3dtraj_intro-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/3dtraj_intro-eps-converted-to.pdf>
 Package pdftex.def Info: figs/3dtraj_intro-eps-converted-to.pdf  used on input 
@@ -1498,9 +1498,9 @@ l.57 \end{align}
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.72 \begin{align}
+l.77 \begin{align}
                   ] [22] [23] [24] [25] [26] [27] [28]
-Package mdframed Info: Not enough space on this page on input line 275.
+Package mdframed Info: Not enough space on this page on input line 280.
 ) (chapter4.tex [29
 
 ]
@@ -1519,7 +1519,7 @@ Package epstopdf Info: Source file: <figs/planar_traj.eps>
 ted-to.pdf figs/planar_traj.eps>
 (epstopdf)             \includegraphics on input line 23.
 Package epstopdf Info: Output file is already uptodate.
-<figs/planar_traj-eps-converted-to.pdf, id=553, 462.72874pt x 239.89626pt>
+<figs/planar_traj-eps-converted-to.pdf, id=546, 462.72874pt x 239.89626pt>
 File: figs/planar_traj-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/planar_traj-eps-converted-to.pdf>
 Package pdftex.def Info: figs/planar_traj-eps-converted-to.pdf  used on input l
@@ -1536,7 +1536,7 @@ Package epstopdf Info: Source file: <figs/planar_controls.eps>
 nverted-to.pdf figs/planar_controls.eps>
 (epstopdf)             \includegraphics on input line 31.
 Package epstopdf Info: Output file is already uptodate.
-<figs/planar_controls-eps-converted-to.pdf, id=554, 486.81876pt x 317.185pt>
+<figs/planar_controls-eps-converted-to.pdf, id=547, 486.81876pt x 317.185pt>
 File: figs/planar_controls-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/planar_controls-eps-converted-to.pdf>
 Package pdftex.def Info: figs/planar_controls-eps-converted-to.pdf  used on inp
@@ -1557,7 +1557,7 @@ Package epstopdf Info: Source file: <figs/planar_alignment.eps>
 onverted-to.pdf figs/planar_alignment.eps>
 (epstopdf)             \includegraphics on input line 77.
 Package epstopdf Info: Output file is already uptodate.
-<figs/planar_alignment-eps-converted-to.pdf, id=585, 467.7475pt x 137.51375pt>
+<figs/planar_alignment-eps-converted-to.pdf, id=578, 467.7475pt x 137.51375pt>
 File: figs/planar_alignment-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/planar_alignment-eps-converted-to.pdf>
 Package pdftex.def Info: figs/planar_alignment-eps-converted-to.pdf  used on in
@@ -1575,7 +1575,7 @@ df>
 -converted-to.pdf figs/nonplanar_controls.eps>
 (epstopdf)             \includegraphics on input line 87.
 Package epstopdf Info: Output file is already uptodate.
-<figs/nonplanar_controls-eps-converted-to.pdf, id=600, 486.81876pt x 371.3875pt
+<figs/nonplanar_controls-eps-converted-to.pdf, id=593, 486.81876pt x 371.3875pt
 >
 File: figs/nonplanar_controls-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/nonplanar_controls-eps-converted-to.pdf>
@@ -1594,7 +1594,7 @@ Package epstopdf Info: Source file: <figs/nonplanar_3dtraj.eps>
 onverted-to.pdf figs/nonplanar_3dtraj.eps>
 (epstopdf)             \includegraphics on input line 95.
 Package epstopdf Info: Output file is already uptodate.
-<figs/nonplanar_3dtraj-eps-converted-to.pdf, id=619, 458.71375pt x 437.635pt>
+<figs/nonplanar_3dtraj-eps-converted-to.pdf, id=612, 458.71375pt x 437.635pt>
 File: figs/nonplanar_3dtraj-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/nonplanar_3dtraj-eps-converted-to.pdf>
 Package pdftex.def Info: figs/nonplanar_3dtraj-eps-converted-to.pdf  used on in
@@ -1610,7 +1610,7 @@ Package epstopdf Info: Source file: <figs/nonplanar_rv.eps>
 rted-to.pdf figs/nonplanar_rv.eps>
 (epstopdf)             \includegraphics on input line 103.
 Package epstopdf Info: Output file is already uptodate.
-<figs/nonplanar_rv-eps-converted-to.pdf, id=622, 261.97874pt x 269.005pt>
+<figs/nonplanar_rv-eps-converted-to.pdf, id=615, 261.97874pt x 269.005pt>
 File: figs/nonplanar_rv-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/nonplanar_rv-eps-converted-to.pdf>
 Package pdftex.def Info: figs/nonplanar_rv-eps-converted-to.pdf  used on input 
@@ -1635,7 +1635,7 @@ Package epstopdf Info: Source file: <figs/etavsK.eps>
 o.pdf figs/etavsK.eps>
 (epstopdf)             \includegraphics on input line 41.
 Package epstopdf Info: Output file is already uptodate.
-<figs/etavsK-eps-converted-to.pdf, id=669, 365.365pt x 187.70125pt>
+<figs/etavsK-eps-converted-to.pdf, id=662, 365.365pt x 187.70125pt>
 File: figs/etavsK-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/etavsK-eps-converted-to.pdf>
 Package pdftex.def Info: figs/etavsK-eps-converted-to.pdf  used on input line 4
@@ -1651,7 +1651,7 @@ Package epstopdf Info: Source file: <figs/massvsK.eps>
 to.pdf figs/massvsK.eps>
 (epstopdf)             \includegraphics on input line 49.
 Package epstopdf Info: Output file is already uptodate.
-<figs/massvsK-eps-converted-to.pdf, id=670, 365.365pt x 188.705pt>
+<figs/massvsK-eps-converted-to.pdf, id=663, 365.365pt x 188.705pt>
 File: figs/massvsK-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/massvsK-eps-converted-to.pdf>
 Package pdftex.def Info: figs/massvsK-eps-converted-to.pdf  used on input line 
@@ -1667,7 +1667,7 @@ Package epstopdf Info: Source file: <figs/iteratetiming.eps>
 erted-to.pdf figs/iteratetiming.eps>
 (epstopdf)             \includegraphics on input line 57.
 Package epstopdf Info: Output file is already uptodate.
-<figs/iteratetiming-eps-converted-to.pdf, id=671, 354.32375pt x 187.70125pt>
+<figs/iteratetiming-eps-converted-to.pdf, id=664, 354.32375pt x 187.70125pt>
 File: figs/iteratetiming-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/iteratetiming-eps-converted-to.pdf>
 Package pdftex.def Info: figs/iteratetiming-eps-converted-to.pdf  used on input
@@ -1683,7 +1683,7 @@ Package epstopdf Info: Source file: <figs/solvetimevsK.eps>
 rted-to.pdf figs/solvetimevsK.eps>
 (epstopdf)             \includegraphics on input line 65.
 Package epstopdf Info: Output file is already uptodate.
-<figs/solvetimevsK-eps-converted-to.pdf, id=672, 350.30875pt x 188.705pt>
+<figs/solvetimevsK-eps-converted-to.pdf, id=665, 350.30875pt x 188.705pt>
 File: figs/solvetimevsK-eps-converted-to.pdf Graphic file (type pdf)
 <use figs/solvetimevsK-eps-converted-to.pdf>
 Package pdftex.def Info: figs/solvetimevsK-eps-converted-to.pdf  used on input 
@@ -1691,35 +1691,7 @@ line 65.
 (pdftex.def)             Requested size: 469.75499pt x 253.06493pt.
  [37] [38 <./figs/etavsK-eps-converted-to.pdf> <./figs/massvsK-eps-converted-to
 .pdf>] [39 <./figs/iteratetiming-eps-converted-to.pdf> <./figs/solvetimevsK-eps
--converted-to.pdf>]
-! Undefined control sequence.
-<argument> ... \right ) \right ] \right ] \Bigggg 
-                                                  \} 
-l.84 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-! Undefined control sequence.
-<argument> ... \right ) \right ] \right ] \Bigggg 
-                                                  \} 
-l.84 \end{align*}
-                 
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Overfull \hbox (22.20163pt too wide) detected at line 84
-[]
- []
-
-) (chapter6.tex [40]
+-converted-to.pdf>]) (chapter6.tex [40]
  \th@ChapterStyle\th@DoChapCenterChapter \th@ChapterStyle 6.
 centered
 ) [41
@@ -1741,7 +1713,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 85.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 85.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 85.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D316937A6B50776A806377586102AAF0;2845.
+(rerunfilecheck)             Checksum: 1D64CD684DE5AD5FAA80FAB7EDA44C23;2763.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -1749,10 +1721,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 85.
  ) 
 Here is how much of TeX's memory you used:
- 24529 strings out of 492973
- 457005 string characters out of 3121374
- 540837 words of memory out of 3000000
- 27898 multiletter control sequences out of 15000+200000
+ 24526 strings out of 492973
+ 456965 string characters out of 3121374
+ 540832 words of memory out of 3000000
+ 27896 multiletter control sequences out of 15000+200000
  545078 words of font info for 71 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  42i,21n,63p,1550b,929s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1782,9 +1754,9 @@ blic/amsfonts/cm/cmsy8.pfb><C:/Users/Padraig Lysandrou/AppData/Local/Programs/M
 iKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/Padraig Lysa
 ndrou/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msb
 m10.pfb>
-Output written on main.pdf (55 pages, 565180 bytes).
+Output written on main.pdf (55 pages, 560925 bytes).
 PDF statistics:
- 868 PDF objects out of 1000 (max. 8388607)
- 217 named destinations out of 1000 (max. 500000)
- 376 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 857 PDF objects out of 1000 (max. 8388607)
+ 216 named destinations out of 1000 (max. 500000)
+ 368 words of extra memory for PDF output out of 10000 (max. 10000000)
 
