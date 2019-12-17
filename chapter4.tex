@@ -15,7 +15,7 @@ The successive convexification routine is a very valuable tool in that it can qu
 
 
 \section{Planar Problem Solutions}
-Let us first study a case where the vehicle has a velocity in-plane with the terminal condition and can therefore neglect on dimension of motion. This is the nominal scenario where a vehicle is coming in for landing and has pre-conditioned it's  state to do so. This is apparent in the landing of first stages, where the out-of-plane motion is canceled and an in-plane maneuver is performed to adjust to meet the landing pad. In figure \ref{fig:planar}, we see the SCvx guidance solution to a set of initial conditions in-plane with the landing point; the vehicle has a position of 600 meters North and 500 meters East with Eastward velocity of -120m/s. The incoming velocity is higher than nominal, and so the optimal control solution is to maximize the divert capability such that the lateral velocity is arrested while the attitude is up-right at the final time.
+Let us first study a case where the vehicle has a velocity in-plane with the terminal condition and can therefore neglect on dimension of motion. This is the nominal scenario where a vehicle is coming in for landing and has pre-conditioned it's  state to do so. This is apparent in the landing of first stages, where the out-of-plane motion is canceled and an in-plane maneuver is performed to adjust to meet the landing pad. In figure \ref{fig:planar}, the SCvx guidance solution to a problem with a set of initial conditions in-plane with the landing point is shown; the vehicle has a position of 600 meters North and 500 meters East with Eastward velocity of -120m/s. The incoming velocity is higher than nominal, and so the optimal control solution is to maximize the divert capability such that the lateral velocity is arrested while the attitude is up-right at the final time.
 
 \clearpage
 \begin{figure}[!htbp] 
@@ -33,7 +33,7 @@ Let us first study a case where the vehicle has a velocity in-plane with the ter
   \label{fig:planarcontrols}
  \end{figure}
  %
-The control solution in figure \ref{fig:planarcontrols} shows how maximum thrust is used nearly the entire duration where lateral thrust is used for attitude control while simultaneously lowering altitude control. The commanded TVC deflection angles stay within our proposed constraints. Our thrust magnitude and angular rate constraints are also met throughout the duration of the flight. For a fast pitch-over maneuvers like this, it is hard to find a trajectory where the vehicle angular rate maintains within reasonable boundaries; this scenario is restricted to below $14$ deg/s. We have shown all initial conditions and constraints in \ref{table:tableplanar}.
+The control solution in figure \ref{fig:planarcontrols} shows how maximum thrust is used nearly the entire duration where lateral thrust is used for attitude control while simultaneously lowering altitude control. The commanded TVC deflection angles stay within our proposed constraints. Our thrust magnitude and angular rate constraints are also met throughout the duration of the flight. For a fast pitch-over maneuvers like this, it is hard to find a trajectory where the vehicle angular rate maintains within reasonable boundaries; this scenario is restricted to below $14$ deg/s. All initial conditions and constraints are shown in \ref{table:tableplanar}.
 
 \begin{table}[ht]
 \caption{Parameters Used For Planar Problem}
@@ -70,7 +70,7 @@ $U_T$					 		& s			 	& $3.132$ \\[1ex]
 \label{table:tableplanar}
 \end{table}
 
-The vehicle following the planar path in figure \ref{fig:planar} reached it's terminal state after $22.4$ seconds and with a final mass of $373.62$kg with a starting mass of $408.23$kg only using $11.7$\% of it's fuel. Additionally, we see that the total aligntment MRP constraint is met throughout the flight \ref{fig:nplanar_align}.
+The vehicle following the planar path in figure \ref{fig:planar} reached it's terminal state after $22.4$ seconds and with a final mass of $373.62$kg with a starting mass of $408.23$kg only using $11.7$\% of it's fuel. Additionally, the total aligntment MRP constraint is shown to meet the rquirement throughout the flight \ref{fig:nplanar_align}.
 
 \begin{figure}[!htbp] 
   \centering
@@ -80,7 +80,7 @@ The vehicle following the planar path in figure \ref{fig:planar} reached it's te
  \end{figure}
 
 \section{Non-Planar Problem Solutions}
-We now look at a non-planar problem where the initial condition of the vehicle is off-nominal and must make an out-of-plane maneuver to land on the target. The parameters and initial conditions are found in table \ref{table:tablenplanar}. Figure \ref{fig:nplanar} shows a vehicle coming towards the landing pad with an offset lateral position of 100m and with a velocity not pointed directly in-line with the target. All constraints are met and the vehicle uses maximum thrust nearly the entire duration where cosine throttling and attitude control becomes required are employed. The simple MRP constraint is also met.
+Now let us look at a non-planar problem where the initial condition of the vehicle is off-nominal and must make an out-of-plane maneuver to land on the target. The parameters and initial conditions are found in table \ref{table:tablenplanar}. Figure \ref{fig:nplanar} shows a vehicle coming towards the landing pad with an offset lateral position of 100m and with a velocity not pointed directly in-line with the target. All constraints are met and the vehicle uses maximum thrust nearly the entire duration where cosine throttling and attitude control becomes required are employed. The simple MRP constraint is also met.
 
 \begin{figure}[!htbp] 
   \centering
@@ -97,10 +97,10 @@ We now look at a non-planar problem where the initial condition of the vehicle i
   \label{fig:nplanar}
  \end{figure}
 
-The vehicle following the non-planar path in figure \ref{fig:planar} reached it's terminal state after $19.95$ seconds and with a final mass of $376.784$kg with a starting mass of $408.23$kg only using $10.6$\% of it's fuel. Additionally, from figure \ref{fig:nplanar_rv} we can see the terminal position and velocity constraints are met, and the vehicle reaches the landing pad with a safe terminal velocity
+The vehicle following the non-planar path in figure \ref{fig:planar} reached it's terminal state after $19.95$ seconds and with a final mass of $376.784$kg with a starting mass of $408.23$kg only using $10.6$\% of it's fuel. Additionally, figure \ref{fig:nplanar_rv} shows that the terminal position and velocity constraints are met, and the vehicle reaches the landing pad with a safe terminal velocity
 \begin{figure}[ht] 
   \centering
-  \includegraphics[width=.5\linewidth]{figs/nonplanar_rv.eps}
+  \includegraphics[width=.7\linewidth]{figs/nonplanar_rv.eps}
   \caption{Non-Planar Guidance Problem: Position and Velocity Histories}
   \label{fig:nplanar_rv}
 \end{figure}
