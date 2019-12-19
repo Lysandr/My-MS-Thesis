@@ -4,8 +4,8 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Planar Guidance Problem: Vehicle Descends In-line with Target\relax }}{31}{figure.caption.7}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Planar Guidance Problem: Control and Angular Rate During Landing\relax }}{31}{figure.caption.8}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Planar Guidance Problem: Vehicle Descends In-line with Target\relax }}{31}{figure.caption.8}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Planar Guidance Problem: Control and Angular Rate During Landing\relax }}{32}{figure.caption.9}
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Planar Guidance Problem: Total Alignment Constraint Met\relax }}{32}{figure.caption.10}
 \contentsline {figure}{\numberline {4.4}{\ignorespaces Non-Planar Guidance Problem: Controls and Angular rate of Landing Vehicle\relax }}{33}{figure.caption.11}
 \contentsline {figure}{\numberline {4.5}{\ignorespaces Non-Planar Guidance Problem: Vehicle Approaches Offset from Target\relax }}{34}{figure.caption.12}
@@ -15,5 +15,8 @@
 \contentsline {figure}{\numberline {5.2}{\ignorespaces Planar Guidance Problem: Terminal Vehicle Mass versus K Node Count\relax }}{38}{figure.caption.17}
 \contentsline {figure}{\numberline {5.3}{\ignorespaces Planar Guidance Problem: Final-Time $\eta $ Convergence for many K Node Count Runs\relax }}{39}{figure.caption.18}
 \contentsline {figure}{\numberline {5.4}{\ignorespaces Planar Guidance Problem: Computation Time versus Temporal Node Count K\relax }}{39}{figure.caption.19}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Glideslope (GS) and Superterminal (ST) Constraint Solution Comparisons\relax }}{41}{figure.caption.20}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Glideslope and Superterminal $\mathbf {r} \ \mathbf {v}$ and Control Comparisons\relax }}{41}{figure.caption.21}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Multiple Dispersed Guidance Solutions\relax }}{42}{figure.caption.22}
 \addvspace {10\p@ }
 \addvspace {10\p@ }

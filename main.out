@@ -28,11 +28,10 @@
 \BOOKMARK [0][-]{chapter.5}{Analysis}{}% 28
 \BOOKMARK [1][-]{section.5.1}{Computation Preface}{chapter.5}% 29
 \BOOKMARK [1][-]{section.5.2}{Temporal Node Count Variation}{chapter.5}% 30
-\BOOKMARK [1][-]{section.5.3}{A Parameter Variation Study}{chapter.5}% 31
-\BOOKMARK [1][-]{section.5.4}{Runtime: MRPs vs Quaternions}{chapter.5}% 32
-\BOOKMARK [1][-]{section.5.5}{Glideslope and Subterminal Constraints}{chapter.5}% 33
-\BOOKMARK [0][-]{chapter.6}{Conclusions}{}% 34
-\BOOKMARK [-1][-]{chapter*.20}{ Bibliography}{}% 35
-\BOOKMARK [0][-]{appendix.A}{Additional Constraint Considerations}{chapter*.20}% 36
-\BOOKMARK [1][-]{section.A.1}{TVC Bandwidth Constraints}{appendix.A}% 37
-\BOOKMARK [1][-]{section.A.2}{Convexifying the Alignment Constraint}{appendix.A}% 38
+\BOOKMARK [1][-]{section.5.3}{Glideslope and Superterminal Constraints}{chapter.5}% 31
+\BOOKMARK [1][-]{section.5.4}{A Parameter Variation Study}{chapter.5}% 32
+\BOOKMARK [0][-]{chapter.6}{Conclusions}{}% 33
+\BOOKMARK [-1][-]{chapter*.23}{ Bibliography}{}% 34
+\BOOKMARK [0][-]{appendix.A}{Additional Constraint Considerations}{chapter*.23}% 35
+\BOOKMARK [1][-]{section.A.1}{TVC Bandwidth Constraints}{appendix.A}% 36
+\BOOKMARK [1][-]{section.A.2}{Convexifying the Alignment Constraint}{appendix.A}% 37

@@ -21,7 +21,7 @@ Therefore the nonlinear dynamics can be expressed in the following form:
 	\end{bmatrix}^T
 \end{align}
 
-In order to formulate our guidance problem with the free-final-time objective time dilation is introduced. Let us evaluate our dynamics on a normalized trajectory time variable $\tau \in [0,1]$. No matter the resolution of the optimization, the terminal value will end at $\tau = 1$. A differentiation based on this variable is then used to scale the time back and forth, leaving the unscaled final time as an optimization variable. Applying the chain rule of differentiation: 
+In order to formulate our guidance problem with a free-final-time objective, time dilation is introduced. Let us evaluate our dynamics on a normalized trajectory time variable $\tau \in [0,1]$. No matter the resolution of the optimization, the terminal value will end at $\tau = 1$. A differentiation based on this variable is then used to scale the time back and forth, leaving the unscaled final time as an optimization variable. Applying the chain rule of differentiation: 
 \begin{align}
 & \mathbf{f}(\mathbf{x}(t) , \mathbf{u}(t)) =  \frac{d}{dt}\mathbf{x}(t) = \frac{d\tau}{dt} \frac{d}{d\tau}\mathbf{x}(t) =  \frac{1}{\eta}\frac{d}{d\tau}\mathbf{x}(t)
 \end{align}
@@ -30,12 +30,12 @@ Let us now translate between the two by using the dilation coefficient $\eta$ wh
 & \eta \triangleq \left(\frac{d\tau}{dt}\right)^{-1}
 \end{align}
 
-This $\eta$ will become a variable in the convex subproblem that acts as the non-dimensionalized final time. It is a scaling factor that translates between real work differential time and the normalized version used for our algorithm. The nonlinear dynamics, taking advantage of this normalized time, is then written as:
+This $\eta$ will become a variable in the convex subproblem that acts as the non-dimensionalized final time. It is a scaling factor that translates between real work differential time and the normalized version used for our algorithm. The nonlinear dynamics, taking advantage of this normalized time, are then written as:
 \begin{align}
 & \mathbf{x}^\prime(\tau) \triangleq \frac{d}{d\tau}\mathbf{x}(\tau) = \eta \mathbf{f}(\mathbf{x}(\tau), \mathbf{u}(\tau)) = \mathbf{g}(\mathbf{x}(\tau), \mathbf{u}(\tau), \eta)
 \end{align}
 
-Taking a first-order Taylor series approximation of the nonlinear dynamics proposed in Problem one, a linear time-varying system of equations is written to use in our algorithm \ref{taylor}. These dynamics will be instantiated at reference values $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\eta})$ at each time. 
+Taking a first-order Taylor series approximation of the nonlinear dynamics proposed in problem one (\ref{ctproblem}), a linear time-varying system of equations is written to use in our algorithm shown in \ref{taylor}. These dynamics will be instantiated at reference values $(\hat{\mathbf{x}}, \hat{\mathbf{u}}, \hat{\eta})$ at each time, together being referred to as the \textit{linearization path}. 
 %
 \begin{subequations}
 \label{taylor}
@@ -72,14 +72,14 @@ This expression is simplified by breaking the Taylor expansion intro matrix subc
 \addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
 \subsection{Convexifying the Minimum Thrust Constraint}
 \addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
-With this done, let us tackle the last source of non-convexity: the non-zero lower bound to our actuator thrust. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taking the first order Taylor series linear approximation, the following convexified constraint formulation becomes:
+Let us now tackle the last source of non-convexity: the non-zero lower bound on actuator thrust. Let us define an $\mathbb{R}^3 \rightarrow \mathbb{R}$ mapping function: $g(\mathbf{u}(\tau)) = F_{min} - \norm{\mathbf{u}(\tau)}_2 \leq 0$. Taking the first order Taylor series linear approximation, the following convexified constraint formulation becomes:
 %
 \begin{align}
 	g(\mathbf{u}(\tau)) &= F_{min} - \norm{\hat{\mathbf{u}}(\tau)} - \frac{\hat{\mathbf{u}}(\tau)^T}{\norm{\hat{\mathbf{u}}(\tau)}}(\mathbf{u}(\tau) - \hat{\mathbf{u}}(\tau)) & \leq 0 \\
 	&= F_{min} - \frac{\hat{\mathbf{u}}(\tau)^T}{\norm{\hat{\mathbf{u}}(\tau)}} \mathbf{u}(\tau)  & \leq 0\\
 	&= F_{min} - \Xi(\tau)\mathbf{u}(\tau)  & \leq 0
 \end{align}
-this leads us to the linear, convexified constraint $F_{min} \leq \Xi(\tau)\mathbf{u}(\tau)$. Recall the variable $\hat{\mathbf{u}}(\tau)$ is our reference input history.
+this leads us to the linear, convexified constraint $F_{min} \leq \Xi(\tau)\mathbf{u}(\tau)$ requiring the linearization path value $\hat{\mathbf{u}}(\tau)$. This means that each iteration of the algorithm will use the input sequence path from the previous iteration to satisfy this constraint.
 
 
 
@@ -94,13 +94,13 @@ The final step to fitting the dynamics, state, and control constraints to an opt
 	\mathcal{K}_- &\triangleq \{0,1,\cdots, K-2 \}
 \end{align*}
 %
-Given that the trajectory time is normalized on the interval $\tau \in [0,1 ]$, the discrete time step at point $k$ is defined as such
+Given that the trajectory time is normalized on the interval $\tau \in [0,1 ]$, the discrete time step at point $k$ is defined as such:
 %
 \begin{align}
 & \tau_k \triangleq \frac{k}{K-1}, \quad \forall k \in \mathcal{K}
 \end{align}
 %
-For implementation sake, a first-order-hold linear scaling on the applied controls for each time step. Over the interval $\tau \in [\tau_k, \tau_{k+1}]$, the $\mathbf{u}(\tau)$ is expressed in terms of the $\mathbf{u}_k$
+For the sake of implementation, a first-order-hold linear scaling is applied to the controls for each time step. Over the interval $\tau \in [\tau_k, \tau_{k+1}]$, the $\mathbf{u}(\tau)$ is expressed in terms of the $\mathbf{u}_k$
  and $\mathbf{u}_{k+1}$:
 \begin{equation}
 	\mathbf{u}(\tau) \triangleq \alpha_k(\tau) \mathbf{u}_k + \beta(\tau) \mathbf{u}_{k+1}
@@ -116,7 +116,7 @@ d\tau &= \frac{1}{K-1} \\
 \end{align}
 %
 
-The state transition matrix (STM) of the dynamics $\Phi(\tau_{k+1},\tau_k)$ is used to translate the process from a state at time $k$ to future state at $k+1$. This matrix assumes no input is being imparted, but a convolution can be used to describe the time varying input. The STM follows these dynamics:
+The state transition matrix (STM) of the dynamics $\Phi(\tau_{k+1},\tau_k)$ is used to translate the process from a state at time $k$ to future state at $k+1$. This matrix assumes no input is being imparted, but a convolution can be used to describe the time varying input. The STM follows the dynamics:
 %
 \begin{align}
 & \frac{d}{d\tau} \Phi(\tau,\tau_k) = A(\tau) \Phi(\tau,\tau_k), \quad \forall k \in \mathcal{K}
@@ -128,13 +128,13 @@ Additionally, the STM has the semigroup, inverse, and identity properties which 
 	\Phi(s,s) &= \mathbb{I}_{n \times n}
 \end{align}
 for arbitrary timing parameters $t, \gamma, s$. Let us take advantage of this property during the discretization steps to minimize some computation. A general homogeneous solution for a system defined by $\dot{\mathbf{x}}$ using the STM is the following:
-
+%
 \begin{align}
 	\text{given that} \ \ \mathbf{x}(\tau) &= \Phi(\tau, \tau_k) \mathbf{x}(\tau_k)\\
 	\frac{d}{d\tau}\mathbf{x}(\tau) &= \dot{\Phi}(\tau, \tau_k) \mathbf{x}(\tau_k) = A(\tau)\mathbf{x}(\tau) \\ 
 	& = A(\tau) \Phi(\tau, \tau_k) \mathbf{x}(\tau_k)
 \end{align}
-Integration leads to the following fact
+Integration leads to the following fact:
 \begin{align}
 	\mathbf{x}(\xi) &= \mathbf{x}(\tau_k) + \int_{\tau_k}^\xi A(\xi) \Phi(\xi, \tau_k) \mathbf{x}(\tau_k) d\xi \\
 	&= \left( \mathbb{I}_{n\times n} + \int_{\tau_k}^\xi A(\xi) \Phi(\xi, \tau_k) d\xi \right)  \mathbf{x}(\tau_k)
@@ -167,7 +167,7 @@ Converting the continuous time dynamics to discrete time dynamics, a series of c
 \end{align}
 \end{subequations}
 
-It should be noted that the number of temporal nodes $K$, where $\mathcal{K} \in \mathbb{Z}^K$, chosen for this problem to be evaluated at does not affect the accuracy of the solution, only the optimality. An optimization solution where $K=10$ will still accurately land the vehicle within all the constraints defined, but may do so in more time and with larger cost than the same problem solved at $K=25$. However, the former is computed faster and generally produces a cost quite close to the higher temporal-density solution depending on the problem statement.
+It should be noted that the number of temporal nodes $K$ chosen for this calculation, where $\mathcal{K} \in \mathbb{Z}^K$, does not affect the accuracy of the solution. While the solution is accurate to the problem statement, it may be suboptimal by a small amount to the same problem evaluated at a higher node count $K$. This is visited in the analysis section later in this report; it is shown that, for a typical landing problem, the difference in key objectives is inconsequential. More simply put, an optimization solution where $K=10$ will still accurately land the vehicle within all the constraints defined, but may do so in more time and with larger cost than the same problem solved at $K=25$. However, the former is computed faster and often produces a total cost marginally higher than the better resolution problem. Note that these are effectively two different problems despite having similar objective and constraint formulation.
 
 \section{Successive Form, Trust Regions and Relaxations}
 
@@ -194,9 +194,9 @@ Dynamic relaxation variable can now be added to discount artificial infeasibilit
 \begin{align}
 & \mathbf{x}_{k+1}^i = F_k^i\mathbf{x}_k^i + G^{-,i}_k\mathbf{u}_k^i + G_k^{+,i}\mathbf{u}_{k+1}^i + \bar{\mathbf{z}}^i_k +\bar{\Sigma}_k^i\eta^i + \bm{\nu}_k^i
 \end{align}
-The right super script $^i$ indicates the iterate of the algorithm, where the subscript $_k$ of course means the ordered parameter entrance in our array shaped by $\mathcal{K}$.
+The right super script $^i$ indicates the iterate of the algorithm, where the subscript $_k$ means the ordered parameter entrance in our array shaped by $\mathcal{K}$.
 
-Because this is going to be used in the cost function as a norm, the time history of the slack variable shall be concatenated as
+As $\bm{\nu}$ will be in the augmented cost function, the following virtual control history vector $\in \mathbb{R}^{K-1}$ will be referred to:
 \begin{align}
 \bm{\nu}^i = 
 	\begin{bmatrix}
@@ -204,7 +204,7 @@ Because this is going to be used in the cost function as a norm, the time histor
 	\end{bmatrix}^T
 \end{align}
 
-And of course the cost function is augmented again with $w_v \norm{\bm{\nu}^i}_1$. As the iteration continues, this value is minimized as the solution becomes more dynamically feasible. Therefore, the magnitude of this norm is indicative of a final solution in the successive iteration process.
+The cost function is augmented again with $w_v \norm{\bm{\nu}^i}_1$ so that the magnitude of the entire history of $\bm{\nu}$ is penalized. As the iteration continues, this value is minimized, making the solution more dynamically feasible and true to the linear system. Additionally, the magnitude of this norm is indicative of a final solution in the successive iteration process.
 
 \section{Convex Sub-Problem}
 Now that the proposed problem has been linearized and convexified, the components can be assembled as the full free-final-time problem as shown in problem \ref{problem2} where the following objective function is used:
@@ -219,7 +219,7 @@ The goal is for the successive convexification algorithm \ref{Successive} to con
 \caption{Successive Convexification}\label{Successive}
 \begin{algorithmic}[1]
 \Procedure{PDG\_SCvx}{$x_{ref}, u_{ref}, \eta_{ref}$}
-\State Generate an initial reference trajectory, as a linearization path for the first iterate of SCVx. In this prototype case, we perform following simple routine which linearly spans many states from initial to terminal condition:
+\State An initial reference trajectory must be generated, as a linearization path for the first iterate of SCVx. In this prototype case, a simple routine which linearly spans many states from initial to terminal condition is performed, although it is recommended to use a more sophisticated approach. The following is used in this demonstration:
 \For{$k$ $\in$ $(1:K)$}
 \State		$a_1 = (K-k)/K;$
 \State		$	a_2 = k/K;$
@@ -228,7 +228,7 @@ The goal is for the successive convexification algorithm \ref{Successive} to con
 \State		$	v_k = (a_1*v_0 + a_2*v_K)$
 \State		$	\sigma_k = [0 \ 0 \ 0]^T$
 \State		$	\omega_k = [0 \ 0 \ 0]^T$
-\State		$	\mathbf{x}[:, k] = [m_k \ r_k \ v_k \ \sigma_k \omega_k]^T$
+\State		$	\mathbf{x}[:, k] = [m_k \ r_k \ v_k \ \sigma_k  \ \omega_k]^T$
 \State		$	\mathbf{u}[:, k] = -\mathbf{g} * m_k$
 \EndFor{}
 \While{$ ||{\Delta}|| \geq \Delta_{tol} \quad \&\& \quad ||{\nu}|| \geq \nu_{tol} \quad \&\& \quad i \leq i_{max}$}
@@ -250,7 +250,6 @@ The goal is for the successive convexification algorithm \ref{Successive} to con
 
 
 \clearpage
-\begin{singlespace}
 \begin{mdframed}
 \label{problem2}
 \textbf{Problem 2: Discretized Convex Fixed-Final-Time Sub-Problem ($i^{th}$ iteration)}
@@ -294,5 +293,4 @@ F_{min} &\leq \Xi_k^i\mathbf{u}_k^i \\
 & || \delta \eta^i ||_2 \leq \Delta_\eta^i
 \end{align*}
 \end{mdframed}
-\end{singlespace}
 
