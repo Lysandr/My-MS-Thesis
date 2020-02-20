@@ -1,66 +1,14 @@
 
-
-Do before dec 19th:
-  ☐ glideslope vs subterminal commands
-    ☐ 
-
-
-
 DO:
- ✔ abstract fill @done (19-11-27 23:03)
-   ✔ fill more @done (19-11-28 21:59)
- ✔ background @done (19-11-29 02:01)
-   ✔ entry figure!!! @done (19-11-29 02:01)
- ✔ motivation @done (19-11-28 19:11)
-   ✔ attributes of a good guidance alg @done (19-11-28 19:11)
-     ✔ keeping within mission constraints @done (19-11-28 19:11)
- ✔ literature review @done (19-11-29 02:01)
- ✔ basic scope coverage @done (19-11-29 02:06)
- ✔ add more fluff in chapter 2 @done (19-11-29 02:43)
- ✔ add more intro fluff to chapter 3 @done (19-11-29 02:43)
- ✔ figure out what is wrong with aligment constraint in 3.1.1 @done (19-11-28 11:50)
-   ✔ look into the MRP norm constraint as an alignment @done (19-11-28 11:50)
- ✔ talk about continuous time convolution stuff @done (19-11-29 02:44)
- ✔ do antsaklis linear derivations in section 3.2 @done (19-11-29 02:44)
- ✔ talk more about trust regions and relaxations @done (19-11-29 02:44)
- ✔ figure out TVC bandwidth shit in section 3.4.1 @done (19-11-28 16:52)
- ✔ finish nonplanar talk @done (19-11-28 16:52)
- ✔ show the glideslops works @done (19-11-28 16:52)
- ✔ do runtime analysis with constraints active plots etc @done (19-11-29 02:48)
  ☐ do temporal node count variation writing shit
  ☐ do parameter variation and plots
  ☐ mrps vs quats
- ✔ corner conditions @done (19-11-28 22:02)
  ☐ glideslope vs subterminal constraints
- ✔ conclusions @done (19-11-28 15:17)
-   ✔ igition time optimization @done (19-11-28 15:17)
-   ✔ stcs cstcs @done (19-11-28 15:17)
-   ✔ hypersonic patch @done (19-11-28 15:17)
 
 
 after draft submission:
- ☐ write more background
- ☐ write more motivation
- ☐ write more on "onscvx section"
- ☐ more fluff in ch 2 and 3
  ☐ maybe do antsaklis derivations
- ☐ talk more avout theory of trust regions and virtual controls
- ☐ \section{Algorithm Runtime with Constraints active}
-  ☐ \begin{itemize}
-    ☐ \item  glideslope constraint
-    ☐ \item alignment constraint
-    ☐ \item sigma constraint
-    ☐ \item omega max constraint
-  ☐ \end{itemize}
- ☐ monte carlo analysis
  ☐ MRP vs Quats timing analysis
- ☐ corner condition discussion
- ☐ glideslope vs subterminal contraints
-
-Analysis extra:
-  ✔ perfect feedforward control simulation @done (19-11-28 22:00)
-    ✔ rk4 right down to the K windows @done (19-11-28 22:00)
-  ✔ feedforward with feedback control simulation @done (19-11-28 22:00)
 
 
 
@@ -97,3 +45,52 @@ Analysis extra:
 
 
 
+
+
+＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
+Archive:
+ ✔ write more on "onscvx section" @done (20-01-01 15:32) @project(after draft submission)
+ ✔ write more motivation @done (20-01-01 15:32) @project(after draft submission)
+ ✔ write more background @done (20-01-01 15:32) @project(after draft submission)
+ ✔ talk more avout theory of trust regions and virtual controls @done (20-01-01 15:32) @project(after draft submission)
+ ✔ more fluff in ch 2 and 3 @done (20-01-01 15:32) @project(after draft submission)
+ ✔ monte carlo analysis @done (20-01-01 15:32) @project(after draft submission)
+ ✔ glideslope vs subterminal contraints @done (20-01-01 15:32) @project(after draft submission)
+ ✔ glideslope vs subterminal commands @done (20-01-01 15:32) @project(Do before dec 19th)
+ ✔ corner condition discussion @done (20-01-01 15:32) @project(after draft submission)
+ ✔ \section{Algorithm Runtime with Constraints active} @done (20-01-01 15:32) @project(after draft submission)
+ ✔ \item sigma constraint @done (20-01-01 15:32) @project(after draft submission)
+ ✔ \item omega max constraint @done (20-01-01 15:32) @project(after draft submission)
+ ✔ \item alignment constraint @done (20-01-01 15:32) @project(after draft submission)
+ ✔ \item  glideslope constraint @done (20-01-01 15:32) @project(after draft submission)
+ ✔ \end{itemize} @done (20-01-01 15:32) @project(after draft submission)
+ ✔ \begin{itemize} @done (20-01-01 15:32) @project(after draft submission)
+ ✔ @done (20-01-01 15:32) @project(Do before dec 19th)
+ ✔ do runtime analysis with constraints active plots etc @done (19-11-29 02:48) @project(DO)
+ ✔ talk more about trust regions and relaxations @done (19-11-29 02:44) @project(DO)
+ ✔ talk about continuous time convolution stuff @done (19-11-29 02:44) @project(DO)
+ ✔ do antsaklis linear derivations in section 3.2 @done (19-11-29 02:44) @project(DO)
+ ✔ add more intro fluff to chapter 3 @done (19-11-29 02:43) @project(DO)
+ ✔ add more fluff in chapter 2 @done (19-11-29 02:43) @project(DO)
+ ✔ basic scope coverage @done (19-11-29 02:06) @project(DO)
+ ✔ literature review @done (19-11-29 02:01) @project(DO)
+ ✔ entry figure!!! @done (19-11-29 02:01) @project(DO)
+ ✔ background @done (19-11-29 02:01) @project(DO)
+ ✔ corner conditions @done (19-11-28 22:02) @project(DO)
+ ✔ rk4 right down to the K windows @done (19-11-28 22:00) @project(Analysis extra)
+ ✔ perfect feedforward control simulation @done (19-11-28 22:00) @project(Analysis extra)
+ ✔ feedforward with feedback control simulation @done (19-11-28 22:00) @project(Analysis extra)
+ ✔ fill more @done (19-11-28 21:59) @project(DO)
+ ✔ motivation @done (19-11-28 19:11) @project(DO)
+ ✔ keeping within mission constraints @done (19-11-28 19:11) @project(DO)
+ ✔ attributes of a good guidance alg @done (19-11-28 19:11) @project(DO)
+ ✔ show the glideslops works @done (19-11-28 16:52) @project(DO)
+ ✔ finish nonplanar talk @done (19-11-28 16:52) @project(DO)
+ ✔ figure out TVC bandwidth shit in section 3.4.1 @done (19-11-28 16:52) @project(DO)
+ ✔ stcs cstcs @done (19-11-28 15:17) @project(DO)
+ ✔ igition time optimization @done (19-11-28 15:17) @project(DO)
+ ✔ hypersonic patch @done (19-11-28 15:17) @project(DO)
+ ✔ conclusions @done (19-11-28 15:17) @project(DO)
+ ✔ look into the MRP norm constraint as an alignment @done (19-11-28 11:50) @project(DO)
+ ✔ figure out what is wrong with aligment constraint in 3.1.1 @done (19-11-28 11:50) @project(DO)
+ ✔ abstract fill @done (19-11-27 23:03) @project(DO)
