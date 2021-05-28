@@ -3,10 +3,10 @@ This my my Master's Thesis from my time at The Universtiy of Colorado Boulder, t
 Implementation for the Pinpoint Landing of Space Vehicles." Dr. Robert D. Braun served as my advisor and my committee included Dr. Jay McMahon and Dr. Hanspeter Schaub.  
 
 
-![Landing Divert Trajectory](/figs/3dtraj_intro.jpg)
+![Landing Divert Trajectory](/figs/3dtraj_intro.JPG)
 
-![Out of plane Divert Trajectory](/figs/3dtraj_oop.jpg)
+![Out of plane Divert Trajectory](/figs/3dtraj_oop.JPG)
 
-![Trajectories with different constraints](/figs/3dtraj_dual.jpg)
+![Trajectories with different constraints](/figs/3dtraj_dual.JPG)
 
-![Trajectory solutions for dispersed initial conditions.](/figs/monte.jpg)
+![Trajectory solutions for dispersed initial conditions.](/figs/monte.JPG)
